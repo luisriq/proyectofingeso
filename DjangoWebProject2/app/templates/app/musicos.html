@@ -1,0 +1,35 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<h3>{{ message }}</h3>
+
+{% for musico in musicos.all %}
+<details>
+    <summary>{{musico.nombre}}</summary>
+    <table>
+      <tr>
+        <th scope="row">Nombre</th>
+        <td>{{musico.nombre}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Correo</th>
+        <td>{{musico.correo}}</td>
+      </tr>
+	  <tr>
+        <th scope="row">Sexo</th>
+        <td>{{musico.sexo}}</td>
+      </tr>
+	  <tr>
+        <th>Bandas</th>
+        <td>{% for banda in musico.banda.all %}
+			{{ banda.nombre }}, 
+{% endfor %}</td>
+      </tr>
+	</table>
+</details>
+<br></br>
+{% endfor %}
+
+{% endblock %}

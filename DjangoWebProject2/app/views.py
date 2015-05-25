@@ -6,20 +6,36 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
-
-def home(request):
-    """Renders the home page."""
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'app/index.html',
-        context_instance = RequestContext(request,
-        {
-            'title':'Home Page',
-            'year':datetime.now().year,
-        })
-    )
-
+from django.views.generic import View
+from models import Musico
+class Home(View):
+    def get(self, request):
+        """Renders the home page."""
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/index.html',
+            context_instance = RequestContext(request,
+            {
+                'title':'Home Page',
+                'year':datetime.now().year,
+            })
+        )
+class Bandas(View):
+    def get(self, request):
+        assert isinstance(request, HttpRequest)
+        musicos = Musico.objects.all()
+        return render(
+            request,
+            'app/musicos.html',
+            context_instance = RequestContext(request,
+            {
+                'title':'Musicos',
+                'message':'Informacion de los musicos.',
+                'year':datetime.now().year,
+                'musicos':musicos,
+            })
+        )
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
