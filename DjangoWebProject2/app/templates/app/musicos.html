@@ -4,7 +4,7 @@
 
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
-
+ <!-- Para cada music en la base de datos -->
 {% for musico in musicos.all %}
 <details>
     <summary>{{musico.nombre}}</summary>
@@ -17,11 +17,18 @@
         <th scope="row">Correo</th>
         <td>{{musico.correo}}</td>
       </tr>
-	  <tr>
+  	  <tr>
         <th scope="row">Sexo</th>
-        <td>{{musico.sexo}}</td>
-      </tr>
-	  <tr>
+          <!-- No se debe hacer asi, pero es para mostrar un ejemplo -->
+        <td>
+          {% if musico.sexo == True%}
+            Hombre
+          {% else %}
+            Mujer
+          {% endif %}
+        </td>
+    	</tr>
+  	  <tr>
         <th>Bandas</th>
         <td>{% for banda in musico.banda.all %}
 			{{ banda.nombre }}, 
@@ -29,7 +36,7 @@
       </tr>
 	</table>
 </details>
-<br></br>
+
 {% endfor %}
 
 {% endblock %}

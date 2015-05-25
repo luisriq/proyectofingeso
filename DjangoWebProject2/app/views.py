@@ -21,7 +21,7 @@ class Home(View):
                 'year':datetime.now().year,
             })
         )
-class Bandas(View):
+class Musicos(View):
     def get(self, request):
         assert isinstance(request, HttpRequest)
         musicos = Musico.objects.all()
