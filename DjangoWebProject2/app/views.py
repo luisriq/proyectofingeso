@@ -12,7 +12,7 @@ class Home(View):
     def get(self, request):
         """Renders the home page."""
         assert isinstance(request, HttpRequest)
-        return render(
+        return render( 
             request,
             'app/index.html',
             context_instance = RequestContext(request,
