@@ -25,6 +25,11 @@ class Musicos(View):
     def get(self, request):
         assert isinstance(request, HttpRequest)
         musicos = Musico.objects.all()
+        if ('visitass' in request.session):
+            pass
+        else:
+            request.session['visitass'] = 0
+        request.session['visitass'] = request.session['visitass'] + 1
         return render(
             request,
             'app/musicos.html',
@@ -34,6 +39,7 @@ class Musicos(View):
                 'message':'Informacion de los musicos.',
                 'year':datetime.now().year,
                 'musicos':musicos,
+                'visitas':request.session['visitass'],
             })
         )
 def contact(request):

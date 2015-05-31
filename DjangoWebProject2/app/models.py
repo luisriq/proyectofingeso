@@ -15,7 +15,6 @@ class Musico(models.Model):
 		return self.nombre
 class Banda(models.Model):
 	nombre = models.CharField(max_length=200)
-	
 	def __unicode__(self):
 		return self.nombre
 class Usuario(models.Model):
