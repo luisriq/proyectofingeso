@@ -1,0 +1,19 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<details>
+    <summary>Usuario creado correctamente</summary>
+    <table>
+      <tr>
+        <th scope="row">Nombre</th>
+        <td>{{nombre}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Correo</th>
+        <td>{{email}}</td>
+      </tr>
+        
+	</table>
+</details>
+{% endblock %}

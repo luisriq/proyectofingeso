@@ -6,7 +6,7 @@ from datetime import datetime
 from django.conf.urls import patterns, url, include
 from app.forms import BootstrapAuthenticationForm
 from django.contrib import admin
-from app.views import Home, Musicos
+from app.views import Home, Musicos, Registrar
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
 # from django.contrib import admin
@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^contact$', 'app.views.contact', name='contact'),
     url(r'^about', 'app.views.about', name='about'),
     url(r'^musicos', Musicos.as_view(), name='musicos'),
+    url(r'^registro', Registrar.as_view(), name='registro'),
     url(r'^login/$',
         'django.contrib.auth.views.login',
         {
