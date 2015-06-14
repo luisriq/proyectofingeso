@@ -65,3 +65,23 @@ th, td {
   padding: 0.5em;
   border-bottom: 1px solid #E6E6E6;
 }
+
+.registro {
+       position: absolute;
+       top: 0;
+       left: 0;
+       bottom: 0;
+       right: 0;
+       margin: auto;
+  }
+  
+  .vertical-center {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items: center;
+}
+
+.center-hor{
+  margin:0 auto;
+}

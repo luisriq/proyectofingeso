@@ -13,7 +13,7 @@ from django.contrib.auth.models import User
 
 from django.views.generic.edit import CreateView
 
-class Registrar(View):
+class VistaSignUp(View):
     def get(self, request):
         if request.GET.get('email','') != '':
             usuario = Usuario(correo=request.GET.get('email',''), nombre = request.GET.get('nombre',''), contrasena = request.GET.get('pas',''), )
@@ -27,18 +27,10 @@ class Registrar(View):
                     'year':datetime.now().year,
                     'nombre':usuario.nombre,
                     'email':usuario.correo,
+                    'creado':usuario.fechaIngreso,
                 })
         	)
-        if request.method == "POST":
-            form = UserForm(request.POST)
-            if form.is_valid():
-                new_user = Usuario.objects.create_user(**form.cleaned_data)
-                login(new_user)
-                # redirect, or however you want to get to the main view
-                return HttpResponseRedirect('app/index.html')
-        else:
-            form = UserForm() 
-        return render(request, 'app/registro.html', {'form': form}) 
+        return render(request, 'app/registro.html') 
 
 class Home(View):
     def get(self, request):

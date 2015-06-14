@@ -3,30 +3,28 @@
 {% block content %}
 
 <div class="jumbotron">
-    <h1>Django</h1>
-    <p class="lead">Django is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://www.djangoproject.com/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+    <h1>UMusic</h1>
+    <p class="lead">Version en desarrollo del sistema para presentacion.</p>
+    <p><a href="{% url 'registro' %}" class="btn btn-primary btn-large">Vista de muestra &raquo;</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>Home</h2>
         <p>
-            Django gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            Vista inicial --en desarrollo--.
         </p>
-        <p><a class="btn btn-default" href="http://www.djangobook.com/en/2.0/index.html">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'home' %}">Home &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>The Python Package Index is a repository of software for the Python programming language.</p>
-        <p><a class="btn btn-default" href="https://pypi.python.org/pypi">Learn more &raquo;</a></p>
+        <h2>Musicos</h2>
+        <p>Se visualizan los musicos y sus bandas.</p>
+        <p><a class="btn btn-default" href="{% url 'musicos' %}">Musicos &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Microsoft Azure</h2>
-        <p>You can easily publish to Microsoft Azure using Python Tools for Visual Studio. Find out how you can host your application using a free trial today.</p>
-        <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
+        <h2>Registro</h2>
+        <p>Se implementa el caso de uso registrar usuario.</p>
+        <p><a class="btn btn-default" href="{% url 'registro' %}">Registro &raquo;</a></p>
     </div>
 </div>
 

@@ -14,19 +14,22 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img alt="Brand" style="max-width:30px; margin-top: -7px;" src="{% static 'app/images/logo.png' %}">
+                </a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a href="/" class="navbar-brand">Application name</a>
+                <a href="/" class="navbar-brand">UMusic</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                    <li><a href="{% url 'about' %}">Acerca</a></li>
+                    <li><a href="{% url 'contact' %}">Contacto</a></li>
                     <li><a href="{% url 'musicos' %}">Musicos</a></li>
                     <li><a href="{% url 'registro' %}">Registro</a></li>
                 </ul>
@@ -35,11 +38,11 @@
         </div>
     </div>
 
-    <div class="container body-content">
+    <div class="container body-content " >
 {% block content %}{% endblock %}
         <hr/>
         <footer>
-            <p>&copy; {{ year }} - My Django Application</p>
+            <p>&copy; {{ year }} - Fingeso Grupo 3</p>
         </footer>
     </div>
 

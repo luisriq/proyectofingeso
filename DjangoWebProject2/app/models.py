@@ -18,7 +18,7 @@ class Usuario(models.Model):
 	nombre = models.CharField(max_length=200)
 	correo = models.EmailField(unique=True)
 	contrasena =  models.CharField(max_length=200)
-	fechaIngreso =  models.DateTimeField(auto_now=True)
+	fechaIngreso =  models.DateTimeField(auto_now_add=True)
 	imagenPerfil =  models.CharField(max_length=200, blank=True)
 	usuarioActivo = models.BooleanField(default=True)
 	

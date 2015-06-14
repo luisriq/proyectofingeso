@@ -1,20 +1,23 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
-
-<h2>{{ title }}</h2>
-<h3>{{ message }}</h3>
-
-<h2>{{ creado }}</h2>
-
-<div class="panel panel-primary" style="padding">
+{% load staticfiles %}
+<div class="row vertical-center text-center pagination-centered">
+<div class="col-md-3 center-hor" >
+ 
+<div class="panel panel-primary">
   <div class="panel-heading"> Registro </div>
     <div class="panel-body">
+
 <form id="myForm" action="/registro">
-  Nombre: <input type="text" name="nombre" input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1">
-  E-mail<input type="text" name="email" input type="text" class="form-control" placeholder="E-mail" aria-describedby="basic-addon1">
-  Constraseña: <input type="password" name="pas" input type="text" class="form-control" placeholder="Contraseña" aria-describedby="basic-addon1">
-  <input type="button" class = "btn btn-default" onclick="myFunction()" value="Registrarse">
+  <input type="text" name="nombre" input type="text" class="form-control form-group" placeholder="Nombre" aria-describedby="basic-addon1">
+  <input type="email" name="email" input type="text" class="form-control form-group" placeholder="E-mail" aria-describedby="basic-addon1">
+  <input type="password" name="pas" input type="text" class="form-control form-group" placeholder="Contraseña" aria-describedby="basic-addon1">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <input type="button" class = "btn btn-default " onclick="myFunction()" value="Registrarse">
+    </div>
+  </div>
 </form>
     </div>
 </div>
@@ -24,4 +27,8 @@ function myFunction() {
     document.getElementById("myForm").submit();
 }
 </script>
+
+ </div>
+        
+      </div>
 {% endblock %}
