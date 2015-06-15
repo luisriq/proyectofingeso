@@ -1,5 +1,5 @@
 # proyectofingeso
-Instrucciones
+Instrucciones Linux
 
 >sudo apt-get install python-pip
 
@@ -7,18 +7,18 @@ Instrucciones
 
 >sudo apt-get install git
 
-mkdir Fingeso
+>mkdir Fingeso
 
-cd Fingeso
+>cd Fingeso
 
-virtualenv venv
+>virtualenv venv
 
-source venv/bin/activate
+>source venv/bin/activate
 
-pip install django
+>pip install django
 
-git clone reposss——
+>git clone reposss——
 
-git config —global user.email “correo@ajsd.cl”
+>git config —global user.email “correo@ajsd.cl”
 
-git config —global user.name “Nombre"
+>git config —global user.name “Nombre"
