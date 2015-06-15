@@ -17,7 +17,7 @@ Instrucciones Linux
 
 >pip install django
 
->git clone reposss——
+>git clone https://github.com/luisriq/proyectofingeso.git
 
 >git config —global user.email “correo@ajsd.cl”
 
