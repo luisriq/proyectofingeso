@@ -14,8 +14,6 @@ class UserForm(ModelForm):
         model = Usuario
         fields = ('nombre', 'correo', 'contrasena')
         
-        
-
 
 
 class BootstrapAuthenticationForm(AuthenticationForm):
