@@ -16,6 +16,8 @@ class UserForm(ModelForm):
         
         
 
+
+
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
