@@ -101,3 +101,16 @@ nav .brand-logo{
 .color-333{
   background-color:#333 !important;
 }
+.button-collapse{
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+.side-nav{
+  background-color:  #222 !important;
+  color: #ddd !important;
+}
+.side-nav li a{
+  color: #ddd !important;
+}.side-nav li:hover{
+  background-color:  #444 !important;
+}
