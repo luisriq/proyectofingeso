@@ -1,6 +1,6 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    /*padding-top: 50px;
+    padding-bottom: 20px;*/
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -84,4 +84,20 @@ th, td {
 
 .center-hor{
   margin:0 auto;
+}
+.logo-img{
+  margin-bottom: -18px;
+  max-width: 120px;
+}
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+  height: 80px;
+  line-height: 80px;
+}
+nav .brand-logo{
+  padding: 0 40px;
+  background-color:#25b7d3;
+}
+
+.color-333{
+  background-color:#333 !important;
 }

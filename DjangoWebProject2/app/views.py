@@ -43,7 +43,7 @@ class Home(View):
             {
                 'title':'Home Page',
                 'year':datetime.now().year,
-            })#jhsfgkjalkñ
+            })
         )
 class Musicos(View):
     def get(self, request):
