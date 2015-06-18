@@ -7,7 +7,7 @@ from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
 from django.views.generic import View
-from models import Musico, Usuario
+from models import Usuario
 from forms import UserForm
 from django.contrib.auth.models import User
 

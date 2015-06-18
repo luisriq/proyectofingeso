@@ -7,15 +7,13 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from models import Musico, Usuario
+from models import Usuario
 
 class UserForm(ModelForm):
     class Meta:
         model = Usuario
         fields = ('nombre', 'correo', 'contrasena')
-        
 
-#asdapsapdapsdapsodapsjd
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
