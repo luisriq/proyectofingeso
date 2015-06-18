@@ -42,6 +42,9 @@ class Home(View):
             context_instance = RequestContext(request,
             {
                 'title':'Home Page',
+                
+                'username':'elLucho',
+                
                 'year':datetime.now().year,
             })
         )
