@@ -13,6 +13,8 @@ class UserForm(ModelForm):
     class Meta:
         model = Usuario
         fields = ('nombre', 'correo', 'contrasena')
+        
+        
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
