@@ -93,11 +93,25 @@ nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
   height: 80px;
   line-height: 80px;
 }
-nav .brand-logo{
+nav .b-logo{
   padding: 0 40px;
   background-color:#25b7d3;
+  position: absolute;
+  color: #fff;
+  display: inline-block;
+  font-size: 2.1rem;
 }
 
 .color-333{
   background-color:#333 !important;
+}
+nav li{
+  padding:0 25px!important;
+}
+nav li:first{
+  margin:0 20px!important;
+  width: 600px;
+}
+input, select, textarea {
+  max-width: 9000px !important;
 }
