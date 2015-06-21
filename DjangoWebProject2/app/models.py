@@ -16,7 +16,7 @@ class Usuario(models.Model):
 	usuarioActivo = models.BooleanField(default=True)
 	
 	def __unicode__(self):
-		return self.correo
+		return self.nombre + " / " + self.correo
 		
 class Normal(Usuario):
 	tiempoCastigo = models.IntegerField(default=0)
@@ -37,8 +37,17 @@ class Reporte(models.Model):
 	
 class Banda(models.Model):
 	nombre = models.CharField(max_length=200)
+	integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	def __unicode__(self):
 		return self.nombre
+		
+class IntegrantesBanda(models.Model):
+	integrante = models.ForeignKey(Artista, related_name = 'perteneciente', null=True)
+	banda = models.ForeignKey(Banda, related_name = 'iintegrante', null=True)
+	fechaIngreso = models.DateField()
+	ocupacion = models.CharField(max_length=200)
+	def __unicode__(self):
+		return self.integrante.nombre + "----" + self.banda.nombre
 
 class Comentario(models.Model):
 	texto = models.CharField(max_length=200)
