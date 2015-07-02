@@ -16,7 +16,10 @@ from django.views.generic.edit import CreateView
 class VistaSignUp(View):
     def get(self, request):
         if request.GET.get('email','') != '':
-            usuario = Usuario(correo=request.GET.get('email',''), nombre = request.GET.get('nombre',''), contrasena = request.GET.get('pas',''), )
+            _user = User.objects.create_user(username=request.GET.get('email',''),
+                                 password=request.GET.get('pas',''),
+                                 first_name=request.GET.get('nombre',''))
+            usuario = Usuario(user = _user, correo=request.GET.get('email',''), nombre = request.GET.get('nombre',''), contrasena = request.GET.get('pas',''), )
             usuario.save()
             return render( 
                 request,
