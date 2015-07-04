@@ -7,20 +7,39 @@ from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
 from django.views.generic import View
-from models import Usuario
-from forms import UserForm
+from models import Usuario, Artista, Normal
+from forms import UserForm, RegistroForm
 from django.contrib.auth.models import User
 
 from django.views.generic.edit import CreateView
 
 class VistaSignUp(View):
-    def get(self, request):
-        if request.GET.get('email','') != '':
-            _user = User.objects.create_user(username=request.GET.get('email',''),
-                                 password=request.GET.get('pas',''),
-                                 first_name=request.GET.get('nombre',''))
-            usuario = Usuario(user = _user, correo=request.GET.get('email',''), nombre = request.GET.get('nombre',''), contrasena = request.GET.get('pas',''), )
-            usuario.save()
+    def post(self, request):
+        # create a form instance and populate it with data from the request:
+        form = RegistroForm(request.POST)
+        # check whether it's valid:
+        print "lkansdlkansdlkansds"
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            _user = User.objects.create_user(username=form.cleaned_data['email'],
+                             password=form.cleaned_data['password2'],
+                             first_name=form.cleaned_data['name'])
+            fecha = 0
+            if form.cleaned_data['tipo']:
+                usuario = Normal(user = _user, correo=form.cleaned_data['email'], 
+                             nombre = form.cleaned_data['name'], 
+                             contrasena = form.cleaned_data['password2'], )
+                fecha = usuario.fechaIngreso
+                usuario.save()
+            else:
+                usuario = Artista(user = _user, correo=form.cleaned_data['email'], 
+                             nombre = form.cleaned_data['name'], 
+                             contrasena = form.cleaned_data['password2'], )
+                fecha = usuario.fechaIngreso
+            	usuario.save()
+            print "EXITO!!!!"
             return render( 
                 request,
                 'app/usuarioCreado.html',
@@ -28,13 +47,19 @@ class VistaSignUp(View):
                 {
                     'title':'Home Page',
                     'year':datetime.now().year,
-                    'nombre':usuario.nombre,
-                    'email':usuario.correo,
-                    'creado':usuario.fechaIngreso,
+                    'nombre':form.cleaned_data['name'],
+                    'email':form.cleaned_data['email'],
+                    'creado':fecha,
                 })
         	)
-        return render(request, 'app/registro.html') 
-
+        else:
+            return render(request, 'app/registro.html', {'form': form})
+    def get(self, request):
+        # if this is a POST request we need to process the form data
+        form = RegistroForm()
+    
+        return render(request, 'app/registro.html', {'form': form})
+    
 class Home(View):
     def get(self, request):
         """Renders the home page."""

@@ -10,17 +10,16 @@
                 <h4>Ingresa tus datos para autentificarte en el sistema.</h4>
                 <hr />
                 <div class="form-group">
-                    <label for="id_username" class="col-md-2 control-label">Correo</label>
-                    <div class="col-md-10">
+                    <div class="col-md-10 input-field">
                         {{ form.username }}
+                        <label for="id_username" class="active">Correo</label>
                     </div>
                 </div>
                 {# Para editar el hint de los inputs, ir a forms.py en el cuerpo de la funcion estan los parametros#}
                 <div class="form-group">
-                    <label for="id_password" class="col-md-2 control-label">Contraseña</label>
-                    
-                    <div class="col-md-10">
+                    <div class="input-field col-md-10">
                         {{ form.password }}
+                        <label class="active" for="contras">Contraseña</label>
                     </div>
                 </div>
                 <div class="form-group">
