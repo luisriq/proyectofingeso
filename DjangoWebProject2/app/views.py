@@ -64,6 +64,14 @@ class Home(View):
     def get(self, request):
         """Renders the home page."""
         assert isinstance(request, HttpRequest)
+        tipo = ""
+        try:
+            if len(Artista.objects.filter(user=request.user)) == 1:
+                tipo = "Artista :"
+            elif len(Normal.objects.filter(user=request.user)) == 1:
+                tipo = "Normal :"
+        except:
+            tipo = ""
         return render( 
             request,
             'app/index.html',
@@ -71,7 +79,7 @@ class Home(View):
             {
                 'title':'Home Page',
                 
-                'username':'elLucho',
+                'tipo':tipo,
                 
                 'year':datetime.now().year,
             })
