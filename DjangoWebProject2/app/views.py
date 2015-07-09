@@ -27,7 +27,7 @@ class VistaSignUp(View):
                              password=form.cleaned_data['password2'],
                              first_name=form.cleaned_data['name'])
             fecha = 0
-            if form.cleaned_data['tipo']:
+            if not form.cleaned_data['tipo']:
                 usuario = Normal(user = _user, correo=form.cleaned_data['email'], 
                              nombre = form.cleaned_data['name'], 
                              contrasena = form.cleaned_data['password2'], )
