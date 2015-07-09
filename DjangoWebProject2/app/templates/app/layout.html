@@ -12,25 +12,28 @@
 
 <body>
     
-    <nav>
-       	<div class="nav-wrapper color-333">
-            <a class="b-logo" href="{% url 'home' %}">
-                <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
-            </a>
-            <ul class="right ">
-                <li><form>
-                    <div class="input-field">
+    <div class="navbar container wide">
+       	<div class="row color-333">
+            <div class="col s2">
+                <a class="b-logo" href="{% url 'home' %}">
+                    <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
+                </a>
+            </div>
+            <div class="col s8">
+                <form>
+                    <div class="">
                       <input id="search" type="search" required>
                       <label for="search"><i class="mdi-action-search"></i></label>
                       <i class="mdi-navigation-close"></i>
                     </div>
                   </form>
-                </li>
+            </div>
+            <div class="col s2">
                 {# Para cambiar el texto de login logout y el nombre que se muestra ir al template loginpartial.html #}
-                <li>{% include 'app/loginpartial.html' %}</li>
-            </ul>
+                {% include 'app/loginpartial.html' %}
+            </div>
         </div>
-    </nav>
+    </div>
         
 
     <div class="container body-content " >

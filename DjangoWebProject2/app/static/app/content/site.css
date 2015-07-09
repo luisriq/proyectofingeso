@@ -89,11 +89,17 @@ th, td {
   margin-bottom: -18px;
   max-width: 120px;
 }
-nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+.navbar{
   height: 80px;
   line-height: 80px;
 }
-nav .b-logo{
+.wide{
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+  max-width: 9999px !important; 
+}
+.b-logo{
   padding: 0 40px;
   background-color:#25b7d3;
   position: absolute;
