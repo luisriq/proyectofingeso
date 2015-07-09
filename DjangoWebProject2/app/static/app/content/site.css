@@ -136,17 +136,13 @@ input, select, textarea {
   background-color:#FFF !important;
   padding-right: 20px;
 }
-.material-icons.prefix{
-  margin-top: 25px
-}
+.material-icons.prefix{margin-top: 25px}
 .material-icons.close{
   margin-top: 35px;
   margin-bottom: -35px;
   cursor: pointer;
 }
-.input-field .prefix ~ input{
-    width: calc(100% - 5rem);
-}
+.input-field .prefix ~ input{width: calc(100% - 5rem);}
 .cent-valing{
   display: inline-block;
   vertical-align: middle;
