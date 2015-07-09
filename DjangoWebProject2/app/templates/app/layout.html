@@ -7,6 +7,7 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/materialize.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
 
@@ -14,21 +15,22 @@
     
     <div class="navbar container wide">
        	<div class="row color-333">
-            <div class="col s2">
+            <div class="col left w200px">
+                
                 <a class="b-logo" href="{% url 'home' %}">
                     <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
-                </a>
+                </a>&nbsp;
             </div>
-            <div class="col s8">
-                <form>
-                    <div class="">
-                      <input id="search" type="search" required>
-                      <label for="search"><i class="mdi-action-search"></i></label>
-                      <i class="mdi-navigation-close"></i>
-                    </div>
-                  </form>
-            </div>
-            <div class="col s2">
+            <div class="w100p right ">
+                <div class="col search-cont nav-wrapper">
+                    <form>
+                        <div class="input-field s6">
+                          <i class="material-icons prefix">search</i>
+                          <input id="icon_prefix" type="text" class="validate">
+                        </div>
+                      </form>
+                    
+                </div>
                 {# Para cambiar el texto de login logout y el nombre que se muestra ir al template loginpartial.html #}
                 {% include 'app/loginpartial.html' %}
             </div>

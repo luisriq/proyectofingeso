@@ -1,14 +1,24 @@
 {% if user.is_authenticated %}
 <form id="logoutForm" action="/logout" method="post" class="navbar-right">
     {% csrf_token %}
-        <div><span class="navbar-brand">
-            {{tipo}} {{ user.first_name }}!
+    <style>.col.search-cont{width: calc(100% - 400px);!important;}</style>
+        <div class="col w300px white-text"><span class="navbar-brand">
+             {%if tipo == "Artista :" %}
+             <div class="cent-valing">
+                 <i class="material-icons" style="color:#FB0;font-size:45px;">grade</i>
+             </div>
+             {% else %}
+             <div class="cent-valing">
+                 <i class="material-icons" style="color:#1565C0;font-size:45px;">assignment_ind</i>
+             </div>
+             {% endif %}
+             {{ user.first_name }}
              </span></div>
         <div><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></div>
 
 </form>
 
 {% else %}
-    <div><a href="{% url 'registro' %}">Registrarse</a></div>
-    <div><a href="{% url 'login' %}">Log in</a></div>
+    <div class="col w100px"><a href="{% url 'registro' %}">Registrarse</a></div>
+    <div class="col w100px "><a href="{% url 'login' %}">Log in</a></div>
 {% endif %}
