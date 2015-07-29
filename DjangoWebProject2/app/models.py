@@ -52,12 +52,6 @@ class IntegrantesBanda(models.Model):
 	def __unicode__(self):
 		return self.integrante.nombre + "----" + self.banda.nombre
 
-class Comentario(models.Model):
-	texto = models.CharField(max_length=200)
-	fecha = models.DateTimeField(auto_now_add=True)
-	usuario = models.ForeignKey(Usuario, related_name = 'comentado', null=True)
-	def __unicode__(self):
-		return self.texto
 
 class Notificacion(models.Model):
 	texto = models.CharField(max_length=200)
@@ -137,5 +131,13 @@ class MensajeBanda(models.Model):
 	fecha = models.DateTimeField(auto_now_add=True)
 	bandaE = models.ForeignKey(Banda, related_name = 'enviado', null=True)
 	bandaR = models.ForeignKey(Banda, related_name = 'recibido', null=True)
+	def __unicode__(self):
+		return self.texto
+		
+class Comentario(models.Model):
+	texto = models.CharField(max_length=200)
+	fecha = models.DateTimeField(auto_now_add=True)
+	usuario = models.ForeignKey(Usuario, related_name = 'comentado', null=True)
+	material = models.ForeignKey(Material, related_name = 'comenta', null=True)
 	def __unicode__(self):
 		return self.texto
