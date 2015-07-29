@@ -89,11 +89,18 @@ th, td {
   margin-bottom: -18px;
   max-width: 120px;
 }
-nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+.navbar{
   height: 80px;
   line-height: 80px;
 }
-nav .b-logo{
+.wide{
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+  max-width: 9999px !important; 
+}
+.b-logo{
+  width: 200px;
   padding: 0 40px;
   background-color:#25b7d3;
   position: absolute;
@@ -114,4 +121,31 @@ nav li:first{
 }
 input, select, textarea {
   max-width: 9000px !important;
+}
+.navbar .input-field{
+  margin-top: 0rem; 
+}
+.w100px{width: 100px !important;}
+.w150px{width: 150px !important;}
+.w200px{width: 200px!important;}
+.w300px{width: 300px!important;}
+.w100p{width: calc(100% - 220px);}
+.col.search-cont{width: calc(100% - 200px);!important;}
+.search-cont{
+  box-shadow:0 0 0 5px #333 inset;
+  background-color:#FFF !important;
+  padding-right: 20px;
+}
+.material-icons.prefix{margin-top: 25px}
+.material-icons.close{
+  margin-top: 35px;
+  margin-bottom: -35px;
+  cursor: pointer;
+}
+.input-field .prefix ~ input{width: calc(100% - 5rem);}
+.cent-valing{
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 20px;
+  margin-right: 5px;
 }

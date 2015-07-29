@@ -3,11 +3,12 @@ Definition of models.
 """
 
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
 class Usuario(models.Model):
+	user = models.OneToOneField(User, null=True)
 	nombre = models.CharField(max_length=200)
 	correo = models.EmailField(unique=True)
 	contrasena =  models.CharField(max_length=200)

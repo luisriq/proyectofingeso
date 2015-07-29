@@ -3,36 +3,41 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - My Django Application</title>
+    <title>{{ title }} - uMusic</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/materialize.min.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
 
 <body>
     
-    <nav>
-       	<div class="nav-wrapper color-333">
-            <a class="b-logo" href="{% url 'home' %}">
-                <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
-            </a>
-            <ul class="right ">
-                <li><form>
-                    <div class="input-field">
-                      <input id="search" type="search" required>
-                      <label for="search"><i class="mdi-action-search"></i></label>
-                      <i class="mdi-navigation-close"></i>
-                    </div>
-                  </form>
-                </li>
-                <li>{{ username }}</li>
-                <li><a href="components.html">Log Out</a></li>
-            </ul>
+    <div class="navbar container wide">
+       	<div class="row color-333">
+            <div class="col left w200px">
+                
+                <a class="b-logo" href="{% url 'home' %}">
+                    <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
+                </a>&nbsp;
+            </div>
+            <div class="w100p right ">
+                <div class="col search-cont nav-wrapper">
+                    <form>
+                        <div class="input-field s6">
+                          <i class="material-icons prefix">search</i>
+                          <input id="icon_prefix" type="text" class="validate">
+                        </div>
+                      </form>
+                    
+                </div>
+                {# Para cambiar el texto de login logout y el nombre que se muestra ir al template loginpartial.html #}
+                {% include 'app/loginpartial.html' %}
+            </div>
         </div>
-    </nav>
+    </div>
         
-
+  
     <div class="container body-content " >
 {% block content %}{% endblock %}
         <hr/>
