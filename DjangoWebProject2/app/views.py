@@ -59,6 +59,12 @@ class VistaSignUp(View):
         form = RegistroForm()
     
         return render(request, 'app/registro.html', {'form': form})
+
+class VistaLanding(View):
+    def get(self, request):
+        return render(request, 'app/landing.html')
+    
+
     
 class Home(View):
     def get(self, request):
@@ -84,6 +90,7 @@ class Home(View):
                 'year':datetime.now().year,
             })
         )
+
 class Musicos(View):
     def get(self, request):
         assert isinstance(request, HttpRequest)

@@ -133,7 +133,7 @@ packages/*
 ## TODO: If the tool you use requires repositories.config
 ## uncomment the next line
 #!packages/repositories.config
-
+*.sqlite3
 # Enable "build/" folder in the NuGet Packages folder since
 # NuGet packages use it for MSBuild targets.
 # This line needs to be after the ignore of the build folder
