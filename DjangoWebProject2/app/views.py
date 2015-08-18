@@ -80,10 +80,10 @@ class Home(View):
             tipo = ""
         return render( 
             request,
-            'app/index.html',
+            'app/mainartista.html',
             context_instance = RequestContext(request,
             {
-                'title':'Home Page',
+                'title':'Pagina Principal Artista',
                 
                 'tipo':tipo,
                 

@@ -13,7 +13,7 @@
 
 <body>
     
-    <div class="navbar container wide">
+    <div class="navbar container wide" style="position:fixed;top:0;">
        	<div class="row color-333">
             <div class="col left w200px">
                 
@@ -22,11 +22,11 @@
                 </a>&nbsp;
             </div>
             <div class="w100p right ">
-                <div class="col search-cont nav-wrapper">
+                <div class="col search-cont nav-wrapper hide-on-small-only">
                     <form>
                         <div class="input-field s6">
                           <i class="material-icons prefix">search</i>
-                          <input id="icon_prefix" type="text" class="validate">
+                          <input id="icon_prefix" type="text" name="Q" class="validate">
                         </div>
                       </form>
                     
@@ -38,7 +38,7 @@
     </div>
         
   
-    <div class="container body-content " >
+    <div class="container body-content " style="margin-top: 80px">
 {% block content %}{% endblock %}
         <hr/>
         <footer>

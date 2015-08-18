@@ -1,0 +1,31 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="" style="width:200px;background-color:#222;position:fixed;left:0;top: 80px;height:100%" >
+        {# for y la wea #}
+        fome la wea
+    </div>
+    <div class="col-md-4">
+        <h2>Musicos</h2>
+        <p>Se visualizan los musicos y sus bandas.</p>
+        <p><a class="btn btn-default" href="{% url 'musicos' %}">Musicos &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Registro</h2>
+        <p>Se implementa el caso de uso registrar usuario.</p>
+        <p><a class="btn btn-default" href="{% url 'registro' %}">Registro &raquo;</a></p>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% load staticfiles %}
+	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+	<script src="{% static 'app/scripts/script.js' %}"></script>
+{% endblock %}

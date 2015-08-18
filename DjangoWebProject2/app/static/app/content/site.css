@@ -149,3 +149,11 @@ input, select, textarea {
   line-height: 20px;
   margin-right: 5px;
 }
+.left-bar{
+  width:200px;
+  background-color:#222;
+  position:fixed;
+  left:0;
+  top: 80px;
+  height:100%
+}
