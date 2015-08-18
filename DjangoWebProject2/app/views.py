@@ -125,7 +125,27 @@ def contact(request):
             'year':datetime.now().year,
         })
     )
-
+class perfilArtista(View):
+    def get(self, request):
+        assert isinstance(request, HttpRequest)
+        musicos = Musico.objects.all()
+        if ('visitass' in request.session):
+            pass
+        else:
+            request.session['visitass'] = 0
+        request.session['visitass'] = request.session['visitass'] + 1
+        return render(
+            request,
+            'app/perfilArtista.html',
+            context_instance = RequestContext(request,
+            {
+                'title':'Musicos',
+                'message':'Informacion de los musicos.',
+                'year':datetime.now().year,
+                'musicos':musicos,
+                'visitas':request.session['visitass'],
+            })
+        )
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
