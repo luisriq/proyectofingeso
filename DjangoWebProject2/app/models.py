@@ -13,9 +13,8 @@ class Usuario(models.Model):
 	correo = models.EmailField(unique=True)
 	contrasena =  models.CharField(max_length=200)
 	fechaIngreso =  models.DateTimeField(auto_now_add=True)
-	imagenPerfil =  models.CharField(max_length=200, blank=True)
 	usuarioActivo = models.BooleanField(default=True)
-	
+	imagenPerfil = models.ImageField(upload_to = 'static/', default = 'pic_folder/None/no-img.jpg')
 	def __unicode__(self):
 		return self.nombre + " / " + self.correo
 
@@ -76,8 +75,8 @@ class Instrumento(models.Model):
 	nombre = models.CharField(max_length=200)
 	tipo = models.CharField(max_length=200)
 	imagen = models.CharField(max_length=200)
-	artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True)
-	cancion = models.ManyToManyField(Cancion)
+	artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True, blank=True)
+	cancion = models.ManyToManyField(Cancion, null=True, blank=True)
 		
 class Normal(Usuario):
 	tiempoCastigo = models.IntegerField(default=0)

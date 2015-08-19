@@ -159,23 +159,18 @@ class perfilBanda(View):
    
 
 class perfilArtista(View):
-    
-    
-    
     def get(self, request):
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated() :
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
-        a = Artista.objects.filter(user = usuario)[0]
-
-        integranteEn = IntegrantesBanda.objects.filter(integrante = a)
-        #Ver cada una de las bandas a las que pertenece
-        #Las habilidades estan raras
-        habilidades = IntegrantesBanda.objects.filter(integrante = a)[0].ocupacion
-        informacion = a.biografia
-        nombre = a.nombre
-        #No hemos puesto los seguidores, tabun
-        seguidores = 1
+        artista = Artista.objects.filter(user = usuario)
+        if(len(artista)==0):
+            return HttpResponse("Solo artista")
+        artista = artista[0]
+        integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
+        
+        instrumentos = Instrumento.objects.filter(artista = artista)
+        seguidores = len(artista.seguidores.all())
         
         assert isinstance(request, HttpRequest)
         return render(
@@ -185,8 +180,9 @@ class perfilArtista(View):
             {
                 'year':datetime.now().year,
                 'integranteEn':integranteEn,
-                'habilidades':habilidades,
-                'seguidores':seguidores
+                'instrumentos':instrumentos,
+                'seguidores':seguidores,
+                'artista':artista
                 
             })
         )
