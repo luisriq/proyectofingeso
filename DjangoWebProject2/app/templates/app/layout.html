@@ -13,29 +13,7 @@
 
 <body>
     
-    <!--div class="navbar container wide" style="position:fixed;top:0;">
-       	<div class="row color-333">
-            <div class="col left w200px">
-                
-                <a class="b-logo" href="{% url 'home' %}">
-                    <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
-                </a>&nbsp;
-            </div>
-            <div class="w100p right ">
-                <div class="col search-cont nav-wrapper hide-on-small-only">
-                    <form>
-                        <div class="input-field s6">
-                          <i class="material-icons prefix">search</i>
-                          <input id="icon_prefix" type="text" name="Q" class="validate">
-                        </div>
-                      </form>
-                    
-                </div>
-                {# Para cambiar el texto de login logout y el nombre que se muestra ir al template loginpartial.html #}
-                {% include 'app/loginpartial.html' %}
-            </div>
-        </div>
-    </div-->
+    
     <div class="navbar container wide" style="position:fixed;top:0;">
        	<div class="row color-333">
             <div class="col left w200px">
@@ -50,7 +28,7 @@
                 
                 <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
                     <div class="truncate" >{{ user.first_name }}</div>
-                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="{% static 'app/images/logo.png' %}" alt="" style="height:50px;"></div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="{{ urlAvatar }}" alt="" style="height:50px;"></div>
                 </div>
                 <ul id='dropdown1' class='grey darken-3 dropdown-content' >
                         <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
@@ -78,10 +56,63 @@
             </div>
         </div>
     </div>
-        
-{% block leftbar %}{%  endblock  %} 
-    <div class="container body-content" style="margin-top: 80px;margin-left:230px;">
+    <!--para mid and large-->
+<div class="left-bar hide-on-small-only" >
+    
+    <div class="container">
+        <div class="row">
+        <ul class="grey-text text-lighten-2">
+            <li><h4>Mi Perfil</h4><hr></li>
+            <li>
+                <h5>Mis Bandas</h5>
+            </li>
+            <li><a><h6>+Crear Banda</h6></a></li>
+            <li>
+                <h6>En las que soy Lider</h6>
+                <ul class="margin-left-1">
+                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+                </ul>
+            </li>
+            <li>
+                <h6>En las que Participo</h6>
+                <ul class="margin-left-1">
+                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+                </ul>
+            </li>
+            <li><h5>Eventos</h5></li>
+            <li><h5>Ayuda</h5></li>
+        </ul>
 
+        
+        
+        </div>
+    </div>
+</div>
+<!--para small-->
+<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
+    <li><h4>Mi Perfil</h4><hr></li>
+    <li>
+        <h5>Mis Bandas</h5>
+    </li>
+    <li><a><h6>+Crear Banda</h6></a></li>
+    <li>
+        <h6>En las que soy Lider</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+        </ul>
+    </li>
+    <li>
+        <h6>En las que Participo</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+        </ul>
+    </li>
+    <li><h5>Eventos</h5></li>
+    <li><h5>Ayuda</h5></li>
+</ul>
+    <div class="body-content " >
 {% block content %}{% endblock %}
         <hr/>
         <footer>

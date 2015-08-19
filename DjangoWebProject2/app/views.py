@@ -70,11 +70,16 @@ class Home(View):
     def get(self, request):
         """Renders the home page."""
         assert isinstance(request, HttpRequest)
+        urlAvatar = ""
         tipo = ""
         try:
             if len(Artista.objects.filter(user=request.user)) == 1:
                 tipo = "Artista :"
+                artista = Artista.objects.filter(user = request.user)
+                urlAvatar = artista[0].imagenPerfil.url
             elif len(Normal.objects.filter(user=request.user)) == 1:
+                normal = Normal.objects.filter(user = request.user)
+                urlAvatar = normal[0].imagenPerfil.url
                 tipo = "Normal :"
         except:
             tipo = ""
@@ -88,6 +93,7 @@ class Home(View):
                 'tipo':tipo,
                 
                 'year':datetime.now().year,
+                'urlAvatar':urlAvatar,
             })
         )
 

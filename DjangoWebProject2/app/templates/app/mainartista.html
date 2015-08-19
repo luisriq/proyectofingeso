@@ -1,33 +1,90 @@
 {% extends "app/layout.html" %}
-{% block leftbar %}
-<div class="left-bar hide-on-small-only" style="" >
-    {# for y la wea #}
-    fome la wea
-</div>
-    
-{%  endblock  %}
+
 
 {% block content %}
 
 
-<div class="row">
-    
-    <div class="col-md-4" >
-        <h2>Musicos</h2>
-        <p>Se visualizan los musicos y sus bandas.</p>
-        <p><a class="btn btn-default" href="{% url 'musicos' %}">Musicos &raquo;</a></p>
+<div class="container">
+    <div class="row">
+        
+        <div class="col l6  s12">
+            <div class="card-panel white">
+                <h4>Actividad reciente</h4>
+                <span class="grey-text text-darken-2">I am a very simple card. I am good at containing small bits of information.
+                I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+                </span>
+                <ul class="collection">
+                    
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle">folder</i>
+                        <span class="title">Title</span>
+                        <p>First Line <br>
+                           Second Line
+                        </p>
+                        <div class="secondary-content grey-text small">19-08-2015 12:15</div>
+                    </li>
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle green">insert_chart</i>
+                        <span class="title">Title</span>
+                        <p>First Line <br>
+                           Second Line
+                        </p>
+                        <div class="secondary-content grey-text small">19-08-2015 12:15</div>
+                    </li>
+                    <li class="collection-item avatar">
+                        <i class="material-icons circle red">play_arrow</i>
+                        <span class="title">Title</span>
+                        <p>First Line <br>
+                           Second Line
+                        </p>
+                      <div class="secondary-content grey-text small">19-08-2015 12:15</div>
+                    </li>
+                </ul>
+
+
+
+
+            </div>
+        </div>
+        <div class="col l6 s12">
+            <h4>Mis bandas</h4>
+            <table class="white card-panel bordered striped centered">
+                <thead>
+                    <tr>
+                        <th data-field="id">Nombre Banda</th>
+                        <th data-field="name">Rol</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Alvin Eclair</td><!--nombre de banda-->
+                        <td>Vocalista</td><!--Rol-->
+                    </tr>
+                    <tr>
+                        <td>Alan Jellybean</td>
+                        <td>Guitarrista</td>
+                    </tr>
+                    <tr>
+                        <td>Jonathan Lollipop</td>
+                        <td>Grupi</td>
+                    </tr>
+                    <tr>
+                        <td>Alvin Eclair</td><!--nombre de banda-->
+                        <td>Vocalista</td><!--Rol-->
+                    </tr>
+                    <tr>
+                        <td>Alan Jellybean</td>
+                        <td>Guitarrista</td>
+                    </tr>
+                    <tr>
+                        <td>Jonathan Lollipop</td>
+                        <td>Grupi</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Registro</h2>
-        <p>Se implementa el caso de uso registrar usuario.</p>
-        <p><a class="btn btn-default" href="{% url 'registro' %}">Registro &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Perfil Artista</h2>
-        <p>Perfil del artista.</p>
-        <p><a class="btn btn-default" href="{% url 'perfilArtista' %}">Artista &raquo;</a></p>
-    </div>
-</div>
 
 {% endblock %}
 
