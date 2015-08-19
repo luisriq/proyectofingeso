@@ -92,6 +92,7 @@ th, td {
 .navbar{
   height: 80px;
   line-height: 80px;
+  z-index: 9999999;
 }
 .wide{
   width: 100% !important;
@@ -159,4 +160,18 @@ input, select, textarea {
   left:0;
   top: 80px;
   height:100%
+}
+  .body-content{
+    margin-top: 80px;
+  }
+.margin-left-1{
+  margin-left: 1em;
+}
+@media only screen and (min-width: 601px){
+  .body-content{
+    margin-left:200px;
+  } 
+  .container {
+    width: 90%;
+}
 }
