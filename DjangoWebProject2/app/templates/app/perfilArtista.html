@@ -4,26 +4,37 @@
 
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
+{{ artista.imagenPerfil.url }}
+<img src="{{ MEDIA_URL }}{{ artista.imagenPerfil.url }}"/>
+<details>
+    <summary>Usuario creado correctamente</summary>
+    <table>
+      <tr>
+        <th scope="row">Nombre</th>
+        <td>{{artista.nombre}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Seguidores</th>
+        <td>{{seguidores}}</td>
+      </tr>
+      
+       <tr>
+        <th scope="row">Instrumentos</th>
+        {% for instrumento in instrumentos %}
+            <td>{{ instrumento.nombre }}</td>
+        {% endfor %}
+      </tr> 
+      <tr>
+        <th scope="row">Bandas</th>
+        {% for b in integranteEn %}
+            <td>{{ b.banda.nombre }}</td>
+            <td>{{ b.ocupacion }}</td>
+            <td>{{ b.fechaIngreso }}</td>
+        {% endfor %}
+      </tr>
+      
+	</table>
+</details>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
-
-<h5>{{ b.integrante.nombre }}</h5>
-{% for b in integranteEn %}
-    <h5>{{ b.banda.nombre }}</h5>
-    <h5>{{ habilidades }}</h5>
-    <h5>{{ b.ocupacion }}</h5>
-    <h5>{{ b.fechaIngreso }}</h5>
-    <h5>{{ seguidores }}</h5>
-{% endfor %}
 
 {% endblock %}
