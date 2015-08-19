@@ -14,7 +14,7 @@ class Usuario(models.Model):
 	contrasena =  models.CharField(max_length=200)
 	fechaIngreso =  models.DateTimeField(auto_now_add=True)
 	usuarioActivo = models.BooleanField(default=True)
-	imagenPerfil = models.ImageField(upload_to = 'static/', default = 'pic_folder/None/no-img.jpg')
+	imagenPerfil = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
 	def __unicode__(self):
 		return self.nombre + " / " + self.correo
 
