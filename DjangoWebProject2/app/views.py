@@ -125,6 +125,39 @@ def contact(request):
             'year':datetime.now().year,
         })
     )
+#-----------------------------------------------------------
+class perfilBanda(View):
+    
+    def get(self, request):
+        if not request.user.is_authenticated():
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        usuario = request.user
+        a = Artista.objects.filter(user = usuario)[0]
+
+        bandaSelec = IntegrantesBanda.objects.filter(integrante = a)[0].banda
+        integrantes = [ib.integrante for ib in IntegrantesBanda.objects.filter(banda = bandaSelec)]
+        #Ver cada una de las bandas a las que pertenece
+        #Las habilidades estan raras
+        habilidades = IntegrantesBanda.objects.filter(integrante = a)[0].ocupacion
+        banda = bandaSelec
+        #No hemos puesto los seguidores, tabun
+        seguidores = 1
+        
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/perfilBanda.html',
+            context_instance = RequestContext(request,
+            {
+                'habilidades':habilidades,
+                'seguidores':seguidores,
+                'Banda':banda,
+                
+            })
+        )
+#-----------------------------------------------------------
+   
+
 class perfilArtista(View):
     
     

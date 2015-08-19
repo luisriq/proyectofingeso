@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^registro', VistaSignUp.as_view(), name='registro'),
     url(r'^landing', VistaLanding.as_view(), name='landing'),
     url(r'^perfilArtista', perfilArtista.as_view(), name='perfilArtista'),
+    url(r'^perfilBanda', perfilBanda.as_view(), name='perfilBanda'),
     url(r'^login/$',
         'django.contrib.auth.views.login',
         {
