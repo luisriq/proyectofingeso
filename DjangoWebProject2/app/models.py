@@ -22,7 +22,7 @@ class Usuario(models.Model):
 class Artista(Usuario):
 	biografia = models.TextField()
 	imagenCabecera = models.CharField(max_length=200)
-	
+	seguidores = models.ManyToManyField("Normal", null=True, blank=True)
 class Administrador(Usuario):	
 	pass
 	

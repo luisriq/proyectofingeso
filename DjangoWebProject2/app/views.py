@@ -3,11 +3,11 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from django.template import RequestContext
 from datetime import datetime
 from django.views.generic import View
-from models import Usuario, Artista, Normal
+from models import *
 from forms import UserForm, RegistroForm
 from django.contrib.auth.models import User
 
@@ -126,26 +126,38 @@ def contact(request):
         })
     )
 class perfilArtista(View):
+    
+    
+    
     def get(self, request):
+        if not request.user.is_authenticated():
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        usuario = request.user
+        a = Artista.objects.filter(user = usuario)[0]
+
+        integranteEn = IntegrantesBanda.objects.filter(integrante = a)
+        #Ver cada una de las bandas a las que pertenece
+        #Las habilidades estan raras
+        habilidades = IntegrantesBanda.objects.filter(integrante = a)[0].ocupacion
+        informacion = a.biografia
+        nombre = a.nombre
+        #No hemos puesto los seguidores, tabun
+        seguidores = 1
+        
         assert isinstance(request, HttpRequest)
-        musicos = Musico.objects.all()
-        if ('visitass' in request.session):
-            pass
-        else:
-            request.session['visitass'] = 0
-        request.session['visitass'] = request.session['visitass'] + 1
         return render(
             request,
             'app/perfilArtista.html',
             context_instance = RequestContext(request,
             {
-                'title':'Musicos',
-                'message':'Informacion de los musicos.',
                 'year':datetime.now().year,
-                'musicos':musicos,
-                'visitas':request.session['visitass'],
+                'integranteEn':integranteEn,
+                'habilidades':habilidades,
+                'seguidores':seguidores
+                
             })
         )
+
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)

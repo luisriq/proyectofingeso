@@ -17,4 +17,13 @@
     <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
 </address>
 
+<h5>{{ b.integrante.nombre }}</h5>
+{% for b in integranteEn %}
+    <h5>{{ b.banda.nombre }}</h5>
+    <h5>{{ habilidades }}</h5>
+    <h5>{{ b.ocupacion }}</h5>
+    <h5>{{ b.fechaIngreso }}</h5>
+    <h5>{{ seguidores }}</h5>
+{% endfor %}
+
 {% endblock %}
