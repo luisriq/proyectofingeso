@@ -13,7 +13,7 @@
 
 <body>
     
-    <div class="navbar container wide" style="position:fixed;top:0;">
+    <!--div class="navbar container wide" style="position:fixed;top:0;">
        	<div class="row color-333">
             <div class="col left w200px">
                 
@@ -33,6 +33,48 @@
                 </div>
                 {# Para cambiar el texto de login logout y el nombre que se muestra ir al template loginpartial.html #}
                 {% include 'app/loginpartial.html' %}
+            </div>
+        </div>
+    </div-->
+    <div class="navbar container wide" style="position:fixed;top:0;">
+       	<div class="row color-333">
+            <div class="col left w200px">
+                
+                <a class="b-logo" href="./Pagina Principal Artista - uMusic_files/Pagina Principal Artista - uMusic.html">
+                    <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
+                </a>&nbsp;
+            </div>
+           
+            <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
+                <div class="row">
+                
+                <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
+                    <div class="truncate" >{{ user.first_name }}</div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="{% static 'app/images/logo.png' %}" alt="" style="height:50px;"></div>
+                </div>
+                <ul id='dropdown1' class='grey darken-3 dropdown-content' >
+                        <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
+                        <li><a href="#!">Configuraciones</a></li>
+                        <li class="divider"></li>
+                        <li>
+                            <form id="logoutForm" action="/logout" method="post" class="navbar-right">
+                            <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar Sesion</a>
+                            </form>
+                        </li>
+                    </ul>
+                <script type="text/javascript">$('.dropdown-button').dropdown({
+                      inDuration: 300,
+                      outDuration: 225,
+                      constrain_width: false, // Does not change width of dropdown to that of the activator
+                      hover: true, // Activate on hover
+                      gutter: 0, // Spacing from edge
+                      belowOrigin: false // Displays dropdown below the button
+                    }
+                  );</script>
+
+                </div>
+            </div>
+            
             </div>
         </div>
     </div>

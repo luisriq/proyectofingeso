@@ -167,6 +167,30 @@ input, select, textarea {
 .margin-left-1{
   margin-left: 1em;
 }
+.avatar-img{
+  display: inline-block;
+  overflow:hidden;
+  height:50px;
+  width:50px;
+  margin:15px 3px;
+  padding:0 !important;
+  border:solid 2px #666;
+}.inline{
+  display: inline-block;
+  margin: 0 10px;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+  font-size: 1em !important;
+  color:#ccc;
+} 
+.dropdown-content{
+  min-width: 180px;
+}
+.dropdown-content li:hover{
+  background-color: #456;
+}
+
+
 @media only screen and (min-width: 601px){
   .body-content{
     margin-left:200px;

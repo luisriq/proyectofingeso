@@ -21,18 +21,31 @@
                     <img alt="Brand" class="logo-img" src="./Pagina Principal Artista - uMusic_files/logo.png">
                 </a>&nbsp;
             </div>
-            <div class="w100p right ">
-                <div class="col search-cont nav-wrapper hide-on-small-only">
-                    <form>
-                        <div class="input-field s6">
-                          <i class="material-icons prefix">search</i>
-                          <input id="icon_prefix" type="text" name="Q" class="validate">
-                        </div>
-                      </form>
-                    
+           
+            <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
+                <div class="row">
+                
+                <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
+                    <div class="truncate" >Nombre del usuario y la cashalaspa</div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
                 </div>
-            <div class="container">
-                <div class="row"></div>
+                <ul id='dropdown1' class='grey darken-3 dropdown-content' >
+                        <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
+                        <li><a href="#!">Configuraciones</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">Cerrar Sesion</a></li>
+                    </ul>
+                <script type="text/javascript">$('.dropdown-button').dropdown({
+                      inDuration: 300,
+                      outDuration: 225,
+                      constrain_width: false, // Does not change width of dropdown to that of the activator
+                      hover: true, // Activate on hover
+                      gutter: 0, // Spacing from edge
+                      belowOrigin: false // Displays dropdown below the button
+                    }
+                  );</script>
+
+                </div>
             </div>
             
             </div>
@@ -40,7 +53,9 @@
     </div>
         
 
-<div class="left-bar hide-on-small-only" style="">
+
+<!--para mid and large-->
+<div class="left-bar hide-on-small-only" >
     
     <div class="container">
         <div class="row">
@@ -72,6 +87,29 @@
         </div>
     </div>
 </div>
+<!--para small-->
+<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
+    <li><h4>Mi Perfil</h4><hr></li>
+    <li>
+        <h5>Mis Bandas</h5>
+    </li>
+    <li><a><h6>+Crear Banda</h6></a></li>
+    <li>
+        <h6>En las que soy Lider</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+        </ul>
+    </li>
+    <li>
+        <h6>En las que Participo</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+        </ul>
+    </li>
+    <li><h5>Eventos</h5></li>
+    <li><h5>Ayuda</h5></li>
+</ul>
     
 <div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
 <div class="container">
