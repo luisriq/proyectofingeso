@@ -13,22 +13,21 @@
 
 <body>
     
-    
     <div class="navbar container wide" style="position:fixed;top:0;">
        	<div class="row color-333">
             <div class="col left w200px">
                 
-                <a class="b-logo" href="./Pagina Principal Artista - uMusic_files/Pagina Principal Artista - uMusic.html">
+                <a class="b-logo" href="/">
                     <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
                 </a>&nbsp;
             </div>
            
             <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
                 <div class="row">
-                
+
                 <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
                     <div class="truncate" >{{ user.first_name }}</div>
-                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="{{ urlAvatar }}" alt="" style="height:50px;"></div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="{{user.profile.imagenPerfil.url}}" alt="" style="height:50px;"></div>
                 </div>
                 <ul id='dropdown1' class='grey darken-3 dropdown-content' >
                         <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
@@ -62,7 +61,8 @@
 {% block content %}{% endblock %}
         <hr/>
         <footer>
-            <p>&copy; {{ year }} - Fingeso Grupo 3</p>
+            <p>&copy; {{ year }} - Fingeso Grupo 3 </p>
+            <p></p>
         </footer>
     </div>
 

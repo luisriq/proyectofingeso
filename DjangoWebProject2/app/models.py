@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 
 class Usuario(models.Model):
-	user = models.OneToOneField(User, null=True)
+	user = models.OneToOneField(User, null=True, related_name="profile")
 	nombre = models.CharField(max_length=200)
 	correo = models.EmailField(unique=True)
 	contrasena =  models.CharField(max_length=200)
@@ -21,7 +21,7 @@ class Usuario(models.Model):
 class Artista(Usuario):
 	biografia = models.TextField()
 	imagenCabecera = models.CharField(max_length=200)
-	seguidores = models.ManyToManyField("Normal", null=True, blank=True)
+	seguidores = models.ManyToManyField("Normal", blank=True)
 class Administrador(Usuario):	
 	pass
 	
@@ -76,7 +76,7 @@ class Instrumento(models.Model):
 	tipo = models.CharField(max_length=200)
 	imagen = models.CharField(max_length=200)
 	artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True, blank=True)
-	cancion = models.ManyToManyField(Cancion, null=True, blank=True)
+	cancion = models.ManyToManyField(Cancion, blank=True)
 		
 class Normal(Usuario):
 	tiempoCastigo = models.IntegerField(default=0)
