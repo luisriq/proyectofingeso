@@ -175,7 +175,17 @@ input, select, textarea {
   margin:15px 3px;
   padding:0 !important;
   border:solid 2px #666;
-}.inline{
+}
+.avatar-perfil{
+  display: inline-block;
+  overflow:hidden;
+  height:150px;
+  width:150px;
+  margin:15px 3px;
+  padding:0 !important;
+  border:solid 2px #666;
+}
+.inline{
   display: inline-block;
   margin: 0 10px;
 }
