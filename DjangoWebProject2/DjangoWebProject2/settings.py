@@ -168,3 +168,13 @@ LOGGING = {
 
 # Specify the default test runner.
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+#TEST twitter 
+
+TWITTER_OAUTH_TOKEN = '228562756-HFah0Xcv69Eewd3EJqib18qrFWat40WPeAzo2YJN'
+# Your access token: Access token secret
+TWITTER_OAUTH_SECRET = 'YctDUQigRUacUzgqhmz0XPFy9NqVc9usNb5CCjOKxLe1Y'
+# OAuth settings: Consumer key
+TWITTER_CONSUMER_KEY = 'U2TYMCHhCkjHrFRWqte6aK7cE'
+# OAuth settings: Consumer secret
+TWITTER_CONSUMER_SECRET = 'WI9GWddrOlL2xutgZVkButenETYOMCUHtFFXwtFE5j02o4NwiS'
