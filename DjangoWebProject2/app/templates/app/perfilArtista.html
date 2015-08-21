@@ -2,6 +2,14 @@
 
 {% block content %}
 
+{% load twitter_tag %}
+{% get_tweets for "crunchyroll" as tweets %}
+<ul>
+{% for tweet in tweets %}
+    <li>{{ tweet.html|safe }}</li>
+{% endfor %}
+</ul>
+
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
 {{ artista.imagenPerfil.url }}

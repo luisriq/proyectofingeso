@@ -40,6 +40,7 @@ class Banda(models.Model):
 	nombre = models.CharField(max_length=200)
 	integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	genero = models.ForeignKey(Genero, related_name = 'tocado_por')
+	seguidores = models.ManyToManyField("Normal", blank=True)
 	def __unicode__(self):
 		return self.nombre
 		
