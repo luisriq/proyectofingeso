@@ -113,6 +113,9 @@ th, td {
 .color-333{
   background-color:#333 !important;
 }
+.color-principal{
+  background-color:#25b7d3 !important;
+}
 nav li{
   padding:0 25px!important;
 }
