@@ -173,7 +173,7 @@ class perfilArtista(View):
             return HttpResponse("Solo artista")
         artista = artista[0]
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
-        
+        #holi
         instrumentos = Instrumento.objects.filter(artista = artista)
         seguidores = len(artista.seguidores.all())
         assert isinstance(request, HttpRequest)
