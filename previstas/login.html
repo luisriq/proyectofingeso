@@ -11,45 +11,117 @@
     <script src="./Pagina Principal Artista - uMusic_files/modernizr-2.6.2.js"></script>
 </head>
 
-<body class="blue lighten-2">
+<body class="blue lighten-2" background="./Pagina Principal Artista - uMusic_files/bg-login.jpg" >
 
     <div class="valing-wrapper">
-            <div class="w100p container valing" >
-                <div class="row">
-                    <div class="col m6 s12 center-align">
-                        <div class="container ">
+            
+                
+                    
+                        <div class="container center-align" style="margin-top:70px;">
                             <div class="row">
-                                <div class="col s10 offset-m1">
-                                    <div class="card-panel white">
-                                        <img alt="Brand" class="logo-img" src="./Pagina Principal Artista - uMusic_files/logo_login.png">
-                                        <div class="container" style="margin-top:50px">
-                                            <div class="row">
-                                                <div class="col s12 "><h4>uMusic</h4> sñakdfjhaskjdhfkajshdflkjahsdflkjhasdlfkjhas lksadjhfglkasjhdf lkasjhdf lkasjhdf lkasjhdf lkjashdf lkjashdklfjhas lkdfjhas lkdjfh askljdhfklasjhdf lkajshdf lkjah</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-
-                    <div class="col m6 s12 center-align" style="background-color:#678;min-height:1000px">
-                        <div class="container ">
-                            <div class="row">
-                                <div class="col s10 offset-m1">
+                                <div class="col s12 m10 offset-m1 l5 offset-l7">
                                     <div class="card-panel white">
                                         
                                         <div class="container">
                                             <div class="row">
-                                                <div class="col s12 ">
+                                                <div class="col s12" style="margin-top:-80px;">
+                                                        <img alt="Brand" class="logo-img " src="./Pagina Principal Artista - uMusic_files/logo_login.png">
+                                                        <div class="container" >
+                                                            <div class="row">
+                                                                <div class="col s12 grey-text text-darken-3"><h4>uMusic</h4></div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s12 " style="margin-top:-40px;">
                                                 <ul class="tabs">
-                                                    <li class="tab col s6"><a href="#login">Iniciar Sesión</a></li>
-                                                    <li class="tab col s6"><a class="active" href="#signin">Registrarse</a></li>
+                                                    <li class="tab col m6 s12" ><a class="active" href="#login">Iniciar Sesión</a></li>
+                                                    <li class="tab col m6 s12"><a  href="#signin">Registrarse</a></li>
                                                 </ul>
                                                 </div>
-                                                <div id="login" class="col s12">Test 1</div>
-                                                <div id="signin" class="col s12">Test 2</div>
+                                                <div id="login" class="col s12" style="margin-top:30px">
+                                                  <form action="." method="post" class="form-horizontal">
+                                                    <!--{% csrf_token %}-->
+                                                    <div class="form-group">
+                                                        <div class="col s12 input-field">
+                                                            <!--{{ form.username }}-->
+                                                            <input id="id_username" type="text" class="validate">
+                                                            <label for="id_username" class="active">Correo</label>
+                                                        </div>
+                                                    </div>
+                                                    <!--{# Para editar el hint de los inputs, ir a forms.py en el cuerpo de la funcion estan los parametros#}-->
+                                                    <div class="form-group">
+                                                        <div class="input-field col s12">
+                                                            <!--{{ form.password }}-->
+                                                            <input id="contras" type="text" class="validate">
+                                                            <label class="active" for="contras">Contraseña</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col s12">
+                                                            <input type="hidden" name="next" value="/" />
+                                                            <input type="submit" value="Ingresar" class="btn btn-default color-principal" />
+                                                        </div>
+                                                    </div>
+                                                    <!--{% if form.errors %}-->
+                                                    <p class="validation-summary-errors col s12">Los datos ingresados son incorrectos.</p>
+                                                    <!--{% endif %}-->
+                                                </form>
+                                                </div>
+                                                <div id="signin" class="col s12" style="margin-top:30px">
+                                                    <form action="/registro" method="post" class="form-horizontal">
+                                                        <!--{% csrf_token %}-->
+                                                        <div class="form-group">
+                                                            <div class="col-md-10 input-field">
+                                                                <!--{{ form.name }}-->
+                                                                <input id="id_name" type="text" class="validate">
+                                                                <label for="id_name" class="active">Nombre</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-10 input-field">
+                                                                <!--{{ form.email }}-->
+                                                                <input id="email" type="text" class="validate">
+                                                                <label for="email" class="active">Email</label>
+                                                            </div>
+                                                        </div>
+                                                        <!--{# Para editar el hint de los inputs, ir a forms.py en el cuerpo de la funcion estan los parametros#}-->
+                                                        <div class="form-group">
+                                                            <div class="input-field col-md-10">
+                                                                <!--{{ form.password1 }}-->
+                                                                <input id="contras" type="text" class="validate">
+                                                                <label class="active" for="contras">Contraseña</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="input-field col-md-10">
+                                                                <!--{{ form.password2 }}-->
+                                                                <input id="contras2" type="text" class="validate">
+                                                                <label class="active" for="contras2">Verifique su Contraseña</label>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="switch form-group">
+                                                            <label>
+                                                              Normal(?)
+                                                              <!--{{ form.tipo }}-->
+                                                              <span class="lever"></span>
+                                                              Artista
+                                                            </label>
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <div class="col-md-offset-2 col-md-10">
+                                                                <input type="submit" value="Ingresar" style="margin-top:15px;" class="btn btn-default" />
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <!--{% if form.errors %}-->
+                                                        <p class="validation-summary-errors">Los datos ingresados son incorrectos.</p>
+                                                        <!--{% endif %}-->
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                         
@@ -57,9 +129,9 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                
+                
+            
 
     </div>    
 
@@ -70,7 +142,7 @@
 	<script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
 	<script src="./Pagina Principal Artista - uMusic_files/script.js"></script>
 
-
+    
 
 
 </body></html>
