@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^musicos', login_required(Musicos.as_view()), name='musicos'),
     url(r'^registro', VistaSignUp.as_view(), name='registro'),
     url(r'^landing', VistaLanding.as_view(), name='landing'),
-    url(r'^perfilArtistaNp/(?P<username>\w{1,50})/$', perfilArtistaNp.as_view(), name='perfilArtistaNp'),
+    url(r'^perfilArtistaNp/(?P<userid>\w{1,50})/$', perfilArtistaNp.as_view(), name='perfilArtistaNp'),
     url(r'^perfilArtista', perfilArtista.as_view(), name='perfilArtista'),
     
     url(r'^perfilBanda', perfilBanda.as_view(), name='perfilBanda'),
