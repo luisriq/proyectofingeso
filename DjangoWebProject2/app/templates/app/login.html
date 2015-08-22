@@ -1,142 +1,36 @@
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - uMusic</title>
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/materialize.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
-</head>
-
-<body class="blue lighten-2" background="./Pagina Principal Artista - uMusic_files/bg-login.jpg" >
-
-    <div class="valing-wrapper">
-            
-                
-                    
-                        <div class="container center-align" style="margin-top:70px;">
-                            <div class="row">
-                                <div class="col s12 m10 offset-m1 l5 offset-l7">
-                                    <div class="card-panel white">
-                                        
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col s12" style="margin-top:-80px;">
-                                                        <img alt="Brand" class="logo-img " src="./Pagina Principal Artista - uMusic_files/logo_login.png">
-                                                        <div class="container" >
-                                                            <div class="row">
-                                                                <div class="col s12 grey-text text-darken-3"><h4>uMusic</h4></div>
-                                                            </div>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col s12 " style="margin-top:-40px;">
-                                                <ul class="tabs">
-                                                    <li class="tab col m6 s12" ><a class="active" href="#login">Iniciar Sesión</a></li>
-                                                    <li class="tab col m6 s12"><a  href="#signin">Registrarse</a></li>
-                                                </ul>
-                                                </div>
-                                                <div id="login" class="col s12" style="margin-top:30px">
-                                                  <form action="." method="post" class="form-horizontal">
-                                                    {% csrf_token %}
-                                                    <div class="form-group">
-                                                        <div class="col s12 input-field">
-                                                            {{ form.username }}
-                                                            <label for="id_username" class="active">Correo</label>
-                                                        </div>
-                                                    </div>
-                                                    {# Para editar el hint de los inputs, ir a forms.py en el cuerpo de la funcion estan los parametros#}
-                                                    <div class="form-group">
-                                                        <div class="input-field col s12">
-                                                            {{ form.password }}
-                                                            <label class="active" for="contras">Contraseña</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="col s12">
-                                                            <input type="hidden" name="next" value="/" />
-                                                            <input type="submit" value="Ingresar" class="btn btn-default color-principal" />
-                                                        </div>
-                                                    </div>
-                                                    {% if form.errors %}
-                                                    <p class="validation-summary-errors col s12">Los datos ingresados son incorrectos.</p>
-                                                    {% endif %}
-                                                </form>
-                                                </div>
-                                                <div id="signin" class="col s12" style="margin-top:30px">
-                                                    <form action="/registro" method="post" class="form-horizontal">
-                                                        {% csrf_token %}
-                                                        <div class="form-group">
-                                                            <div class="col-md-10 input-field">
-                                                                {{ form.name }}
-                                                                <label for="id_name" class="active">Nombre</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="col-md-10 input-field">
-                                                                {{ form.email }}
-                                                                <label for="email" class="active">Email</label>
-                                                            </div>
-                                                        </div>
-                                                        {# Para editar el hint de los inputs, ir a forms.py en el cuerpo de la funcion estan los parametros#}
-                                                        <div class="form-group">
-                                                            <div class="input-field col-md-10">
-                                                                {{ form.password1 }}
-                                                                <label class="active" for="contras">Contraseña</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <div class="input-field col-md-10">
-                                                                {{ form.password2 }}
-                                                                <label class="active" for="contras2">Verifique su Contraseña</label>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        <div class="switch form-group">
-                                                            <label>
-                                                              Normal(?)
-                                                              {{ form.tipo }}
-                                                              <span class="lever"></span>
-                                                              Artista
-                                                            </label>
-                                                        </div>
-                                                        
-                                                        <div class="form-group">
-                                                            <div class="col-md-offset-2 col-md-10">
-                                                                <input type="submit" value="Ingresar" style="margin-top:15px;" class="btn btn-default" />
-                                                            </div>
-                                                        </div>
-                                                        
-                                                        {% if form.errors %}
-                                                        <p class="validation-summary-errors">Los datos ingresados son incorrectos.</p>
-                                                        {% endif %}
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                
-                
-            
-
-    </div>    
-{% load staticfiles %}
-    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'app/scripts/materialize.min.js' %}"></script>
-    <script src="{% static 'app/scripts/respond.js' %}"></script>
-    <script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-	<script src="{% static 'app/scripts/script.js  %}"></script>
-
+{% extends "app/login-layout.html" %}
+{% block tabs %}
+    <div class="col s6" style="color:#00bcd4; border-bottom:4px solid #00bcd4 !important; ">Iniciar Sesión</div>
+    <a style="color:#00bcd4;" href="/registro"><div class="col s6 hover-underline">Registrarse</div></a>
     
+{% endblock %}
+{% block formulario %}
 
-
-</body></html>
+<div id="login" class="col s12" style="margin-top:30px">
+    <form action="." method="post" class="form-horizontal">
+    {% csrf_token %}
+        <div class="form-group">
+            <div class="col s12 input-field">
+                {{ form.username }}
+                <label for="id_username" class="active">Correo</label>
+            </div>
+        </div>
+    {# Para editar el hint de los inputs, ir a forms.py en el cuerpo de la funcion estan los parametros#}
+    <div class="form-group">
+        <div class="input-field col s12">
+            {{ form.password }}
+            <label class="active" for="contras">Contraseña</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col s12">
+            <input type="hidden" name="next" value="/" />
+            <input type="submit" value="Ingresar" class="btn btn-default color-principal" />
+        </div>
+    </div>
+    {% if form.errors %}
+    <p class="validation-summary-errors col s12">Los datos ingresados son incorrectos.</p>
+    {% endif %}
+    </form>
+</div>
+{% endblock %}

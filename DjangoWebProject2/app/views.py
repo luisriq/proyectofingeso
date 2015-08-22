@@ -16,39 +16,41 @@ from django.views.generic.edit import CreateView
 class VistaSignUp(View):
     def post(self, request):
         # create a form instance and populate it with data from the request:
-        form = RegistroForm(request.POST)
+        formRegistro = RegistroForm(request.POST)
+        
         # check whether it's valid:
         print "lkansdlkansdlkansds"
-        if form.is_valid():
+        if formRegistro.is_valid():
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            _user = User.objects.create_user(username=form.cleaned_data['email'],
-                             password=form.cleaned_data['password2'],
-                             first_name=form.cleaned_data['name'])
+            _user = User.objects.create_user(username=formRegistro.cleaned_data['email'],
+                             password=formRegistro.cleaned_data['password2'],
+                             first_name=formRegistro.cleaned_data['name'])
             fecha = 0
-            if not form.cleaned_data['tipo']:
-                usuario = Normal(user = _user, correo=form.cleaned_data['email'], 
-                             nombre = form.cleaned_data['name'], 
-                             contrasena = form.cleaned_data['password2'], )
+            if not formRegistro.cleaned_data['tipo']:
+                usuario = Normal(user = _user, correo=formRegistro.cleaned_data['email'], 
+                             nombre = formRegistro.cleaned_data['name'], 
+                             contrasena = formRegistro.cleaned_data['password2'], )
                 fecha = usuario.fechaIngreso
                 usuario.save()
             else:
-                usuario = Artista(user = _user, correo=form.cleaned_data['email'], 
-                             nombre = form.cleaned_data['name'], 
-                             contrasena = form.cleaned_data['password2'], )
+                usuario = Artista(user = _user, correo=formRegistro.cleaned_data['email'], 
+                             nombre = formRegistro.cleaned_data['name'], 
+                             contrasena = formRegistro.cleaned_data['password2'])
                 fecha = usuario.fechaIngreso
             	usuario.save()
             print "EXITO!!!!"
             return render( 
                 request,
                 'app/usuarioCreado.html',
+                
                 context_instance = RequestContext(request,
                 {
                     'title':'Home Page',
                     'year':datetime.now().year,
-                    'nombre':form.cleaned_data['name'],
-                    'email':form.cleaned_data['email'],
+                    'nombre':formRegistro.cleaned_data['name'],
+                    'email':formRegistro.cleaned_data['email'],
                     'creado':fecha,
                 })
         	)
