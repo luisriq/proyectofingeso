@@ -5,6 +5,7 @@
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
 
+
 <address>
     One Microsoft Way<br />
     Redmond, WA 98052-6399<br />
@@ -19,11 +20,15 @@
 
 
 
-<h5>{{ b.integrante.nombre }}</h5>
-<h5>{{ nombre }}</h5>
-<h5>{{ habilidades }}</h5>
-<h5>{{ Banda.nombre }}</h5>
-<h5>{{ Banda.genero.nombre }}</h5>
-<h5>{{ seguidores }}</h5>
+        {% for b in integrantes %}
+            <div>{{ b.nombre }}</div>
+        {% endfor %}
+<img src="{{Banda.imagenPortada}}">
+
+
+<h5>banda : {{ banda.nombre }}</h5>
+<h5>Genero :{{ banda.genero.nombre }}</h5>
+<h5>Seguidores :{{ seguidores }}</h5>
+<h5>Id banda :{{ idBanda }}</h5>
 
 {% endblock %}

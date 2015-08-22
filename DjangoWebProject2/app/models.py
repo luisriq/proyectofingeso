@@ -40,6 +40,12 @@ class Banda(models.Model):
 	nombre = models.CharField(max_length=200)
 	integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	genero = models.ForeignKey(Genero, related_name = 'tocado_por')
+	imagenPerfil = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPortada = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+
+
+
+	seguidores = models.ManyToManyField("Normal", blank=True)
 	def __unicode__(self):
 		return self.nombre
 		
