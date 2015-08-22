@@ -74,14 +74,14 @@
                         <div class="row">
                             <div class="col s8 offset-s2"> 
                                 <div class="card-panel color-principal">
-                                    <b class="">N seguidores
+                                    <b class="">{{seguidores}}
                                     </b>
                                 </div>
                             </div>
                         </div>
                     
                     </div>
-                    {{idArtista}}    
+             <!--       {{idArtista}}    
                      {% if artista %}
                      artista existe  
                      {%else%}
@@ -92,13 +92,12 @@
                      idArtista existe
                      {%else%}
                      idArtista no existe
-                     {% endif %}
+                     {% endif %}     -->
 
                 <div class="left-align">
                     <h6>Sobre mi:</h6>
                     <div class="card-panel color-principal">
-                        <b class="">I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
+                        <b class="">{{artista.biografia}}
                         </b>
                     </div>
                 </div>
@@ -116,53 +115,22 @@
         <div class="col l6 s12 center-align">
             <div class="container">
                 <div class="row">
-
+                    {{largo}}
+                    {% for b in instrumentos %}
                     <div class="col s6 center-align"> 
                         <div class="card color-333">
                             <div class="card-image">
                             <img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:150px;">
                             </div>
-                            <div class="card-content  white-text">
-                            <p>Nivel</p>
+                            <div class="card-content ">
+                            <p class=" white-text">LVL:{{b.nivel}}</p>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
 
 
-                    <div class="col s6 center-align"> 
-                        <div class="card  color-333">
-                            <div class="card-image">
-                            <img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:150px;">
-                            </div>
-                            <div class="card-content  white-text">
-                            <p>Nivel</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col s6 center-align"> 
-                        <div class="card  color-333">
-                            <div class="card-image">
-                            <img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:150px;">
-                            </div>
-                            <div class="card-content white-text">
-                            <p>Nivel</p>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col s6 center-align"> 
-                        <div class="card  color-333">
-                            <div class="card-image">
-                            <img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:150px;">
-                            </div>
-                            <div class="card-content  white-text">
-                            <p>Nivel</p>
-                            </div>
-                        </div>
-                    </div>
+                    
 
     </div>  
 </div>

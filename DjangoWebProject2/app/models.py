@@ -20,8 +20,8 @@ class Usuario(models.Model):
 
 class Artista(Usuario):
 	biografia = models.TextField()
-	imagenCabecera = models.CharField(max_length=200)
 	seguidores = models.ManyToManyField("Normal", blank=True)
+	
 class Administrador(Usuario):	
 	pass
 	
@@ -38,13 +38,10 @@ class Genero(models.Model):
 	
 class Banda(models.Model):
 	nombre = models.CharField(max_length=200)
-	integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
+	#integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	genero = models.ForeignKey(Genero, related_name = 'tocado_por')
 	imagenPerfil = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
 	imagenPortada = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
-
-
-
 	seguidores = models.ManyToManyField("Normal", blank=True)
 	def __unicode__(self):
 		return self.nombre
@@ -78,12 +75,21 @@ class Cancion(models.Model):
 	autor = models.CharField(max_length=200)
 		
 class Instrumento(models.Model):
-	nombre = models.CharField(max_length=200)
 	tipo = models.CharField(max_length=200)
-	imagen = models.CharField(max_length=200)
-	artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True, blank=True)
+	imagen = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+	#artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True, blank=True)
 	cancion = models.ManyToManyField(Cancion, blank=True)
-		
+	def __unicode__(self):
+		return self.tipo
+	
+class Toca(models.Model):
+	instrumento = models.ForeignKey(Instrumento, related_name = 'tocacion', null=True)
+	artista = models.ForeignKey(Artista, related_name = 'tocador', null=True)
+	nivel = models.IntegerField()
+	def __unicode__(self):
+		return self.instrumento.tipo + "----" + self.artista.nombre
+	
+	
 class Normal(Usuario):
 	tiempoCastigo = models.IntegerField(default=0)
 	descripcion = models.TextField(blank=True)

@@ -10,6 +10,7 @@ from django.views.generic import View
 from models import *
 from forms import UserForm, RegistroForm
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 
 from django.views.generic.edit import CreateView
 
@@ -193,21 +194,25 @@ class perfilArtista(View):
         )
 #------------------------
 class perfilArtistaNp(View):
-    def get(self, request,username):
+    def get(self, request,userid):
         if not request.user.is_authenticated() :
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
-        artista = Artista.objects.filter(user = usuario)
-        if(len(artista)==0):
+        usuarioLog = Artista.objects.filter(user = usuario)
+        if(len(usuarioLog)==0):
             return HttpResponse("Solo artista")
-        artista = artista[0]
-        idArtista = username
+        
+        artista = Artista.objects.filter(id = userid)[0]
         ##este es el username
+        if usuarioLog[0].id == artista.id:
+            return HttpResponseRedirect("/perfilArtista")
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         
-        instrumentos = Instrumento.objects.filter(artista = artista)
+        #instrumentos = Instrumento.objects.filter(artista = artista)
         seguidores = len(artista.seguidores.all())
         
+        instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
+        largo = instrumentos[0].nivel
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -218,9 +223,8 @@ class perfilArtistaNp(View):
                 'integranteEn':integranteEn,
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'idArtista':idArtista,
+                'largo':largo,
                 'artista':artista
-                
             })
         )
 
