@@ -1,7 +1,9 @@
 ﻿body {
     /*padding-top: 50px;
     padding-bottom: 20px;*/
+     background-size: 100%;
 }
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -219,5 +221,11 @@ white-space:nowrap;
   } 
   .container {
     width: 90%;
+  }
 }
+
+@media only screen and (max-width: 600px){
+  .container{
+    width: 100% !important;
+  }
 }
