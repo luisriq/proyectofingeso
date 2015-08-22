@@ -21,7 +21,7 @@
                     <div class="col l6 s12 ">
                         <div class="container">
                             <div class="row">
-                                <div class="col s12 left-align"><span >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</span></div>
+                                <div class="col s12 left-align"><span >{{banda.biografia}}</span></div>
                             </div>
                             <div class="row">
                                 <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"> {{ seguidores }} Seguidores</div>
@@ -84,26 +84,13 @@
                                 <div class="col s12 left-align">
                                     <h5>Integrantes</h5>
                                     <ul class="collection">
+                                        {% for integrante in integrantes %}
                                         <li class="collection-item valign-wrapper">
                                             <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Nombre</span>
-                                            <span class="secondary-content">Cargo</span>
+                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{integrante.integrante.nombre}}</span>
+                                            <span class="secondary-content">{{integrante.ocupacion}}</span>
                                         </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Nombre</span>
-                                            <span class="secondary-content">Cargo</span>
-                                        </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Nombre</span>
-                                            <span class="secondary-content">Cargo</span>
-                                        </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Nombre</span>
-                                            <span class="secondary-content">Cargo</span>
-                                        </li>
+                                        {% endfor %}
                                       </ul>
                                 </div>
                             </div>

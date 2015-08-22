@@ -66,9 +66,9 @@
     <div class="row">
         <div class="col l6 s12 center-align">
 
-             <div class="circle avatar-perfil" ><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" 
+             <div class="circle avatar-perfil" ><img src="{{artista.imagenPerfil.url}}" alt="" 
                 style="height:150px;"></div>
-                <h4> {{artista.nombre}}</h4>
+                <h4> {{artista.nombre}} </h4>
 
                     <div class="container">
                         <div class="row">
@@ -115,7 +115,6 @@
         <div class="col l6 s12 center-align">
             <div class="container">
                 <div class="row">
-                    {{largo}}
                     {% for b in instrumentos %}
                     <div class="col s6 center-align"> 
                         <div class="card color-333">
@@ -123,7 +122,7 @@
                             <img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:150px;">
                             </div>
                             <div class="card-content ">
-                            <p class=" white-text">LVL:{{b.nivel}}</p>
+                            <p class=" white-text">LVL:{{b.tipo}}</p>
                             </div>
                         </div>
                     </div>
@@ -135,23 +134,14 @@
     </div>  
 </div>
 
-
-  <h5>Grupos a los que pertenesco</h5>
+  <h5>Bandas a los que pertenezco</h5>
 <ul class="collection">
+    {% for b in integranteEn %}
       <a href="#!"  class="collection-item avatar">
-      <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
-      <span class="title left-align"><br>Los zolezzi</span>
+      <div class="circle avatar-img dropdown-button"><img src="" alt="" style="height:50px;"></div>
+      <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>
     </a>
-
-    <a href="#!"  class="collection-item avatar">
-      <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
-      <span class="title left-align"><br>Elefantes Felices</span>
-    </a>
-
-    <a href="#!"  class="collection-item avatar">
-      <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
-      <span class="title left-align"><br>Terminator 3</span>
-    </a>
+    {% endfor %}
 </ul>
 
 

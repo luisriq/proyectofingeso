@@ -17,41 +17,39 @@ from django.views.generic.edit import CreateView
 class VistaSignUp(View):
     def post(self, request):
         # create a form instance and populate it with data from the request:
-        formRegistro = RegistroForm(request.POST)
-        
+        form = RegistroForm(request.POST)
         # check whether it's valid:
         print "lkansdlkansdlkansds"
-        if formRegistro.is_valid():
+        if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            _user = User.objects.create_user(username=formRegistro.cleaned_data['email'],
-                             password=formRegistro.cleaned_data['password2'],
-                             first_name=formRegistro.cleaned_data['name'])
+            _user = User.objects.create_user(username=form.cleaned_data['email'],
+                             password=form.cleaned_data['password2'],
+                             first_name=form.cleaned_data['name'])
             fecha = 0
-            if not formRegistro.cleaned_data['tipo']:
-                usuario = Normal(user = _user, correo=formRegistro.cleaned_data['email'], 
-                             nombre = formRegistro.cleaned_data['name'], 
-                             contrasena = formRegistro.cleaned_data['password2'], )
+            if not form.cleaned_data['tipo']:
+                usuario = Normal(user = _user, correo=form.cleaned_data['email'], 
+                             nombre = form.cleaned_data['name'], 
+                             contrasena = form.cleaned_data['password2'], )
                 fecha = usuario.fechaIngreso
                 usuario.save()
             else:
-                usuario = Artista(user = _user, correo=formRegistro.cleaned_data['email'], 
-                             nombre = formRegistro.cleaned_data['name'], 
-                             contrasena = formRegistro.cleaned_data['password2'])
+                usuario = Artista(user = _user, correo=form.cleaned_data['email'], 
+                             nombre = form.cleaned_data['name'], 
+                             contrasena = form.cleaned_data['password2'], )
                 fecha = usuario.fechaIngreso
             	usuario.save()
             print "EXITO!!!!"
             return render( 
                 request,
                 'app/usuarioCreado.html',
-                
                 context_instance = RequestContext(request,
                 {
                     'title':'Home Page',
                     'year':datetime.now().year,
-                    'nombre':formRegistro.cleaned_data['name'],
-                    'email':formRegistro.cleaned_data['email'],
+                    'nombre':form.cleaned_data['name'],
+                    'email':form.cleaned_data['email'],
                     'creado':fecha,
                 })
         	)
@@ -146,7 +144,7 @@ class perfilBanda(View):
         #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
         banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
         #lista de los integrantes de la banda (modelo)
-        integrantes = [ib.integrante for ib in IntegrantesBanda.objects.filter(banda = banda)]
+        integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]
         ide = banda.id
         seguidores = len(banda.seguidores.all())
         
@@ -178,7 +176,6 @@ class perfilArtista(View):
         
         instrumentos = Instrumento.objects.filter(artista = artista)
         seguidores = len(artista.seguidores.all())
-        
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -189,6 +186,7 @@ class perfilArtista(View):
                 'integranteEn':integranteEn,
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
+                'url':string,
                 'artista':artista
             })
         )
@@ -206,13 +204,10 @@ class perfilArtistaNp(View):
         ##este es el username
         if usuarioLog[0].id == artista.id:
             return HttpResponseRedirect("/perfilArtista")
-        integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
-        
+        integranteEn = [ib.banda for ib in IntegrantesBanda.objects.filter(integrante = artista)]
+        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         #instrumentos = Instrumento.objects.filter(artista = artista)
         seguidores = len(artista.seguidores.all())
-        
-        instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
-        largo = instrumentos[0].nivel
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -220,11 +215,10 @@ class perfilArtistaNp(View):
             context_instance = RequestContext(request,
             {
                 'year':datetime.now().year,
-                'integranteEn':integranteEn,
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'largo':largo,
-                'artista':artista
+                'artista':artista,
+                'integranteEn':integranteEn
             })
         )
 
