@@ -203,6 +203,15 @@ input, select, textarea {
   background-color: #456;
 }
 
+.horizontal-scroll {
+width:600px;
+overflow-x:scroll;
+overflow-y:hidden;
+
+white-space:nowrap;
+}
+
+
 
 @media only screen and (min-width: 601px){
   .body-content{
