@@ -1,7 +1,9 @@
 ﻿body {
     /*padding-top: 50px;
     padding-bottom: 20px;*/
+     background-size: 100%;
 }
+
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -113,6 +115,9 @@ th, td {
 .color-333{
   background-color:#333 !important;
 }
+.color-principal{
+  background-color:#25b7d3 !important;
+}
 nav li{
   padding:0 25px!important;
 }
@@ -175,7 +180,17 @@ input, select, textarea {
   margin:15px 3px;
   padding:0 !important;
   border:solid 2px #666;
-}.inline{
+}
+.avatar-perfil{
+  display: inline-block;
+  overflow:hidden;
+  height:150px;
+  width:150px;
+  margin:15px 3px;
+  padding:0 !important;
+  border:solid 2px #666;
+}
+.inline{
   display: inline-block;
   margin: 0 10px;
 }
@@ -190,6 +205,17 @@ input, select, textarea {
   background-color: #456;
 }
 
+.horizontal-scroll {
+width:600px;
+overflow-x:scroll;
+overflow-y:hidden;
+
+white-space:nowrap;
+}
+.hover-underline:hover{
+  border-bottom:4px solid #80deea !important;
+}
+
 
 @media only screen and (min-width: 601px){
   .body-content{
@@ -197,5 +223,11 @@ input, select, textarea {
   } 
   .container {
     width: 90%;
+  }
 }
+
+@media only screen and (max-width: 600px){
+  .container{
+    width: 100% !important;
+  }
 }

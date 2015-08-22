@@ -38,6 +38,17 @@ class RegistroForm(forms.Form):
         if password1 != password2:
             raise forms.ValidationError("Las contraseñas no coinciden")
         return password2
+class LoginForm(forms.Form):
+    """Authentication form which uses boostrap CSS."""
+    username = forms.CharField(max_length=254,
+                               widget=forms.TextInput({
+                                   'type':'email',
+                                   'class': 'form-control validate'}))
+    password = forms.CharField(label=_("Password"),
+                               widget=forms.PasswordInput({
+                                   'id':'contras',
+                                   'class': 'form-control validate'}))
+        
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
