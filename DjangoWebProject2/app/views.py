@@ -200,6 +200,7 @@ class perfilArtistaNp(View):
             return HttpResponse("Solo artista")
         artista = artista[0]
         idArtista = username
+        ##este es el username
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         
         instrumentos = Instrumento.objects.filter(artista = artista)
