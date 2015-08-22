@@ -179,7 +179,7 @@ class perfilArtista(View):
         assert isinstance(request, HttpRequest)
         return render(
             request,
-            'app/perfilArtistaNp.html',
+            'app/perfilArtista.html',
             context_instance = RequestContext(request,
             {
                 'year':datetime.now().year,
@@ -191,7 +191,7 @@ class perfilArtista(View):
         )
 #------------------------
 class perfilArtistaNp(View):
-    def get(self, request,userid):
+    def get(self, request,username):
         if not request.user.is_authenticated() :
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
@@ -199,7 +199,7 @@ class perfilArtistaNp(View):
         if(len(artista)==0):
             return HttpResponse("Solo artista")
         artista = artista[0]
-        idArtista = "hola : "
+        idArtista = username
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         
         instrumentos = Instrumento.objects.filter(artista = artista)
