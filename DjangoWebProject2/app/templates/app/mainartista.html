@@ -113,30 +113,12 @@
                 </thead>
 
                 <tbody>
+                    {% for banda in bandas %}
                     <tr>
-                        <td>Alvin Eclair</td><!--nombre de banda-->
-                        <td>Vocalista</td><!--Rol-->
+                        <td>{{banda.banda.nombre}}</td><!--nombre de banda-->
+                        <td>{{banda.ocupacion}}</td><!--Rol-->
                     </tr>
-                    <tr>
-                        <td>Alan Jellybean</td>
-                        <td>Guitarrista</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan Lollipop</td>
-                        <td>Grupi</td>
-                    </tr>
-                    <tr>
-                        <td>Alvin Eclair</td><!--nombre de banda-->
-                        <td>Vocalista</td><!--Rol-->
-                    </tr>
-                    <tr>
-                        <td>Alan Jellybean</td>
-                        <td>Guitarrista</td>
-                    </tr>
-                    <tr>
-                        <td>Jonathan Lollipop</td>
-                        <td>Grupi</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

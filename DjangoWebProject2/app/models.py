@@ -41,8 +41,8 @@ class Banda(models.Model):
 	biografia = models.TextField()
 	#integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	genero = models.ForeignKey(Genero, related_name = 'tocado_por')
-	imagenPerfil = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
-	imagenPortada = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPerfil = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPortada = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	seguidores = models.ManyToManyField("Normal", blank=True)
 	def __unicode__(self):
 		return self.nombre

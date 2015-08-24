@@ -78,6 +78,7 @@ class Home(View):
                 tipo = "Artista :"
                 artista = Artista.objects.filter(user = request.user)
                 urlAvatar = artista[0].imagenPerfil.url
+                integranteEn = [ib for ib in IntegrantesBanda.objects.filter(integrante = artista)]
             elif len(Normal.objects.filter(user=request.user)) == 1:
                 normal = Normal.objects.filter(user = request.user)
                 urlAvatar = normal[0].imagenPerfil.url
@@ -95,6 +96,7 @@ class Home(View):
                 
                 'year':datetime.now().year,
                 'urlAvatar':urlAvatar,
+                'bandas':integranteEn
             })
         )
 
@@ -135,7 +137,7 @@ def contact(request):
 #-----------------------------------------------------------
 class perfilBanda(View):
     
-    def get(self, request):
+    def get(self, request)  :
         if not request.user.is_authenticated():
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
@@ -150,12 +152,41 @@ class perfilBanda(View):
         
         assert isinstance(request, HttpRequest)
         return render(
-            request,
+            request,    
             'app/perfilBanda.html',
             context_instance = RequestContext(request,
             {
                 'banda':banda,
-                'idBanda':ide,
+                'integrantes':integrantes,
+                'seguidores':seguidores
+            })
+        )
+#-----------------------------------------------------------
+class perfilBandaNp(View):
+    
+    def get(self, request, bandaid):
+        if not request.user.is_authenticated():
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        usuario = request.user
+        a = Artista.objects.filter(user = usuario)[0]
+        
+        #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
+        banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
+        #lista de los integrantes de la banda (modelo)
+        ide = banda.id
+        if ide == bandaid:
+            return HttpResponseRedirect("/perfilBanda")
+        banda = Banda.objects.filter(id = bandaid)[0]
+        integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
+        seguidores = len(banda.seguidores.all())
+        
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/perfilBandaNp.html',
+            context_instance = RequestContext(request,
+            {
+                'banda':banda,
                 'integrantes':integrantes,
                 'seguidores':seguidores
             })
@@ -174,7 +205,7 @@ class perfilArtista(View):
         artista = artista[0]
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         #holi
-        instrumentos = Instrumento.objects.filter(artista = artista)
+        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
         assert isinstance(request, HttpRequest)
         return render(
@@ -186,7 +217,6 @@ class perfilArtista(View):
                 'integranteEn':integranteEn,
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'url':string,
                 'artista':artista
             })
         )
