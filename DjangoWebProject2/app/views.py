@@ -235,7 +235,7 @@ class perfilArtistaNp(View):
         if usuarioLog[0].id == artista.id:
             return HttpResponseRedirect("/perfilArtista")
         integranteEn = [ib.banda for ib in IntegrantesBanda.objects.filter(integrante = artista)]
-        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
+        instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
         #instrumentos = Instrumento.objects.filter(artista = artista)
         seguidores = len(artista.seguidores.all())
         assert isinstance(request, HttpRequest)

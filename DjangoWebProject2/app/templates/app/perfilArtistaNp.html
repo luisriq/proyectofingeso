@@ -119,10 +119,10 @@
                     <div class="col s6 center-align"> 
                         <div class="card color-333">
                             <div class="card-image">
-                            <img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:150px;">
+                            <img src="{{b.instrumento.imagen.url}}" alt="" style="height:150px;">
                             </div>
                             <div class="card-content ">
-                            <p class=" white-text">LVL:{{b.tipo}}</p>
+                            <p class=" white-text">LVL:{{b.nivel}}</p>
                             </div>
                         </div>
                     </div>
@@ -131,28 +131,24 @@
 
                     
 
-    </div>  
-</div>
+                </div>  
+            </div>
 
   <h5>Bandas a los que pertenezco</h5>
 <ul class="collection">
     {% for b in integranteEn %}
       <a href="#!"  class="collection-item avatar">
-      <div class="circle avatar-img dropdown-button"><img src="" alt="" style="height:50px;"></div>
+      <div class="circle avatar-img dropdown-button"><img src="" alt="" style="height:50px;">
+      </div>
       <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>
     </a>
     {% endfor %}
 </ul>
-
-
-
-
-
-
-
-
             </div>
         </div>
+        
+        
+
 
     </div>
 </div>
