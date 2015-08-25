@@ -14,7 +14,7 @@ class Usuario(models.Model):
 	contrasena =  models.CharField(max_length=200)
 	fechaIngreso =  models.DateTimeField(auto_now_add=True)
 	usuarioActivo = models.BooleanField(default=True)
-	imagenPerfil = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPerfil = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	def __unicode__(self):
 		return self.nombre + " / " + self.correo
 
@@ -38,10 +38,11 @@ class Genero(models.Model):
 	
 class Banda(models.Model):
 	nombre = models.CharField(max_length=200)
+	biografia = models.TextField()
 	#integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	genero = models.ForeignKey(Genero, related_name = 'tocado_por')
-	imagenPerfil = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
-	imagenPortada = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPerfil = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPortada = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	seguidores = models.ManyToManyField("Normal", blank=True)
 	def __unicode__(self):
 		return self.nombre
@@ -76,7 +77,7 @@ class Cancion(models.Model):
 		
 class Instrumento(models.Model):
 	tipo = models.CharField(max_length=200)
-	imagen = models.ImageField(upload_to = 'static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagen = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	#artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True, blank=True)
 	cancion = models.ManyToManyField(Cancion, blank=True)
 	def __unicode__(self):

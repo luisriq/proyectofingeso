@@ -1,31 +1,141 @@
-{% extends "app/layout.html" %}
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principal Artista - uMusic</title>
+    
+    <link rel="stylesheet" type="text/css" href="./Pagina Principal Artista - uMusic_files/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="./Pagina Principal Artista - uMusic_files/site.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="./Pagina Principal Artista - uMusic_files/modernizr-2.6.2.js"></script>
+</head>
 
-{% block content %}
-<div class="container" id-banda="{{ idBanda }}">
-<div class="row" >
+<body class="grey lighten-2">
+    
+    <div class="navbar container wide" style="position:fixed;top:0;">
+       	<div class="row color-333">
+            <div class="col left w200px">
+                
+                <a class="b-logo" href="./Pagina Principal Artista - uMusic_files/Pagina Principal Artista - uMusic.html">
+                    <img alt="Brand" class="logo-img" src="./Pagina Principal Artista - uMusic_files/logo.png">
+                </a>&nbsp;
+            </div>
+           
+            <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
+                <div class="row">
+                
+                <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
+                    <div class="truncate" >Nombre del usuario y la cashalaspa</div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+                </div>
+                <ul id='dropdown1' class='grey darken-3 dropdown-content' >
+                        <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
+                        <li><a href="#!">Configuraciones</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">Cerrar Sesion</a></li>
+                    </ul>
+                <script type="text/javascript">$('.dropdown-button').dropdown({
+                      inDuration: 300,
+                      outDuration: 225,
+                      constrain_width: false, // Does not change width of dropdown to that of the activator
+                      hover: true, // Activate on hover
+                      gutter: 0, // Spacing from edge
+                      belowOrigin: false // Displays dropdown below the button
+                    }
+                  );</script>
+
+                </div>
+            </div>
+            
+            </div>
+        </div>
+    </div>
+        
+
+
+<!--para mid and large-->
+<div class="left-bar hide-on-small-only" >
+    
+    <div class="container">
+        <div class="row">
+        <ul class="grey-text text-lighten-2">
+            <li><h4>Mi Perfil</h4><hr></li>
+            <li>
+                <h5>Mis Bandas</h5>
+            </li>
+            <li><a><h6>+Crear Banda</h6></a></li>
+            <li>
+                <h6>En las que soy Lider</h6>
+                <ul class="margin-left-1">
+                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+                </ul>
+            </li>
+            <li>
+                <h6>En las que Participo</h6>
+                <ul class="margin-left-1">
+                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+                </ul>
+            </li>
+            <li><h5>Eventos</h5></li>
+            <li><h5>Ayuda</h5></li>
+        </ul>
+
+        
+        
+        </div>
+    </div>
+</div>
+<!--para small-->
+<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
+    <li><h4>Mi Perfil</h4><hr></li>
+    <li>
+        <h5>Mis Bandas</h5>
+    </li>
+    <li><a><h6>+Crear Banda</h6></a></li>
+    <li>
+        <h6>En las que soy Lider</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+        </ul>
+    </li>
+    <li>
+        <h6>En las que Participo</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+        </ul>
+    </li>
+    <li><h5>Eventos</h5></li>
+    <li><h5>Ayuda</h5></li>
+</ul>
+    
+<div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
+<div class="container">
+<div class="row">
     
     <div class="col s12">
         <div class="card white">
-            <div class="foto-portada" style="background:url({{banda.imagenPerfil.url}}) ;" >
+            <div class="foto-portada" style="background:url(http://86bb71d19d3bcb79effc-d9e6924a0395cb1b5b9f03b7640d26eb.r91.cf1.rackcdn.com/wp-content/uploads/2009/09/the-beatles-rock-band-instruments-wallpaper.jpg) ;" >
             </div>
             <div class="container center-align">
                 <div class="row">
                     <div class="col s12 ">
-                        <div class="inline blue"><img src="{{banda.imagenPerfil.url}}" alt="" 
-                style="width:100px;height:100px;border:solid 1px #444;margin-top:-50px;"></div>
+                        <div class="inline blue" style="width:100px;height:100px;border:solid 1px #444;margin-top:-50px;"></div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s12 "><h5 >{{ banda.nombre }}<h6>{{ banda.genero.nombre }}</h6></h5></div>
+                    <div class="col s12 "><h5 >Nombre de la Banda<h6>Nombre de la Banda</h6></h5></div>
                 </div>
                 <div class="row">
                     <div class="col l6 s12 ">
                         <div class="container">
                             <div class="row">
-                                <div class="col s12 left-align"><span >{{banda.biografia}}</span></div>
+                                <div class="col s12 left-align"><span >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat.</span></div>
                             </div>
                             <div class="row">
-                                <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"> {{ seguidores }} Seguidores</div>
+                                <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"> {N} Seguidores</div>
                             </div>
                             <div class="row">
                                 <div class="col s12" >
@@ -87,8 +197,8 @@
                                     <ul class="collection">
                                         {% for integrante in integrantes %}
                                         <li class="collection-item valign-wrapper">
-                                            <div class="circle avatar-perfil"style="height:50px;width:50px" ><img src="{{integrante.integrante.imagenPerfil.url}}" alt=""style="height:50px;"></div>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{integrante.integrante.nombre}}</span>
+                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
+                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{integrante.nombre}}</span>
                                             <span class="secondary-content">{{integrante.ocupacion}}</span>
                                         </li>
                                         {% endfor %}
@@ -126,6 +236,19 @@
     
 </div>
 </div>
+</div>
+
+    <script src="./Pagina Principal Artista - uMusic_files/jquery-1.10.2.js"></script>
+    <script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
+    <script src="./Pagina Principal Artista - uMusic_files/respond.js"></script>
 
 
-{% endblock %}
+
+	<script src="./Pagina Principal Artista - uMusic_files/jquery.validate.min.js"></script>
+	<script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
+	<script src="./Pagina Principal Artista - uMusic_files/script.js"></script>
+
+
+
+
+<div class="hiddendiv common"></div></body></html>

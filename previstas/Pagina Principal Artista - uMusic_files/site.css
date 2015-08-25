@@ -191,7 +191,7 @@ input, select, textarea {
   border:solid 2px #666;
 }
 .inline{
-  display: inline-block;
+  display: inline-block ;
   margin: 0 10px;
 }
 .dropdown-content li>a, .dropdown-content li>span {
@@ -215,7 +215,13 @@ white-space:nowrap;
 .hover-underline:hover{
   border-bottom:4px solid #80deea !important;
 }
-
+.foto-portada{
+  height:200px;
+  overflow:hidden;
+  background-size:100% !important;
+  background-repeat: no-repeat !important;
+  width:100%;
+}
 
 .filter-bar{
   width:200px;
