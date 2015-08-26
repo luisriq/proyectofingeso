@@ -69,15 +69,15 @@ th, td {
 }
 
 .registro {
-       position: absolute;
-       top: 0;
-       left: 0;
-       bottom: 0;
-       right: 0;
-       margin: auto;
-  }
-  
-  .vertical-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
   display: flex;
@@ -117,6 +117,21 @@ th, td {
 }
 .color-principal{
   background-color:#25b7d3 !important;
+}
+.color-principal.lighten-1{
+  background-color:#44c2db !important;
+}
+.color-principal.lighten-2{
+  background-color:#66cee3 !important;
+}
+.color-principal.lighten-3{
+  background-color:#86d3e3 !important;
+}
+.color-principal.lighten-4{
+  background-color:#b1e7f2 !important;
+}
+.color-principal.lighten-5{
+  background-color:#d9f4fa !important;
 }
 nav li{
   padding:0 25px!important;
