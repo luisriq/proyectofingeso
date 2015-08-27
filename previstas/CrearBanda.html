@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principal Artista - uMusic</title>
+    
+    <link rel="stylesheet" type="text/css" href="./Pagina Principal Artista - uMusic_files/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="./Pagina Principal Artista - uMusic_files/site.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="./Pagina Principal Artista - uMusic_files/modernizr-2.6.2.js"></script>
+</head>
+
+<body class="grey lighten-2">
+    
+    <div class="navbar container wide" style="position:fixed;top:0;">
+       	<div class="row color-333">
+            <div class="col left w200px">
+                
+                <a class="b-logo" href="./Pagina Principal Artista - uMusic_files/Pagina Principal Artista - uMusic.html">
+                    <img alt="Brand" class="logo-img" src="./Pagina Principal Artista - uMusic_files/logo.png">
+                </a>&nbsp;
+            </div>
+           
+            <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
+                <div class="row">
+                
+                <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
+                    <div class="truncate" >Nombre del usuario y la cashalaspa</div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+                </div>
+                <ul id='dropdown1' class='grey darken-3 dropdown-content' >
+                        <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
+                        <li><a href="#!">Configuraciones</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">Cerrar Sesion</a></li>
+                    </ul>
+                <script type="text/javascript">$('.dropdown-button').dropdown({
+                      inDuration: 300,
+                      outDuration: 225,
+                      constrain_width: false, // Does not change width of dropdown to that of the activator
+                      hover: true, // Activate on hover
+                      gutter: 0, // Spacing from edge
+                      belowOrigin: false // Displays dropdown below the button
+                    }
+                  );</script>
+
+                </div>
+            </div>
+            
+            </div>
+        </div>
+    </div>
+        
+
+
+<!--para mid and large-->
+<div class="left-bar hide-on-small-only" >
+    
+    <div class="container">
+        <div class="row">
+        <ul class="grey-text text-lighten-2">
+            <li><h4>Mi Perfil</h4><hr></li>
+            <li>
+                <h5>Mis Bandas</h5>
+            </li>
+            <li><a><h6>+Crear Banda</h6></a></li>
+            <li>
+                <h6>En las que soy Lider</h6>
+                <ul class="margin-left-1">
+                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+                </ul>
+            </li>
+            <li>
+                <h6>En las que Participo</h6>
+                <ul class="margin-left-1">
+                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+                </ul>
+            </li>
+            <li><h5>Eventos</h5></li>
+            <li><h5>Ayuda</h5></li>
+        </ul>
+
+        
+        
+        </div>
+    </div>
+</div>
+<!--para small-->
+<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
+    <li><h4>Mi Perfil</h4><hr></li>
+    <li>
+        <h5>Mis Bandas</h5>
+    </li>
+    <li><a><h6>+Crear Banda</h6></a></li>
+    <li>
+        <h6>En las que soy Lider</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+        </ul>
+    </li>
+    <li>
+        <h6>En las que Participo</h6>
+        <ul class="margin-left-1">
+            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
+            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+        </ul>
+    </li>
+    <li><h5>Eventos</h5></li>
+    <li><h5>Ayuda</h5></li>
+</ul>
+    
+
+
+
+
+
+<div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
+
+<div class="container">
+    <div class="row">
+        <div class="col s12"> 
+            
+            <h5>Creando una banda</h5>
+            <div class="input-field col s12">
+                
+              <input id="last_name" type="text" class="validate">
+              <label for="last_name">Nombre Banda</label>
+            </div>
+    
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s6">
+                            <label>Genero</label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Seleccione un genero</option>
+                                <option value="1">Rock</option>
+                                <option value="2">Pop</option>
+                                <option value="3">Grunge</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s4">
+                            <label>Fundada en:</label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Mes</option>
+                                <option value="1">Enero</option>
+                                <option value="2">Febrero</option>
+                                <option value="3">Diciembre</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s2">
+                            <label></label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Año</option>
+                                <option value="1">2005</option>
+                                <option value="2">2014</option>
+                                <option value="3">2015</option>
+                            </select>
+                        </div>  
+                    </div>
+                </div>
+
+                <div class="input-field col s11">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">Nuevo integrante</label>
+                </div>
+                <div class="input-field col s1">
+                      <a class="btn-floating btn-small waves-effect waves-light blue"><i class="material-icons">add</i></a>
+                </div>
+
+                <div class="input-field col s12">
+                <h5>Integrantes</h5>
+                <ul class="collection">
+                      <a href="#!"  class="collection-item avatar">
+                      <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+                      <span class="title left-align"><br>El luxo</span>
+                    </a>
+
+                    <a href="#!"  class="collection-item avatar">
+                      <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+                      <span class="title left-align"><br>Nestor</span>
+                    </a>
+
+                    <a href="#!"  class="collection-item avatar">
+                      <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+                      <span class="title left-align"><br>Cristiancito</span>
+                    </a>
+                </ul>  
+                </div>
+                
+                <div class="col s12">
+                        <a class="waves-effect waves-light btn">Cancelar</a>
+                        <a class="waves-effect waves-light btn">Crear banda</a>  
+                </div>
+
+    </div>
+</div>  
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+    <script src="./Pagina Principal Artista - uMusic_files/jquery-1.10.2.js"></script>
+    <script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
+    <script src="./Pagina Principal Artista - uMusic_files/respond.js"></script>
+
+
+
+	<script src="./Pagina Principal Artista - uMusic_files/jquery.validate.min.js"></script>
+	<script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
+	<script src="./Pagina Principal Artista - uMusic_files/script.js"></script>
+
+
+
+
+<div class="hiddendiv common"></div></body></html>
