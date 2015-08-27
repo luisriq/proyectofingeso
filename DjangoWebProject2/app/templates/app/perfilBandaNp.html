@@ -2,7 +2,6 @@
 
 {% block content %}
 
-{{banda.cuentaTwitter}}
 <div class="container" id-banda="{{ idBanda }}">
 <div class="row" >
     
@@ -87,11 +86,13 @@
                                     <h5>Integrantes</h5>
                                     <ul class="collection">
                                         {% for integrante in integrantes %}
+                                       <a  href="/perfilArtistaNp/{{integrante.integrante.id}}">
                                         <li class="collection-item valign-wrapper">
                                             <div class="circle avatar-perfil"style="height:50px;width:50px" ><img src="{{integrante.integrante.imagenPerfil.url}}" alt=""style="height:50px;"></div>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{integrante.integrante.nombre}}</span>
                                             <span class="secondary-content">{{integrante.ocupacion}}</span>
                                         </li>
+                                        </a>
                                         {% endfor %}
                                       </ul>
                                 </div>
