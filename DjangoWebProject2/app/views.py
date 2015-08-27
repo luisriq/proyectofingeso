@@ -232,8 +232,10 @@ class perfilArtistaNp(View):
         usuarioLog = Artista.objects.filter(user = usuario)
         if(len(usuarioLog)==0):
             return HttpResponse("Solo artista")
-        
-        artista = Artista.objects.filter(id = userid)[0]
+        try:
+            artista = Artista.objects.filter(id = userid)[0]
+        except:
+            return HttpResponse("el richard se la come")
         ##este es el username
         if usuarioLog[0].id == artista.id:
             return HttpResponseRedirect("/perfilArtista")

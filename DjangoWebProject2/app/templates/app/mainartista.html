@@ -115,6 +115,7 @@
                 <tbody>
                     {% for banda in bandas %}
                     <tr>
+                        <td class="circle avatar-img dropdown-button"><img src="{{banda.banda.imagenPerfil.url}}" alt="" style="height:50px;"></td>
                         <td>{{banda.banda.nombre}}</td><!--nombre de banda-->
                         <td>{{banda.ocupacion}}</td><!--Rol-->
                     </tr>
