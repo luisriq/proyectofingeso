@@ -1,6 +1,7 @@
 {% extends "app/layout.html" %}
 
 {% block content %}
+
 <div class="container" id-banda="{{ idBanda }}">
 <div class="row" >
     
@@ -77,8 +78,7 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col s12 ">
-                                    <a class="twitter-timeline" href="https://twitter.com/CriGomezI" data-widget-id="634787059299950593">Tweets por el @CriGomezI.</a>
-                                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                                    <a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{banda.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                                 </div>
                             </div>
                             <div class="row">
@@ -86,11 +86,13 @@
                                     <h5>Integrantes</h5>
                                     <ul class="collection">
                                         {% for integrante in integrantes %}
+                                       <a  href="/perfilArtistaNp/{{integrante.integrante.id}}">
                                         <li class="collection-item valign-wrapper">
                                             <div class="circle avatar-perfil"style="height:50px;width:50px" ><img src="{{integrante.integrante.imagenPerfil.url}}" alt=""style="height:50px;"></div>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{integrante.integrante.nombre}}</span>
                                             <span class="secondary-content">{{integrante.ocupacion}}</span>
                                         </li>
+                                        </a>
                                         {% endfor %}
                                       </ul>
                                 </div>
