@@ -205,13 +205,16 @@ class perfilNormalNp(View):
         #usuario al que se esta viendo
         print "iiiii",Normal.objects.all()[0].id
         print "ijnasdjinadsjniadsjnisadjna",normalid
-        usuarioLog = Normal.objects.filter(id = normalid)
+        usuarioLog = Normal.objects.filter(id = normalid)[0]
         print usuarioLog
         #if ide == bandaid:
         #    return HttpResponseRedirect("/perfilBanda")
         
         #artistas a los que sigue el usuario normal
         artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
+        
+        #bandas a las que sigue el usuario normal
+        bandasSeguidas = Banda.objects.filter(seguidores = usuarioLog)
         
         assert isinstance(request, HttpRequest)
         return render(
@@ -220,7 +223,8 @@ class perfilNormalNp(View):
             context_instance = RequestContext(request,
             {
                 'usuario':usuarioLog,
-                'losquesigo':artistasSeguidos
+                'losquesigo':artistasSeguidos,
+                'lasquesigo':bandasSeguidas
             })
         )
 #-----------------------------------------------------------

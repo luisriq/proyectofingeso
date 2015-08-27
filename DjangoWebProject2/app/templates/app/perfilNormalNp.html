@@ -76,9 +76,7 @@
                                 <div class="col s12">
                                     <div class="center-align">
                                         <div class="card-panel color-principal lighten-4 grey-text text-darken-3">
-                                            I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
-                                            
-<h1>{{usuario.nombre}}</h1>
+                                            {{usuario.descripcion}}
                                         </div>
                                     </div>
 
@@ -91,7 +89,7 @@
                             <h5>Artistas que sigo</h5>
                             <div class="horizontal-scroll">
                                 {% for seguido in losquesigo %}
-                                <a href=""><img style="height:100px" src="{{seguido.imagenPerfil.url}}" /></a>
+                                <a href="/perfilArtistaNp/{{seguido.id}}"><img style="height:100px" src="{{seguido.imagenPerfil.url}}" /></a>
                                 {% endfor %}
                                 </div>
 
@@ -101,25 +99,10 @@
                         <div class="col s12">
                             <h5>Bandas que sigo</h5>
                             <div class="horizontal-scroll">
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                                <img style="height:100px" src="./Pagina Principal Artista - uMusic_files/rockband.jpg" />
-                            </div>
+                                {% for seguida in lasquesigo %}
+                                <a href="/perfilBandaNp/{{seguida.id}}"><img style="height:100px" src="{{seguida.imagenPerfil.url}}" /></a>
+                                {% endfor %}
+                                </div>
 
                         </div>
                     </div>
