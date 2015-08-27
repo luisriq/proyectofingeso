@@ -269,3 +269,6 @@ white-space:nowrap;
     width: 100% !important;
   }
 }
+.modal{
+  margin-top: 80px !important;
+}
