@@ -35,6 +35,7 @@
                         <li class="divider"></li>
                         <li>
                             <form id="logoutForm" action="/logout" method="post" class="navbar-right">
+                            {% csrf_token %}
                             <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar Sesion</a>
                             </form>
                         </li>
