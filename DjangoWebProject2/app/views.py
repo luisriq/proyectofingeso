@@ -195,6 +195,35 @@ class perfilBandaNp(View):
             })
         )
 #-----------------------------------------------------------
+class perfilNormalNp(View):
+    
+    def get(self, request, normalid):
+        if not request.user.is_authenticated():
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        usuario = request.user
+        
+        #usuario al que se esta viendo
+        print "iiiii",Normal.objects.all()[0].id
+        print "ijnasdjinadsjniadsjnisadjna",normalid
+        usuarioLog = Normal.objects.filter(id = normalid)
+        print usuarioLog
+        #if ide == bandaid:
+        #    return HttpResponseRedirect("/perfilBanda")
+        
+        #artistas a los que sigue el usuario normal
+        artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
+        
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/perfilNormalNp.html',
+            context_instance = RequestContext(request,
+            {
+                'usuario':usuarioLog,
+                'losquesigo':artistasSeguidos
+            })
+        )
+#-----------------------------------------------------------
    
 
 class perfilArtista(View):
