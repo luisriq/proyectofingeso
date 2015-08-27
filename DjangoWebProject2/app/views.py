@@ -73,6 +73,7 @@ class Home(View):
         assert isinstance(request, HttpRequest)
         urlAvatar = ""
         tipo = ""
+        integranteEn = []
         try:
             if len(Artista.objects.filter(user=request.user)) == 1:
                 tipo = "Artista :"
@@ -84,6 +85,8 @@ class Home(View):
                 urlAvatar = normal[0].imagenPerfil.url
                 tipo = "Normal :"
         except:
+            print "Usuario no logeado"
+            return HttpResponseRedirect("/login")
             tipo = ""
         return render( 
             request,
