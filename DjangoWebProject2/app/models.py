@@ -21,6 +21,7 @@ class Usuario(models.Model):
 class Artista(Usuario):
 	biografia = models.TextField()
 	seguidores = models.ManyToManyField("Normal", blank=True)
+	cuentaTwitter = models.CharField(max_length=200, null = True)
 	
 class Administrador(Usuario):	
 	pass
@@ -44,6 +45,8 @@ class Banda(models.Model):
 	imagenPerfil = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	imagenPortada = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	seguidores = models.ManyToManyField("Normal", blank=True)
+	cuentaTwitter = models.CharField(max_length=200, null = True)
+	fechaCreacion = models.DateField(null = True)
 	def __unicode__(self):
 		return self.nombre
 		

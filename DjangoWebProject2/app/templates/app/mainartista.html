@@ -114,9 +114,20 @@
 
                 <tbody>
                     {% for banda in bandas %}
+                    
                     <tr>
-                        <td>{{banda.banda.nombre}}</td><!--nombre de banda-->
+                        
+                        <td>
+                            <a href="/perfilBandaNp/{{banda.banda.id}}">
+                                <div class="circle avatar-img">
+                                    <img src="{{banda.banda.imagenPerfil.url}}" style="height:50px;">
+                                </div>
+                                {{banda.banda.nombre}}
+                            </a>
+                        </td><!--nombre de banda-->
                         <td>{{banda.ocupacion}}</td><!--Rol-->
+                        
+                    
                     </tr>
                     {% endfor %}
                 </tbody>

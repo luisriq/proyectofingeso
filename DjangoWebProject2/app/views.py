@@ -73,6 +73,7 @@ class Home(View):
         assert isinstance(request, HttpRequest)
         urlAvatar = ""
         tipo = ""
+        integranteEn = []
         try:
             if len(Artista.objects.filter(user=request.user)) == 1:
                 tipo = "Artista :"
@@ -84,6 +85,8 @@ class Home(View):
                 urlAvatar = normal[0].imagenPerfil.url
                 tipo = "Normal :"
         except:
+            print "Usuario no logeado"
+            return HttpResponseRedirect("/login")
             tipo = ""
         return render( 
             request,
@@ -192,6 +195,35 @@ class perfilBandaNp(View):
             })
         )
 #-----------------------------------------------------------
+class perfilNormalNp(View):
+    
+    def get(self, request, normalid):
+        if not request.user.is_authenticated():
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        usuario = request.user
+        
+        #usuario al que se esta viendo
+        print "iiiii",Normal.objects.all()[0].id
+        print "ijnasdjinadsjniadsjnisadjna",normalid
+        usuarioLog = Normal.objects.filter(id = normalid)
+        print usuarioLog
+        #if ide == bandaid:
+        #    return HttpResponseRedirect("/perfilBanda")
+        
+        #artistas a los que sigue el usuario normal
+        artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
+        
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/perfilNormalNp.html',
+            context_instance = RequestContext(request,
+            {
+                'usuario':usuarioLog,
+                'losquesigo':artistasSeguidos
+            })
+        )
+#-----------------------------------------------------------
    
 
 class perfilArtista(View):
@@ -229,8 +261,10 @@ class perfilArtistaNp(View):
         usuarioLog = Artista.objects.filter(user = usuario)
         if(len(usuarioLog)==0):
             return HttpResponse("Solo artista")
-        
-        artista = Artista.objects.filter(id = userid)[0]
+        try:
+            artista = Artista.objects.filter(id = userid)[0]
+        except:
+            return HttpResponse("el richard se la come")
         ##este es el username
         if usuarioLog[0].id == artista.id:
             return HttpResponseRedirect("/perfilArtista")
