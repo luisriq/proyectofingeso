@@ -89,7 +89,7 @@
                             <h5>Artistas que sigo</h5>
                             <div class="horizontal-scroll">
                                 {% for seguido in losquesigo %}
-                                <a href="/perfilArtistaNp/{{seguido.id}}"><img style="height:100px" src="{{seguido.imagenPerfil.url}}" /></a>
+                                <a class="tooltipped" data-tooltip="{{seguido.nombre}}" href="/perfilArtistaNp/{{seguido.id}}"><img style="height:100px" src="{{seguido.imagenPerfil.url}}" /></a>
                                 {% endfor %}
                                 </div>
 
@@ -100,7 +100,7 @@
                             <h5>Bandas que sigo</h5>
                             <div class="horizontal-scroll">
                                 {% for seguida in lasquesigo %}
-                                <a href="/perfilBandaNp/{{seguida.id}}"><img style="height:100px" src="{{seguida.imagenPerfil.url}}" /></a>
+                                <a class="tooltipped" data-tooltip="{{seguida.nombre}}" href="/perfilBandaNp/{{seguida.id}}"><img style="height:100px" src="{{seguida.imagenPerfil.url}}" /></a>
                                 {% endfor %}
                                 </div>
 
