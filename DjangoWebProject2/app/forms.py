@@ -6,6 +6,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from datetime import datetime
 from django.forms import ModelForm
 from models import Usuario
 
@@ -13,6 +14,19 @@ class UserForm(ModelForm):
     class Meta:
         model = Usuario
         fields = ('nombre', 'correo', 'contrasena')
+        
+class CrearBandaForm(forms.Form):
+    nombre = forms.CharField(max_length=254,
+                               widget=forms.TextInput({
+                                   'class': 'form-control validate'}))
+
+    genero = forms.ChoiceField(choices = (), widget=forms.Select({
+                                   'class': 'browser-default'}))
+    mes = forms.ChoiceField(choices = (), widget=forms.Select({
+                                   'class': 'browser-default'}))
+    year = forms.ChoiceField(choices = (), widget=forms.Select({
+                                   'class': 'browser-default'}))
+    
 class RegistroForm(forms.Form):
     name = forms.CharField(max_length=254,
                                widget=forms.TextInput({
