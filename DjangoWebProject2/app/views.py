@@ -202,10 +202,13 @@ class perfilNormalNp(View):
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
         
-        #usuario al que se esta viendo
-        print "iiiii",Normal.objects.all()[0].id
-        print "ijnasdjinadsjniadsjnisadjna",normalid
-        usuarioLog = Normal.objects.filter(id = normalid)[0]
+        #usuario al que se esta viendo}
+        try:
+            usuarioLog = Normal.objects.filter(id = normalid)[0]
+        except:
+            #url = "/perfilArtistaNp/",normalid
+            return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
+        
         print usuarioLog
         #if ide == bandaid:
         #    return HttpResponseRedirect("/perfilBanda")
@@ -268,7 +271,10 @@ class perfilArtistaNp(View):
         try:
             artista = Artista.objects.filter(id = userid)[0]
         except:
-            return HttpResponse("el richard se la come")
+            return HttpResponseRedirect("/perfilNormalNp/%s" % userid)
+       
+        
+        
         ##este es el username
         if usuarioLog[0].id == artista.id:
             return HttpResponseRedirect("/perfilArtista")
