@@ -30,6 +30,7 @@ urlpatterns = patterns('',
     url(r'^perfilBandaNp/(?P<bandaid>\w{1,50})$', perfilBandaNp.as_view(), name='perfilBandaNp'),
     url(r'^perfilBanda', perfilBanda.as_view(), name='perfilBanda'),
     url(r'^busqueda$', busqueda.as_view(), name='busqueda'),
+    url(r'^updatePA$', editarPerfilArtistA.as_view(), name='updatePA'),
     url(r'^login/$',
         'django.contrib.auth.views.login',
         {

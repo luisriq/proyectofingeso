@@ -139,33 +139,7 @@ def contact(request):
         })
     )
 #-----------------------------------------------------------
-class perfilBanda(View):
-    
-    def get(self, request)  :
-        if not request.user.is_authenticated():
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
-        usuario = request.user
-        a = Artista.objects.filter(user = usuario)[0]
-        
-        #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
-        banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
-        #lista de los integrantes de la banda (modelo)
-        integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]
-        ide = banda.id
-        seguidores = len(banda.seguidores.all())
-        
-        assert isinstance(request, HttpRequest)
-        return render(
-            request,    
-            'app/perfilBanda.html',
-            context_instance = RequestContext(request,
-            {
-                'banda':banda,
-                'integrantes':integrantes,
-                'seguidores':seguidores
-            })
-        )
-#-----------------------------------------------------------
+
 class perfilBandaNp(View):
     
     def get(self, request, bandaid):
@@ -234,6 +208,34 @@ class perfilNormalNp(View):
 #-----------------------------------------------------------
    
 
+class perfilBanda(View):
+    def get(self, request):
+        if not request.user.is_authenticated() :
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        usuario = request.user
+        artista = Artista.objects.filter(user = usuario)
+        if(len(artista)==0):
+            return HttpResponse("Solo artista")
+        artista = artista[0]
+        integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
+        #holi
+        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
+        seguidores = len(artista.seguidores.all())
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/perfilArtista.html',
+            context_instance = RequestContext(request,
+            {
+                'year':datetime.now().year,
+                'integranteEn':integranteEn,
+                'instrumentos':instrumentos,
+                'seguidores':seguidores,
+                'artista':artista
+            })
+        )
+#------------------------
+
 class perfilArtista(View):
     def get(self, request):
         if not request.user.is_authenticated() :
@@ -300,11 +302,23 @@ class perfilArtistaNp(View):
  #------------------------------------------------------       
 class busqueda(View):
     def get(self, request):
+        
         if request.is_ajax():
                    artistas = Artista.objects.filter(nombre__startswith= request.GET['nombre'] ).values('id', 'nombre', 'imagenPerfil')
-                   return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
+                   #return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
         else:
                    return HttpResponse("['nombre':0]");
+        
+#----------------------------------------------
+class editarPerfilArtistA(View):
+    def get(self, request):
+        
+        if  request.user.is_authenticated():
+            
+                   return HttpResponse( request.GET["target"] + " - " +request.GET["data"]) 
+                   #return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
+        else:
+                   return HttpResponse("a la mierda ");
         
 #----------------------------------------------
 def about(request):
