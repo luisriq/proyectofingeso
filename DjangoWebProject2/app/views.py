@@ -11,6 +11,7 @@ from models import *
 from forms import UserForm, RegistroForm
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
+import json
 
 from django.views.generic.edit import CreateView
 
@@ -295,7 +296,17 @@ class perfilArtistaNp(View):
                 'integranteEn':integranteEn
             })
         )
-
+ 
+ #------------------------------------------------------       
+class busqueda(View):
+    def get(self, request):
+        if request.is_ajax():
+                   artistas = Artista.objects.filter(nombre__startswith= request.GET['nombre'] ).values('id', 'nombre', 'imagenPerfil')
+                   return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
+        else:
+                   return HttpResponse("['nombre':0]");
+        
+#----------------------------------------------
 def about(request):
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
