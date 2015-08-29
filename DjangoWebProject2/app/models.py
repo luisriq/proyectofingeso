@@ -53,6 +53,7 @@ class Banda(models.Model):
 class IntegrantesBanda(models.Model):
 	integrante = models.ForeignKey(Artista, related_name = 'perteneciente', null=True)
 	banda = models.ForeignKey(Banda, related_name = 'integrante', null=True)
+	esLider = models.BooleanField(default=False)
 	fechaIngreso = models.DateField()
 	ocupacion = models.CharField(max_length=200)
 	def __unicode__(self):
