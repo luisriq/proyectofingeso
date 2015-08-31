@@ -5,13 +5,14 @@ Definition of views.
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.template import RequestContext
-from datetime import datetime
+from datetime import datetime, timedelta, date
 from django.views.generic import View
 from models import *
-from forms import UserForm, RegistroForm
+from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
+import locale
 
 from django.views.generic.edit import CreateView
 
@@ -263,6 +264,7 @@ class perfilArtista(View):
             })
         )
 #------------------------
+
 class perfilArtistaNp(View):
     def get(self, request,userid):
         if not request.user.is_authenticated() :
@@ -298,6 +300,66 @@ class perfilArtistaNp(View):
                 'integranteEn':integranteEn
             })
         )
+#------------------------------
+class crearBanda(View):
+    def post(self, request):
+        # create a form instance and populate it with data from the request:
+        form = CrearBandaForm(request.POST)
+        # check whether it's valid:
+        print "lkansdlkansdlkansds"
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            banda = Banda(nombre=form.cleaned_data['email'],
+                             password=form.cleaned_data['password2'],
+                             first_name=form.cleaned_data['name'])
+            fecha = 0
+            if not form.cleaned_data['tipo']:
+                usuario = Normal(user = _user, correo=form.cleaned_data['email'], 
+                             nombre = form.cleaned_data['name'], 
+                             contrasena = form.cleaned_data['password2'], )
+                fecha = usuario.fechaIngreso
+                usuario.save()
+            else:
+                usuario = Artista(user = _user, correo=form.cleaned_data['email'], 
+                             nombre = form.cleaned_data['name'], 
+                             contrasena = form.cleaned_data['password2'], )
+                fecha = usuario.fechaIngreso
+            	usuario.save()
+            print "EXITO!!!!"
+            return render( 
+                request,
+                'app/usuarioCreado.html',
+                context_instance = RequestContext(request,
+                {
+                    'title':'Home Page',
+                    'year':datetime.now().year,
+                    'nombre':form.cleaned_data['name'],
+                    'email':form.cleaned_data['email'],
+                    'creado':fecha,
+                })
+        	)
+        else:
+            return render(request, 'app/registro.html', {'form': form})
+            
+    def get(self, request):
+        # if this is a POST request we need to process the form data
+        #Traer todos los generos 
+        generos = [ ("",gen.nombre) for gen in Genero.objects.all()]
+        years = [("", year) for year in range(1900, 2016) ]
+        years.reverse()
+        meses = []
+        locale.setlocale(locale.LC_TIME,'es_ES')
+        for i in range(1,13):
+            meses.append((i, date(2008, i, 1).strftime('%B').capitalize()))
+        form = CrearBandaForm()
+        form.fields["genero"].choices = generos
+        form.fields["mes"].choices = meses
+        form.fields["year"].choices = years
+        return render(request, 'app/crearBanda.html', {'form': form})
+
+#------------------------------
  
  #------------------------------------------------------       
 class busqueda(View):

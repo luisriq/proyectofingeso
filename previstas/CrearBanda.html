@@ -196,9 +196,11 @@
                 
                 <div class="col s12">
                         <a class="waves-effect waves-light btn">Cancelar</a>
-                        <a class="waves-effect waves-light btn">Crear banda</a>  
+                        <input type="submit" value="Crear Banda" class="waves-effect waves-light btn"/>  
                 </div>
-
+                {% if form.errors %}
+                    <p class="validation-summary-errors">Los datos ingresados son incorrectos.</p>
+                {% endif %}
     </div>
 </div>  
 

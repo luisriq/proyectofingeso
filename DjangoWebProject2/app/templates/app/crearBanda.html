@@ -1,0 +1,53 @@
+{% extends "app/layout.html" %}
+{% block content %}
+<div class="container">
+    <form action="" method="post" class="form-horizontal">
+            {% csrf_token %}
+    <div class="row">
+        <div class="col s12"> 
+            
+            <h5>Creando una banda</h5>
+            <div class="input-field col s12">
+              {{ form.nombre }}
+              <label for="id_nombre">Nombre Banda</label>
+                
+              
+            </div>
+    
+                <div class="row">
+                    <div class="col s12">
+                        <div class="input-field col s6">
+                            <label>Genero</label>
+                            <br><br>
+                           {{ form.genero }} 
+                        </div>
+
+                        <div class="input-field col s4">
+                            <label>Fundada en:</label>
+                            <br><br>
+                            {{ form.mes }} 
+                            
+                        </div>
+
+                        <div class="input-field col s2">
+                            <label></label>
+                            <br><br>
+                            {{ form.year }} 
+                            
+                        </div>  
+                    </div>
+                </div>
+                <div class="col s12">
+                        <button class="btn waves-effect waves-light" id="cerrarMCB">Cerrar</button>
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Crear Banda</button>
+                </div>
+    </div>
+    </form>
+</div>  
+
+
+{% load staticfiles %}
+	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+	<script src="{% static 'app/scripts/script.js' %}"></script>
+{% endblock %}
