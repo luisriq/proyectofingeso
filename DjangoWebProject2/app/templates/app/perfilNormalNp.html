@@ -1,63 +1,12 @@
 {% extends "app/layout.html" %}
 
 {% block sidebar %}
-    <!--para mid and large-->
-<div class="left-bar hide-on-small-only" >
-    
-    <div class="container">
-        <div class="row">
-        <ul class="grey-text text-lighten-2">
-            <li><h4>Mi Perfil</h4><hr></li>
-            <li>
-                <h5>Mis Bandas</h5>
-            </li>
-            <li><a><h6>+Crear Banda</h6></a></li>
-            <li>
-                <h6>En las que soy Lider</h6>
-                <ul class="margin-left-1">
-                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
-                </ul>
-            </li>
-            <li>
-                <h6>En las que Participo</h6>
-                <ul class="margin-left-1">
-                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
-                </ul>
-            </li>
-            <li><h5>Eventos</h5></li>
-            <li><h5>Ayuda</h5></li>
-        </ul>
-
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% endif%}
         
-        
-        </div>
-    </div>
-</div>
-<!--para small-->
-<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
-    <li><h4>Mi Perfil</h4><hr></li>
-    <li>
-        <h5>Mis Bandas</h5>
-    </li>
-    <li><a><h6>+Crear Banda</h6></a></li>
-    <li>
-        <h6>En las que soy Lider</h6>
-        <ul class="margin-left-1">
-            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
-        </ul>
-    </li>
-    <li>
-        <h6>En las que Participo</h6>
-        <ul class="margin-left-1">
-            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
-        </ul>
-    </li>
-    <li><h5>Eventos</h5></li>
-    <li><h5>Ayuda</h5></li>
-</ul>
 {% endblock %}
+
 
 {% block content %}
 <div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->

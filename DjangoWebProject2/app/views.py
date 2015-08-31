@@ -152,37 +152,45 @@ class perfilBandaNp(View):
             })
         )
 #-----------------------------------------------------------
+#    clase perfil normal no propietario
+#-----------------------------------------------------------
 class perfilNormalNp(View):
     
     def get(self, request, normalid):
-        if not request.user.is_authenticated():
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
-        usuario = request.user
-        
-        #usuario al que se esta viendo
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
+         
         try:
-            usuarioLog = Normal.objects.filter(id = normalid)[0]
+            # si se tiene la url de un artista se redirecciona en el except
+            normal = Normal.objects.filter(id = normalid)[0]
+            # si el usuario logueado es el mismo al que se esta viendo
+            usuarioLog = Normal.objects.filter(user = request.user)[0]
+            #if usuarioLog.id == normal.id:
+                #return HttpResponseRedirect("/perfilNormalNp/%s" % normalid)
+            #artistas a los que sigue el usuario normal
+            artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
+        
+            #bandas a las que sigue el usuario normal
+            bandasSeguidas = Banda.objects.filter(seguidores = usuarioLog)
+            assert isinstance(request, HttpRequest)
+            return render(
+                request,
+                'app/perfilNormalNp.html',
+                context_instance = RequestContext(request,
+                {
+                    'usuario':usuarioLog,
+                    'losquesigo':artistasSeguidos,
+                    'lasquesigo':bandasSeguidas
+                })
+            )
         except:
             #url = "/perfilArtistaNp/",normalid
             return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
         
-        #artistas a los que sigue el usuario normal
-        artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
         
-        #bandas a las que sigue el usuario normal
-        bandasSeguidas = Banda.objects.filter(seguidores = usuarioLog)
         
-        assert isinstance(request, HttpRequest)
-        return render(
-            request,
-            'app/perfilNormalNp.html',
-            context_instance = RequestContext(request,
-            {
-                'usuario':usuarioLog,
-                'losquesigo':artistasSeguidos,
-                'lasquesigo':bandasSeguidas
-            })
-        )
+        
 #-----------------------------------------------------------
    
 
@@ -216,8 +224,9 @@ class perfilBanda(View):
 
 class perfilArtista(View):
     def get(self, request):
-        if not request.user.is_authenticated() :
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
         usuario = request.user
         try:
             artista = Artista.objects.filter(user = usuario)[0]
@@ -234,13 +243,15 @@ class perfilArtista(View):
             {
                 'year':datetime.now().year,
                 'integranteEn':integranteEn,
+                'tipoUsuario': tipoUsuario,
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
                 'artista':artista
             })
         )
-#------------------------
-
+#------------------------------------------------------
+#    clase perfil Artista No propietario
+#------------------------------------------------------
 class perfilArtistaNp(View):
     def get(self, request,userid):
         tipoUsuario = verificacion(request)
@@ -248,7 +259,7 @@ class perfilArtistaNp(View):
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")           
         
         try:
-            # si en la url se tiene la key de un normal se redirecciona
+            # si en la url se tiene la key de un normal se redirecciona en el except
             artista = Artista.objects.filter(id = userid)[0]
             # si el usuario logueado es el mismo al que se esta viendo
             usuarioLog = Usuario.objects.filter(user = request.user)[0]
@@ -346,7 +357,10 @@ def about(request):
             'year':datetime.now().year,
         })
     )
-    
+ 
+#----------------------------------------------------
+#    funcion para verificar si esta login el usuaario  
+#---------------------------------------------------- 
 def verificacion(request):
     if request.user.is_authenticated():
         try:
