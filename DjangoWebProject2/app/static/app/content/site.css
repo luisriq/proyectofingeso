@@ -69,15 +69,15 @@ th, td {
 }
 
 .registro {
-       position: absolute;
-       top: 0;
-       left: 0;
-       bottom: 0;
-       right: 0;
-       margin: auto;
-  }
-  
-  .vertical-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+
+.vertical-center {
   min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
   min-height: 100vh; /* These two lines are counted as one :-)       */
   display: flex;
@@ -117,6 +117,21 @@ th, td {
 }
 .color-principal{
   background-color:#25b7d3 !important;
+}
+.color-principal.lighten-1{
+  background-color:#44c2db !important;
+}
+.color-principal.lighten-2{
+  background-color:#66cee3 !important;
+}
+.color-principal.lighten-3{
+  background-color:#86d3e3 !important;
+}
+.color-principal.lighten-4{
+  background-color:#b1e7f2 !important;
+}
+.color-principal.lighten-5{
+  background-color:#d9f4fa !important;
 }
 nav li{
   padding:0 25px!important;
@@ -191,22 +206,22 @@ input, select, textarea {
   border:solid 2px #666;
 }
 .inline{
-  display: inline-block;
+  display: inline-block ;
   margin: 0 10px;
 }
-.dropdown-content li>a, .dropdown-content li>span {
+.login.dropdown-content li>a, .login.dropdown-content li>span {
   font-size: 1em !important;
   color:#ccc;
 } 
-.dropdown-content{
+.login.dropdown-content{
   min-width: 180px;
 }
-.dropdown-content li:hover{
+.login.dropdown-content li:hover{
   background-color: #456;
 }
 
 .horizontal-scroll {
-width:600px;
+width:100%;
 overflow-x:scroll;
 overflow-y:hidden;
 
@@ -215,8 +230,25 @@ white-space:nowrap;
 .hover-underline:hover{
   border-bottom:4px solid #80deea !important;
 }
+.foto-portada{
+  height:200px;
+  overflow:hidden;
+  background-size:100% !important;
+  background-repeat: no-repeat !important;
+  width:100%;
+}
 
-
+.filter-bar{
+  width:300px;
+  background-color:rgba(240,240,240,.9);
+  border-radius: 0 0 0 3px;
+  position:fixed;
+  right:50px;
+  top: 80px;
+  max-height:80%;
+  z-index: 99998;
+}
+/*                  M+                   */
 @media only screen and (min-width: 601px){
   .body-content{
     margin-left:200px;
@@ -225,9 +257,39 @@ white-space:nowrap;
     width: 90%;
   }
 }
+/*                  L+                   */
+@media only screen and (min-width: 992px){
+  .columna-calendario{
+    width: 350px !important;
+  }
+  .columna-complemento-calendario{
+    width: calc(100% - 350px)!important;
+  }
+}
 
 @media only screen and (max-width: 600px){
   .container{
     width: 100% !important;
   }
+}
+.modal{
+  margin-top: 80px !important;
+}
+.value{display: none}
+.filter-bar label{
+  color:#333;
+} 
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #999;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #999;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #999;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #999;
 }
