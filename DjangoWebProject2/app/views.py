@@ -243,7 +243,7 @@ class perfilArtista(View):
 class perfilArtistaNp(View):
     def get(self, request,userid):
         tipoUsuario = verificacion(request)
-        if tipoUsuario == "nada":
+        if tipoUsuario == 0:
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")           
         
         try:
@@ -375,10 +375,15 @@ def verificacion(request):
     if request.user.is_authenticated():
         try:
             artista = Artista.objects.filter(user = request.user)[0]
-            tipo = "artista"
+            tipo = 1
         except:
-            normal = Normal.objects.filter(user = request.user)[0]
-            tipo = "normal"
+            try:
+                normal = Normal.objects.filter(user = request.user)[0]
+                tipo = 2
+            except:
+                admin = Administrador.objects.filter(user = request.user)[0]
+                
+                tipo = 3
     else:
-        tipo = "nada"
+        tipo = 0
     return tipo
