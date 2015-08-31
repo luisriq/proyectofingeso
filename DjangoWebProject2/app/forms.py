@@ -26,7 +26,7 @@ class CrearBandaForm(forms.Form):
     choice_y.reverse()
     meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septembrie", "Octubre", "Noviembre", "Diciembre"]
     choice_m = []
-    for i in range(1,12):
+    for i in range(0,12):
         choice_m.append((i, meses[i]))
         
     
