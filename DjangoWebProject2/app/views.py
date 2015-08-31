@@ -291,7 +291,7 @@ class perfilArtistaNp(View):
 class crearBanda(View):
     def post(self, request):
         tipoUsuario = verificacion(request)
-        if tipoUsuario == 0:
+        if tipoUsuario != 1:
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
          
         # create a form instance and populate it with data from the request:
