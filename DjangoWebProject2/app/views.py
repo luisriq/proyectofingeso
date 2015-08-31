@@ -125,10 +125,9 @@ def contact(request):
 class perfilBandaNp(View):
     
     def get(self, request, bandaid):
-        if not request.user.is_authenticated():
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
-        usuario = request.user
-        a = Artista.objects.filter(user = usuario)[0]
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")    
         
         #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
         banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
@@ -147,6 +146,7 @@ class perfilBandaNp(View):
             context_instance = RequestContext(request,
             {
                 'banda':banda,
+                'tipoUsuario':tipoUsuario,
                 'integrantes':integrantes,
                 'seguidores':seguidores
             })
@@ -180,6 +180,7 @@ class perfilNormalNp(View):
                 context_instance = RequestContext(request,
                 {
                     'usuario':usuarioLog,
+                    'tipoUsuario':tipoUsuario,
                     'losquesigo':artistasSeguidos,
                     'lasquesigo':bandasSeguidas
                 })
