@@ -8,7 +8,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from datetime import datetime
 from django.forms import ModelForm
-from models import Usuario
+from models import *
+from datetime import datetime, timedelta, date
+import locale
 
 class UserForm(ModelForm):
     class Meta:
@@ -19,12 +21,20 @@ class CrearBandaForm(forms.Form):
     nombre = forms.CharField(max_length=254,
                                widget=forms.TextInput({
                                    'class': 'form-control validate'}))
-
-    genero = forms.ChoiceField(choices = (), widget=forms.Select({
+    choice_g = [ (gen.nombre,gen.nombre) for gen in Genero.objects.all()]
+    choice_y = [(str(year), year) for year in range(1900, 2016) ]
+    choice_y.reverse()
+    choice_m = []
+    locale.setlocale(locale.LC_TIME,'es_ES')
+    for i in range(1,13):
+        choice_m.append((i, date(2008, i, 1).strftime('%B').capitalize()))
+        
+    
+    genero = forms.ChoiceField(choices = choice_g, widget=forms.Select({
                                    'class': 'browser-default'}))
-    mes = forms.ChoiceField(choices = (), widget=forms.Select({
+    mes = forms.ChoiceField(choices = choice_m, widget=forms.Select({
                                    'class': 'browser-default'}))
-    year = forms.ChoiceField(choices = (), widget=forms.Select({
+    year = forms.ChoiceField(choices = choice_y, widget=forms.Select({
                                    'class': 'browser-default'}))
     
 class RegistroForm(forms.Form):
