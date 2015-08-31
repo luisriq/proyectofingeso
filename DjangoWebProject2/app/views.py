@@ -13,7 +13,7 @@ from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
-import locale
+
 
 from django.views.generic.edit import CreateView
 
@@ -378,3 +378,14 @@ def verificacion(request):
     else:
         tipo = 0
     return tipo
+def datosBarra(request):
+    bandasParticipo = []
+    bandasLider = []
+    artista = Artista.objects.filter(user = request.user)[0]
+    integranteEn = IntegrantesBanda.objects.filter(artista = artista)
+    for inte in integranteEn:
+        if(inte.esLider):
+            bandasLider.append(inte.banda)
+        else:
+            bandasParticipo.append(inte.banda)
+    return {"participo":bandasParticipo, "lider":bandasLider}  
