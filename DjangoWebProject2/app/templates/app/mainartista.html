@@ -1,62 +1,7 @@
 {% extends "app/layout.html" %}
 
 {% block sidebar %}
-    <!--para mid and large-->
-<div class="left-bar hide-on-small-only" >
-    
-    <div class="container">
-        <div class="row">
-        <ul class="grey-text text-lighten-2">
-            <li><h4>Mi Perfil</h4><hr></li>
-            <li>
-                <h5>Mis Bandas</h5>
-            </li>
-            <li><a><h6>+Crear Banda</h6></a></li>
-            <li>
-                <h6>En las que soy Lider</h6>
-                <ul class="margin-left-1">
-                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
-                </ul>
-            </li>
-            <li>
-                <h6>En las que Participo</h6>
-                <ul class="margin-left-1">
-                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
-                </ul>
-            </li>
-            <li><h5>Eventos</h5></li>
-            <li><h5>Ayuda</h5></li>
-        </ul>
-
-        
-        
-        </div>
-    </div>
-</div>
-<!--para small-->
-<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
-    <li><h4>Mi Perfil</h4><hr></li>
-    <li>
-        <h5>Mis Bandas</h5>
-    </li>
-    <li><a><h6>+Crear Banda</h6></a></li>
-    <li>
-        <h6>En las que soy Lider</h6>
-        <ul class="margin-left-1">
-            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
-        </ul>
-    </li>
-    <li>
-        <h6>En las que Participo</h6>
-        <ul class="margin-left-1">
-            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
-        </ul>
-    </li>
-    <li><h5>Eventos</h5></li>
-    <li><h5>Ayuda</h5></li>
-</ul>
+    {% include "app/sidebarartistapartial.html" %}
 {% endblock %}
 
 {% block content %}
@@ -64,7 +9,7 @@
     <div class="row">
         
         <div class="col l6  s12">
-            <div class="card-panel white">
+            <div class="card-panel grey lighten-4">
                 <h4>Actividad reciente</h4>
                 <span class="grey-text text-darken-2">I am a very simple card. I am good at containing small bits of information.
                 I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.
@@ -104,43 +49,41 @@
         </div>
         <div class="col l6 s12">
             <h4>Mis bandas</h4>
-            <table class="white card-panel bordered striped centered">
-                <thead>
-                    <tr>
-                        <th data-field="id">Nombre Banda</th>
-                        <th data-field="name">Rol</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {% for banda in bandas %}
-                    
-                    <tr>
-                        
-                        <td>
-                            <a href="/perfilBandaNp/{{banda.banda.id}}">
+            <div class="collection with-header z-depth-1">
+                <div class="collection-header color-principal lighten-1" >
+                    <div class="container" style="width:100%;padding:0">
+                        <div class="row" style="margin-bottom:0;">
+                            <div class="col offset-s2 s5">
+                                <b>Nombre Banda</b>
+                            </div>
+                            <div class="col s5">
+                                <b>Rol</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% for banda in bandas %}
+                <a href="/perfilBandaNp/{{banda.banda.id}}" class="collection-item" style="padding:0px 15px">
+                    <div class="container" style="width:100%;padding:0">
+                        <div class="row valign-wrapper" style="margin-bottom:0;">
+                            <div class="col s2">
                                 <div class="circle avatar-img">
                                     <img src="{{banda.banda.imagenPerfil.url}}" style="height:50px;">
                                 </div>
-                                {{banda.banda.nombre}}
-                            </a>
-                        </td><!--nombre de banda-->
-                        <td>{{banda.ocupacion}}</td><!--Rol-->
-                        
-                    
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                            </div>
+                            <div class="col offset-1 s5 grey-text text-darken-2" style="margin-left:10px">
+                            {{banda.banda.nombre}}
+                            </div>
+                            <div class="col s4 grey-text text-darken-2">
+                            {{banda.ocupacion}}
+                            </div>
+                        </div>
+                    </div>
+                 </a>
+                 {% endfor %}
+            </div>
         </div>
     </div>
 
 {% endblock %}
 
-{% block scripts %}
-
-{% load staticfiles %}
-	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
-	<script src="{% static 'app/scripts/script.js' %}"></script>
-{% endblock %}
