@@ -1,7 +1,7 @@
 {% extends "app/layout.html" %}
 
 {% block sidebar %}
-    {% if tipoUsuaro == artista%}
+    {% if tipoUsuario == 1  %}
         {% include "app/sidebarartistapartial.html" %}
     {% endif%}
         
@@ -59,7 +59,7 @@
             <h5>Bandas a los que pertenezco</h5>
             <ul class="collection">
                 {% for b in integranteEn %}
-                <a href="/perfilBandaNp/b.id"  class="collection-item avatar">
+                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
                 <div class="circle avatar-img dropdown-button"><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
                 <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>

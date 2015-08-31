@@ -1,4 +1,12 @@
 {% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% endif%}
+        
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <form action="{% url 'crearBanda'  %}" method="post" class="form-horizontal">

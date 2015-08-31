@@ -275,6 +275,9 @@ white-space:nowrap;
 .modal{
   margin-top: 80px !important;
 }
+a.color-principal:hover{
+  background-color: #44c2db !important;
+}
 .value{display: none}
 .filter-bar label{
   color:#333;
