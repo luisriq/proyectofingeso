@@ -128,13 +128,12 @@ class perfilBandaNp(View):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")    
-        
-        #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
-        banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
+               #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
+        #banda = IntegrantesBanda.objects.filter(integrante =)[0].banda
         #lista de los integrantes de la banda (modelo)
-        ide = banda.id
-        if ide == bandaid:
-            return HttpResponseRedirect("/perfilBanda")
+        #ide = banda.id
+        #if ide == bandaid:
+        #    return HttpResponseRedirect("/perfilBanda")
         banda = Banda.objects.filter(id = bandaid)[0]
         integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
         seguidores = len(banda.seguidores.all())
