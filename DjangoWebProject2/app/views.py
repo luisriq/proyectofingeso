@@ -214,8 +214,8 @@ class perfilBanda(View):
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
         artista = Artista.objects.filter(user = usuario)
-        if(len(artista)==0):
-            return HttpResponse("Solo artista")
+        #if(len(artista)==0):
+        #    return HttpResponse("Solo artista")
         artista = artista[0]
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         #holi
@@ -242,8 +242,8 @@ class perfilArtista(View):
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
         artista = Artista.objects.filter(user = usuario)
-        if(len(artista)==0):
-            return HttpResponse("Solo artista")
+        #if(len(artista)==0):
+        #    return HttpResponse("Solo artista")
         artista = artista[0]
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         #holi
@@ -269,8 +269,8 @@ class perfilArtistaNp(View):
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
         usuarioLog = Artista.objects.filter(user = usuario)
-        if(len(usuarioLog)==0):
-            return HttpResponse("Solo artista")
+        #if(len(usuarioLog)==0):
+        #    return HttpResponse("Solo artista")
         try:
             artista = Artista.objects.filter(id = userid)[0]
         except:
