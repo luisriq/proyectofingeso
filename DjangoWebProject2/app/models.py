@@ -43,7 +43,7 @@ class Banda(models.Model):
 	#integrantes = models.ManyToManyField(Artista, through = 'IntegrantesBanda')
 	genero = models.ForeignKey(Genero, related_name = 'tocado_por')
 	imagenPerfil = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
-	imagenPortada = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagenPortada = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-portada.jpg')
 	seguidores = models.ManyToManyField("Normal", blank=True)
 	cuentaTwitter = models.CharField(max_length=200, null = True)
 	fechaCreacion = models.DateField(null = True)
