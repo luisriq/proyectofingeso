@@ -24,9 +24,10 @@ class CrearBandaForm(forms.Form):
     choice_g = [ (gen.nombre,gen.nombre) for gen in Genero.objects.all()]
     choice_y = [(str(year), year) for year in range(1900, 2016) ]
     choice_y.reverse()
-    choice_m = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septembrie", "Octubre", "Noviembre", "Diciembre"]
-    for i in range(1,13):
-        choice_m.append((i, choice_m[i]))
+    meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septembrie", "Octubre", "Noviembre", "Diciembre"]
+    choice_m = []
+    for i in range(1,12):
+        choice_m.append((i, meses[i]))
         
     
     genero = forms.ChoiceField(choices = choice_g, widget=forms.Select({

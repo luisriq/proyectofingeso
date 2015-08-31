@@ -102,6 +102,7 @@ class Home(View):
                 
                 'year':datetime.now().year,
                 'urlAvatar':urlAvatar,
+                'datosBarra':datosBarra(request),
                 'bandas':integranteEn
             })
         )
