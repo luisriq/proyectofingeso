@@ -7,18 +7,21 @@
             <li>
                 <h5>Mis Bandas</h5>
             </li>
-            <li><a href="/crearBanda"><h6>+Crear Banda</h6></a></li>
+            <li><a href="/crearBanda" target="_blank"><h6>+Crear Banda</h6></a></li>
             <li>
                 <h6>En las que soy Lider</h6>
                 <ul class="margin-left-1">
-                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+                    {% for b in datosBarra.lider %}
+                        <a href="/perfilBandaNp/{{b.id }}" title="{{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
+                    {% endfor %}
                 </ul>
             </li>
             <li>
                 <h6>En las que Participo</h6>
                 <ul class="margin-left-1">
-                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+                    {% for b in datosBarra.participo %}
+                        <a href="/perfilBandaNp/{{b.id }}" title="{{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
+                    {% endfor %}
                 </ul>
             </li>
             <li><h5>Eventos</h5></li>
@@ -33,18 +36,21 @@
     <li>
         <h5>Mis Bandas</h5>
     </li>
-    <li><a><h6>+Crear Banda</h6></a></li>
+    <li><a href=""><h6>+Crear Banda</h6></a></li>
     <li>
         <h6>En las que soy Lider</h6>
         <ul class="margin-left-1">
-            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
+            {% for b in datosBarra.lider %}
+                <a href="/perfilBandaNp/{{b.id }}" title="{{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
+            {% endfor %}
         </ul>
     </li>
     <li>
         <h6>En las que Participo</h6>
         <ul class="margin-left-1">
-            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
+            {% for b in datosBarra.participo %}
+                <a href="/perfilBandaNp/{{b.id }}" title="{{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
+            {% endfor %}
         </ul>
     </li>
     <li><h5>Eventos</h5></li>

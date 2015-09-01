@@ -378,11 +378,11 @@ def verificacion(request):
     else:
         tipo = 0
     return tipo
-def datosBarra(request):
+def datosBarra(request): #TODO: Solo tira 3 bandas
     bandasParticipo = []
     bandasLider = []
-    artista = Artista.objects.filter(user = request.user)[0]
-    integranteEn = IntegrantesBanda.objects.filter(artista = artista)
+    artis = Artista.objects.filter(user = request.user)[0]
+    integranteEn = IntegrantesBanda.objects.filter(integrante = artis)
     for inte in integranteEn:
         if(inte.esLider):
             bandasLider.append(inte.banda)
