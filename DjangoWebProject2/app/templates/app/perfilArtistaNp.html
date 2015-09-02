@@ -1,62 +1,10 @@
 {% extends "app/layout.html" %}
 
 {% block sidebar %}
-    <!--para mid and large-->
-<div class="left-bar hide-on-small-only" >
-    
-    <div class="container">
-        <div class="row">
-        <ul class="grey-text text-lighten-2">
-            <li><h4>Mi Perfil</h4><hr></li>
-            <li>
-                <h5>Mis Bandas</h5>
-            </li>
-            <li><a><h6>+Crear Banda</h6></a></li>
-            <li>
-                <h6>En las que soy Lider</h6>
-                <ul class="margin-left-1">
-                    <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
-                </ul>
-            </li>
-            <li>
-                <h6>En las que Participo</h6>
-                <ul class="margin-left-1">
-                    <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-                    <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
-                </ul>
-            </li>
-            <li><h5>Eventos</h5></li>
-            <li><h5>Ayuda</h5></li>
-        </ul>
-
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% endif%}
         
-        
-        </div>
-    </div>
-</div>
-<!--para small-->
-<ul class="side-nav" id="mobile-demo" style="padding-top:80px">
-    <li><h4>Mi Perfil</h4><hr></li>
-    <li>
-        <h5>Mis Bandas</h5>
-    </li>
-    <li><a><h6>+Crear Banda</h6></a></li>
-    <li>
-        <h6>En las que soy Lider</h6>
-        <ul class="margin-left-1">
-            <a href="#" title="Jonathan Lollipop Reloaded"><li class="truncate">&#x25cf; Jonathan Lollipop Reloaded</li></a><!--lo de &#x25cf; debe ir por razones esteticas-->
-        </ul>
-    </li>
-    <li>
-        <h6>En las que Participo</h6>
-        <ul class="margin-left-1">
-            <a href="#" title="Alvin Eclair"><li class="truncate">&#x25cf; Alvin Eclair</li></a>
-            <a href="#" title="Alan Jellybean"><li class="truncate">&#x25cf; Alan Jellybean</li></a>
-        </ul>
-    </li>
-    <li><h5>Eventos</h5></li>
-    <li><h5>Ayuda</h5></li>
-</ul>
 {% endblock %}
 
 {% block content %}
@@ -72,43 +20,23 @@
                     <div class="container">
                         <div class="row">
                             <div class="col s8 offset-s2"> 
-                                <div class="card-panel color-principal">
-                                    <b class="">{{seguidores}}
-                                    </b>
+                                <div class="card-panel color-principal lighten-3">
+                                    <b class="">{{seguidores}}</b> Seguidor{%if seguidores != 1%}es{% endif%}
+                                    
                                 </div>
                             </div>
                         </div>
                     
                     </div>
-             <!--       {{idArtista}}    
-                     {% if artista %}
-                     artista existe  
-                     {%else%}
-                     artista no existe 
-                     {% endif %}
-                     
-                     {% if idArtista %}
-                     idArtista existe
-                     {%else%}
-                     idArtista no existe
-                     {% endif %}     -->
-
                 <div class="left-align">
                     <h6>Sobre mi:</h6>
-                    <div class="card-panel color-principal">
-                        <b class="">{{artista.biografia}}
-                        </b>
+                    <div class="card-panel color-principal lighten-3">
+                        {{artista.biografia}}
                     </div>
                 </div>
 
-                    <h6>Twitter: </h6>
-                    <div class="card-panel color-principal">
-                        <div class="card-panel white"> 
-                            <a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                        </div>
-                    </div>
-
-
+                <div class="z-depth-1"><a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div> 
         </div>
 
         <div class="col l6 s12 center-align">
@@ -126,31 +54,21 @@
                         </div>
                     </div>
                     {% endfor %}
-
-
-                    
-
                 </div>  
             </div>
-
-  <h5>Bandas a los que pertenezco</h5>
-<ul class="collection">
-    {% for b in integranteEn %}
-    
-      <a href="/perfilBandaNp/b.id"  class="collection-item avatar">
-      <div class="circle avatar-img dropdown-button"><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
-      </div>
-      <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>
-    </a>
-    {% endfor %}
-</ul>
-            </div>
+            <h5>Bandas a los que pertenezco</h5>
+            <ul class="collection">
+                {% for b in integranteEn %}
+                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
+                <div class="circle avatar-img dropdown-button"><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
+                </div>
+                <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>
+                </a>
+                {% endfor %}
+            </ul>
         </div>
-        
-        
-
-
     </div>
+</div>
 
 {% endblock %}
 

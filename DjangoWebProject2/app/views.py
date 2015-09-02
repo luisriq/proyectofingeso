@@ -5,13 +5,15 @@ Definition of views.
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse
 from django.template import RequestContext
-from datetime import datetime
+from datetime import datetime, timedelta, date
 from django.views.generic import View
 from models import *
-from forms import UserForm, RegistroForm
+import time
+from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
+
 
 from django.views.generic.edit import CreateView
 
@@ -100,31 +102,12 @@ class Home(View):
                 
                 'year':datetime.now().year,
                 'urlAvatar':urlAvatar,
+                'datosBarra':datosBarra(request),
                 'bandas':integranteEn
             })
         )
 
-class Musicos(View):
-    def get(self, request):
-        assert isinstance(request, HttpRequest)
-        musicos = Musico.objects.all()
-        if ('visitass' in request.session):
-            pass
-        else:
-            request.session['visitass'] = 0
-        request.session['visitass'] = request.session['visitass'] + 1
-        return render(
-            request,
-            'app/musicos.html',
-            context_instance = RequestContext(request,
-            {
-                'title':'Musicos',
-                'message':'Informacion de los musicos.',
-                'year':datetime.now().year,
-                'musicos':musicos,
-                'visitas':request.session['visitass'],
-            })
-        )
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
@@ -139,47 +122,19 @@ def contact(request):
         })
     )
 #-----------------------------------------------------------
-class perfilBanda(View):
-    
-    def get(self, request)  :
-        if not request.user.is_authenticated():
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
-        usuario = request.user
-        a = Artista.objects.filter(user = usuario)[0]
-        
-        #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
-        banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
-        #lista de los integrantes de la banda (modelo)
-        integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]
-        ide = banda.id
-        seguidores = len(banda.seguidores.all())
-        
-        assert isinstance(request, HttpRequest)
-        return render(
-            request,    
-            'app/perfilBanda.html',
-            context_instance = RequestContext(request,
-            {
-                'banda':banda,
-                'integrantes':integrantes,
-                'seguidores':seguidores
-            })
-        )
-#-----------------------------------------------------------
+
 class perfilBandaNp(View):
     
     def get(self, request, bandaid):
-        if not request.user.is_authenticated():
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
-        usuario = request.user
-        a = Artista.objects.filter(user = usuario)[0]
-        
-        #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
-        banda = IntegrantesBanda.objects.filter(integrante = a)[0].banda
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")    
+               #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
+        #banda = IntegrantesBanda.objects.filter(integrante =)[0].banda
         #lista de los integrantes de la banda (modelo)
-        ide = banda.id
-        if ide == bandaid:
-            return HttpResponseRedirect("/perfilBanda")
+        #ide = banda.id
+        #if ide == bandaid:
+        #    return HttpResponseRedirect("/perfilBanda")
         banda = Banda.objects.filter(id = bandaid)[0]
         integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
         seguidores = len(banda.seguidores.all())
@@ -191,57 +146,63 @@ class perfilBandaNp(View):
             context_instance = RequestContext(request,
             {
                 'banda':banda,
+                'tipoUsuario':tipoUsuario,
                 'integrantes':integrantes,
                 'seguidores':seguidores
             })
         )
 #-----------------------------------------------------------
+#    clase perfil normal no propietario
+#-----------------------------------------------------------
 class perfilNormalNp(View):
     
     def get(self, request, normalid):
-        if not request.user.is_authenticated():
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
-        usuario = request.user
-        
-        #usuario al que se esta viendo}
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
+         
         try:
-            usuarioLog = Normal.objects.filter(id = normalid)[0]
+            # si se tiene la url de un artista se redirecciona en el except
+            normal = Normal.objects.filter(id = normalid)[0]
+            # si el usuario logueado es el mismo al que se esta viendo
+            usuarioLog = Normal.objects.filter(user = request.user)[0]
+            #if usuarioLog.id == normal.id:
+                #return HttpResponseRedirect("/perfilNormalNp/%s" % normalid)
+            #artistas a los que sigue el usuario normal
+            artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
+        
+            #bandas a las que sigue el usuario normal
+            bandasSeguidas = Banda.objects.filter(seguidores = usuarioLog)
+            assert isinstance(request, HttpRequest)
+            return render(
+                request,
+                'app/perfilNormalNp.html',
+                context_instance = RequestContext(request,
+                {
+                    'usuario':usuarioLog,
+                    'tipoUsuario':tipoUsuario,
+                    'losquesigo':artistasSeguidos,
+                    'lasquesigo':bandasSeguidas
+                })
+            )
         except:
             #url = "/perfilArtistaNp/",normalid
             return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
         
-        print usuarioLog
-        #if ide == bandaid:
-        #    return HttpResponseRedirect("/perfilBanda")
         
-        #artistas a los que sigue el usuario normal
-        artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
         
-        #bandas a las que sigue el usuario normal
-        bandasSeguidas = Banda.objects.filter(seguidores = usuarioLog)
         
-        assert isinstance(request, HttpRequest)
-        return render(
-            request,
-            'app/perfilNormalNp.html',
-            context_instance = RequestContext(request,
-            {
-                'usuario':usuarioLog,
-                'losquesigo':artistasSeguidos,
-                'lasquesigo':bandasSeguidas
-            })
-        )
 #-----------------------------------------------------------
    
 
-class perfilArtista(View):
+class perfilBanda(View):
     def get(self, request):
         if not request.user.is_authenticated() :
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
         usuario = request.user
         artista = Artista.objects.filter(user = usuario)
-        if(len(artista)==0):
-            return HttpResponse("Solo artista")
+        #if(len(artista)==0):
+        #    return HttpResponse("Solo artista")
         artista = artista[0]
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         #holi
@@ -261,50 +222,131 @@ class perfilArtista(View):
             })
         )
 #------------------------
-class perfilArtistaNp(View):
-    def get(self, request,userid):
-        if not request.user.is_authenticated() :
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+
+class perfilArtista(View):
+    def get(self, request):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
         usuario = request.user
-        usuarioLog = Artista.objects.filter(user = usuario)
-        if(len(usuarioLog)==0):
-            return HttpResponse("Solo artista")
         try:
-            artista = Artista.objects.filter(id = userid)[0]
+            artista = Artista.objects.filter(user = usuario)[0]
         except:
-            return HttpResponseRedirect("/perfilNormalNp/%s" % userid)
-       
-        
-        
-        ##este es el username
-        if usuarioLog[0].id == artista.id:
-            return HttpResponseRedirect("/perfilArtista")
-        integranteEn = [ib.banda for ib in IntegrantesBanda.objects.filter(integrante = artista)]
-        instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
-        #instrumentos = Instrumento.objects.filter(artista = artista)
+            return HttpResponse("Debe redirigirse al home del usuario normal")
+        integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
+        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
         assert isinstance(request, HttpRequest)
         return render(
             request,
-            'app/perfilArtistaNp.html',
+            'app/perfilArtista.html',
             context_instance = RequestContext(request,
             {
                 'year':datetime.now().year,
+                'integranteEn':integranteEn,
+                'tipoUsuario': tipoUsuario,
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'artista':artista,
-                'integranteEn':integranteEn
+                'artista':artista
             })
         )
+#------------------------------------------------------
+#    clase perfil Artista No propietario
+#------------------------------------------------------
+class perfilArtistaNp(View):
+    def get(self, request,userid):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")           
+        
+        try:
+            # si en la url se tiene la key de un normal se redirecciona en el except
+            artista = Artista.objects.filter(id = userid)[0]
+            # si el usuario logueado es el mismo al que se esta viendo
+            usuarioLog = Usuario.objects.filter(user = request.user)[0]
+            if usuarioLog.id == artista.id:
+                return HttpResponseRedirect("/perfilArtista")
+                
+            integranteEn = [ib.banda for ib in IntegrantesBanda.objects.filter(integrante = artista)]
+            instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
+            seguidores = len(artista.seguidores.all())
+            assert isinstance(request, HttpRequest)
+            return render(
+                request,
+                'app/perfilArtistaNp.html',
+                context_instance = RequestContext(request,
+                {
+                    'year':datetime.now().year,
+                    'instrumentos':instrumentos,
+                    'seguidores':seguidores,
+                    'artista':artista,
+                    'tipoUsuario':tipoUsuario,
+                    'integranteEn':integranteEn
+                })
+            )
+        except:
+            return HttpResponseRedirect("/perfilNormalNp/%s" % userid)
+        
+#------------------------------
+class crearBanda(View):
+    def post(self, request):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario != 1:
+            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
+         
+        # create a form instance and populate it with data from the request:
+        form = CrearBandaForm(request.POST)
+        # check whether it's valid:
+        print "lkansdlkansdlkansds"
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            gen = Genero.objects.filter(nombre=form.cleaned_data['genero'])[0]
+            fecha = date(year=int(form.cleaned_data['year']), month=int(form.cleaned_data['mes']), day=1)
+            b = Banda(nombre = form.cleaned_data['nombre'],
+                      genero=gen, 
+                      fechaCreacion = fecha)
+            b.save()
+            usuario = request.user
+            artista = Artista.objects.filter(user = usuario)[0]
+            
+            integr = IntegrantesBanda(integrante = artista, banda = b, esLider=True, fechaIngreso=fecha, ocupacion="Lider")
+            integr.save()
+            return HttpResponseRedirect("/perfilBandaNp/%s" % b.id)
+            
+        else:
+            return render(request, 'app/crearBanda.html', {'form': form})
+            
+    def get(self, request):
+        # if this is a POST request we need to process the form data
+        #Traer todos los generos 
+
+        form = CrearBandaForm()
+        return render(request, 'app/crearBanda.html', {'form': form})
+
+#------------------------------
  
  #------------------------------------------------------       
 class busqueda(View):
     def get(self, request):
+        
         if request.is_ajax():
                    artistas = Artista.objects.filter(nombre__startswith= request.GET['nombre'] ).values('id', 'nombre', 'imagenPerfil')
-                   return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
+                   #return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
         else:
                    return HttpResponse("['nombre':0]");
+        
+#----------------------------------------------
+class editarPerfilArtistA(View):
+    def get(self, request):
+        
+        if  request.user.is_authenticated():
+            
+                   return HttpResponse( request.GET["target"] + " - " +request.GET["data"]) 
+                   #return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
+        else:
+                   return HttpResponse("a la mierda ");
         
 #----------------------------------------------
 def about(request):
@@ -320,3 +362,34 @@ def about(request):
             'year':datetime.now().year,
         })
     )
+ 
+#----------------------------------------------------
+#    funcion para verificar si esta login el usuaario  
+#---------------------------------------------------- 
+def verificacion(request):
+    if request.user.is_authenticated():
+        try:
+            artista = Artista.objects.filter(user = request.user)[0]
+            tipo = 1
+        except:
+            try:
+                normal = Normal.objects.filter(user = request.user)[0]
+                tipo = 2
+            except:
+                admin = Administrador.objects.filter(user = request.user)[0]
+                
+                tipo = 3
+    else:
+        tipo = 0
+    return tipo
+def datosBarra(request): #TODO: Solo tira 3 bandas
+    bandasParticipo = []
+    bandasLider = []
+    artis = Artista.objects.filter(user = request.user)[0]
+    integranteEn = IntegrantesBanda.objects.filter(integrante = artis)
+    for inte in integranteEn:
+        if(inte.esLider):
+            bandasLider.append(inte.banda)
+        else:
+            bandasParticipo.append(inte.banda)
+    return {"participo":bandasParticipo, "lider":bandasLider}  

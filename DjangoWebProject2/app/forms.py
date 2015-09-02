@@ -6,13 +6,37 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
+from datetime import datetime
 from django.forms import ModelForm
-from models import Usuario
+from models import *
+from datetime import datetime, timedelta, date
+
 
 class UserForm(ModelForm):
     class Meta:
         model = Usuario
         fields = ('nombre', 'correo', 'contrasena')
+        
+class CrearBandaForm(forms.Form):
+    nombre = forms.CharField(max_length=254,
+                               widget=forms.TextInput({
+                                   'class': 'form-control validate'}))
+    choice_g = [ (gen.nombre,gen.nombre) for gen in Genero.objects.all()]
+    choice_y = [(str(year), year) for year in range(1900, 2016) ]
+    choice_y.reverse()
+    meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septembrie", "Octubre", "Noviembre", "Diciembre"]
+    choice_m = []
+    for i in range(0,12):
+        choice_m.append((i, meses[i]))
+        
+    
+    genero = forms.ChoiceField(choices = choice_g, widget=forms.Select({
+                                   'class': 'browser-default'}))
+    mes = forms.ChoiceField(choices = choice_m, widget=forms.Select({
+                                   'class': 'browser-default'}))
+    year = forms.ChoiceField(choices = choice_y, widget=forms.Select({
+                                   'class': 'browser-default'}))
+    
 class RegistroForm(forms.Form):
     name = forms.CharField(max_length=254,
                                widget=forms.TextInput({
