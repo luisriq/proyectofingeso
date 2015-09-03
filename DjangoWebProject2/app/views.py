@@ -3,7 +3,7 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, Http404
 from django.template import RequestContext
 from datetime import datetime, timedelta, date
 from django.views.generic import View
@@ -360,6 +360,7 @@ class editarPerfilArtistA(View):
         
 #----------------------------------------------
 def about(request):
+    raise Http404("Pagina no existe 404 dead link")
     """Renders the about page."""
     assert isinstance(request, HttpRequest)
     return render(
@@ -372,7 +373,17 @@ def about(request):
             'year':datetime.now().year,
         })
     )
- 
+class NoImplementado(View):
+    def get(self, request, template):
+        return render(
+        request,
+        'app/%s.html'%template,
+        context_instance = RequestContext(request,
+        {
+            'title':'About',
+            'message':'Your application description page.',
+            'year':datetime.now().year,
+        }))
 #----------------------------------------------------
 #    funcion para verificar si esta login el usuaario  
 #---------------------------------------------------- 

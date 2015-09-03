@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div class="container" id-banda="{{ idBanda }}">
+<div class="container sfull" id-banda="{{ idBanda }}">
 <div class="row" >
     
     <div class="col s12">
@@ -25,12 +25,12 @@
                 </div>
                 <div class="row">
                     <div class="col l6 s12 ">
-                        <div class="container">
+                        <div class="container sfull">
                             <div class="row">
                                 <div class="col s12 left-align"><span >{{banda.biografia}}</span></div>
                             </div>
                             <div class="row">
-                                <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"> {{ seguidores }} Seguidores</div>
+                                <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"><b> {{ seguidores }} Seguidores</b></div>
                             </div>
                             <div class="row">
                                 <div class="col s12" >
@@ -43,9 +43,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a class="col  s5  card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>
-                                <a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Solicitar Ingreso</a>
-                                <a class="col  s5  card-panel color-principal white-text" style="padding:10px">Reportar Mala Conducta</a>
+                                <a class="col hover-shadow s5 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>
+                                <a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text"  onclick="Materialize.toast('Solicitud enviada, espere respuesta.', 4000)" style="padding:10px">Solicitar Ingreso</a>
+                                <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
                                 <!--a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a-->
                             </div>
                             <div class="row">
@@ -133,5 +133,39 @@
 </div>
 </div>
 
+
+<!-- Modal Structure -->
+  <div id="modalReport" class="modal ">
+    <div class="modal-content">
+      <h4>Reportar Mala conducta</h4>
+      <p>
+      <input name="group1" type="radio" id="test1" />
+      <label for="test1">Red</label>
+    </p>
+    <p>
+      <input name="group1" type="radio" id="test2" />
+      <label for="test2">Yellow</label>
+    </p>
+    <p>
+      <input class="with-gap" name="group1" type="radio" id="test3"  />
+      <label for="test3">Green</label>
+    </p>
+    <div class="input-field col s12">
+            <textarea id="textarea1" class="materialize-textarea" length="120"></textarea>
+            <label for="textarea1">Textarea</label>
+          </div>
+    </div>
+    <div class="modal-footer">
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Su caso será revisado por un administrador.', 4000);$('#modalReport').closeModal();"  >Aceptar</a>
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modalReport').closeModal();"  >Cancelar</a>
+    </div>
+  </div>
+
+
+{% endblock %}
+{% block scripts %}
+
+
+<script type="text/javascript">$('.modal-trigger').leanModal();</script>
 
 {% endblock %}
