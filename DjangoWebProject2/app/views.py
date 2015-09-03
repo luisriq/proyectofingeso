@@ -435,6 +435,7 @@ def getUsuariolog(request):
         usuario = Artista.objects.filter(user = request.user)[0]
     return usuario
     
+    # sdfsdf
 def datosBarra(request): #TODO: Solo tira 3 bandas
     bandasParticipo = []
     bandasLider = []
