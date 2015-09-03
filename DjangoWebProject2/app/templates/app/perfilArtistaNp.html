@@ -11,9 +11,9 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container sfull">
     <div class="row">
-        <div class="col l6 s12 center-align">
+        <div class="card-panel grey lighten-4 col l6 s12 center-align">
 
              <div class="circle avatar-perfil" ><img src="{{artista.imagenPerfil.url}}" alt="" 
                 style="height:150px;"></div>
@@ -41,18 +41,18 @@
                 </div> 
         </div>
 
-        <div class="col l6 s12 center-align">
+        <div class="card-panel grey lighten-3 col offset-l1 l5 s12 center-align">
             <div class="container">
                 <div class="row">
                     {% for b in instrumentos %}
-                    <div class="col s6 center-align"> 
+                    <div class="col center-align" style="width:160px"> 
                         <div class="card color-333">
                             <div class="card-image">
                             <img src="{{b.instrumento.imagen.url}}" alt="" style="height:150px;">
                             </div>
-                            <div class="card-content ">
+                            <!--div class="card-content ">
                             <p class=" white-text">LVL:{{b.nivel}}</p>
-                            </div>
+                            </div-->
                         </div>
                     </div>
                     {% endfor %}
