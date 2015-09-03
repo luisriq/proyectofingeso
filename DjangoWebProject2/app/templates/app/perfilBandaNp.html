@@ -1,5 +1,13 @@
 {% extends "app/layout.html" %}
 
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
 {% block content %}
 
 <div class="container sfull" id-banda="{{ idBanda }}">
@@ -7,7 +15,7 @@
     
     <div class="col s12">
         <div class="card white">
-            <div class="foto-portada" style="background:url({{banda.imagenPerfil.url}}) ;" >
+            <div class="foto-portada" style="background:url({{banda.imagenPortada.url}}) ;" >
             </div>
             <div class="container center-align">
                 <div class="row">
