@@ -331,9 +331,19 @@ class crearBanda(View):
     def get(self, request):
         # if this is a POST request we need to process the form data
         #Traer todos los generos 
+        tipoUsuario = verificacion(request)
 
         form = CrearBandaForm()
-        return render(request, 'app/crearBanda.html', {'form': form})
+        return render(
+            request, 
+            'app/crearBanda.html', 
+            context_instance = RequestContext(request,
+            {
+                'tipoUsuario':tipoUsuario,
+                'datosBarra':datosBarra(request),
+                'form': form
+            })
+        )
 
 #------------------------------
  
