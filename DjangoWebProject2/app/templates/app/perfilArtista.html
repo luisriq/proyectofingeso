@@ -5,41 +5,33 @@
 {% endblock %}
 
 {% block content %}
-<a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="Crunchyroll">Tweets por el @Crunchyroll.</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    {% load staticfiles %}
 
-<h2>{{ title }}.</h2>
-<h3>{{ message }}</h3>
-{{ artista.imagenPerfil.url }}
-<img src="{{ artista.imagenPerfil.url }}"/>
-<details>
-    <summary>Usuario creado correctamente</summary>
-    <table>
-      <tr>
-        <th scope="row">Nombre</th>
-        <td>{{artista.nombre}}</td>
-      </tr>
-      <tr>
-        <th scope="row">Seguidores</th>
-        <td>{{seguidores}}</td>
-      </tr>
-      
-       <tr>
-        <th scope="row">Instrumentos</th>
-        {% for instrumento in instrumentos %}
-            <td>{{ instrumento.nombre }}</td>
-        {% endfor %}
-      </tr> 
-      <tr>
-        <th scope="row">Bandas</th>
-        {% for b in integranteEn %}
-            <td>{{ b.banda.nombre }}</td>
-            <td>{{ b.ocupacion }}</td>
-            <td>{{ b.fechaIngreso }}</td>
-        {% endfor %}
-      </tr>
-      
-	</table>
-</details>
+<form method="POST" id="post-form-nombre">
+    {% csrf_token %}
+    
+    <div class="fieldWrapper" id="the_post">
+        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        <label for="first_name">First Name</label>
+    </div>
+    <div id="results"></div> <!-- errors go here -->
+    <input type="submit" value="Post" class="tiny button">
+</form>
+<script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
+<script src="{% static 'app/scripts/respond.js' %}"></script>
+<script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+
+<script type="text/javascript">
+    $('#post-form-nombre').on('submit', function(event){
+    event.preventDefault();
+    console.log("form submitted!")  // sanity check
+    create_post();
+});
+function create_post(){
+    console.log("JASDJOASDIJOADS")
+}
+</script>
 
 
 {% endblock %}

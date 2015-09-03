@@ -436,3 +436,6 @@ def datosBarra(request): #TODO: Solo tira 3 bandas
         else:
             bandasParticipo.append(inte.banda)
     return {"participo":bandasParticipo, "lider":bandasLider}  
+
+def guardarDatosArtista(request):
+    return "yes"
