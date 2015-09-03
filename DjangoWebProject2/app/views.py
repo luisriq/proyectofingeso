@@ -147,6 +147,7 @@ class perfilBandaNp(View):
             {
                 'banda':banda,
                 'tipoUsuario':tipoUsuario,
+                'datosBarra':datosBarra(request),
                 'integrantes':integrantes,
                 'seguidores':seguidores
             })
@@ -158,36 +159,42 @@ class perfilNormalNp(View):
     
     def get(self, request, normalid):
         tipoUsuario = verificacion(request)
+        verLogVsUrl = verificarLogVsUrl(request, normalid)
+        print "tipo : ", tipoUsuario, " vs : ", verLogVsUrl, " @ : ", request.user
         if tipoUsuario == 0:
             return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
-         
-        try:
-            # si se tiene la url de un artista se redirecciona en el except
-            normal = Normal.objects.filter(id = normalid)[0]
-            # si el usuario logueado es el mismo al que se esta viendo
-            usuarioLog = Normal.objects.filter(user = request.user)[0]
-            #if usuarioLog.id == normal.id:
-                #return HttpResponseRedirect("/perfilNormalNp/%s" % normalid)
-            #artistas a los que sigue el usuario normal
-            artistasSeguidos = Artista.objects.filter(seguidores = usuarioLog)
         
-            #bandas a las que sigue el usuario normal
-            bandasSeguidas = Banda.objects.filter(seguidores = usuarioLog)
+        elif verLogVsUrl and tipoUsuario == 1:
+            return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
+            
+        elif verLogVsUrl and tipoUsuario == 2:
+            return HttpResponseRedirect("/perfilNormal/%s" % normalid)
+                #falta hacer esta template
+        else:
+            #usuario del perfil normal
+            normal = Normal.objects.filter(id = normalid)[0]  
+            
+            #artistas a los que sigue el usuario normal de la url
+            artistasSeguidos = Artista.objects.filter(seguidores = normal)
+        
+            #bandas a las que sigue el usuario normal de la url
+            bandasSeguidas = Banda.objects.filter(seguidores = normal)
+            
+            #llamada al template
             assert isinstance(request, HttpRequest)
             return render(
                 request,
                 'app/perfilNormalNp.html',
                 context_instance = RequestContext(request,
                 {
-                    'usuario':usuarioLog,
+                    'usuario':normal,
                     'tipoUsuario':tipoUsuario,
+                    'datosBarra':datosBarra(request),
                     'losquesigo':artistasSeguidos,
                     'lasquesigo':bandasSeguidas
                 })
             )
-        except:
-            #url = "/perfilArtistaNp/",normalid
-            return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
+        
         
         
         
@@ -216,6 +223,7 @@ class perfilBanda(View):
             {
                 'year':datetime.now().year,
                 'integranteEn':integranteEn,
+                'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
                 'artista':artista
@@ -245,6 +253,7 @@ class perfilArtista(View):
                 'year':datetime.now().year,
                 'integranteEn':integranteEn,
                 'tipoUsuario': tipoUsuario,
+                'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
                 'artista':artista
@@ -279,6 +288,7 @@ class perfilArtistaNp(View):
                     'year':datetime.now().year,
                     'instrumentos':instrumentos,
                     'seguidores':seguidores,
+                    'datosBarra':datosBarra(request),
                     'artista':artista,
                     'tipoUsuario':tipoUsuario,
                     'integranteEn':integranteEn
@@ -382,6 +392,28 @@ def verificacion(request):
     else:
         tipo = 0
     return tipo
+
+#-----------------------------------------------------
+#    funcion para verificar si el usuario logeado es 
+#    el mismo de la url
+#-----------------------------------------------------   
+def verificarLogVsUrl(request, id):
+    usuario = Usuario.objects.filter(user = request.user)[0]
+    print "user : ", type(usuario.id), "id : ", type(id)
+    if usuario.id == int(id):
+        return True
+    return False
+
+#-----------------------------------------------------
+#    devuelve el usuario logeado
+#-----------------------------------------------------   
+def getUsuariolog(request):
+    if len(Normal.objects.filter(user = request.user)) == 1:
+        usuario = Normal.objects.filter(user = request.user)[0]
+    elif len(Artista.objects.filter(user = request.user)) == 1:
+        usuario = Artista.objects.filter(user = request.user)[0]
+    return usuario
+    
 def datosBarra(request): #TODO: Solo tira 3 bandas
     bandasParticipo = []
     bandasLider = []

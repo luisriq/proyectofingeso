@@ -3,7 +3,7 @@
     <div class="container">
         <div class="row">
         <ul class="grey-text text-lighten-2">
-            <li><h4>Mi Perfil</h4><hr></li>
+            <li><a href="/perfilArtista"><h4>Mi Perfil</h4></a><hr></li>
             <li>
                 <h5>Mis Bandas</h5>
             </li>
@@ -12,7 +12,7 @@
                 <h6>En las que soy Lider</h6>
                 <ul class="margin-left-1">
                     {% for b in datosBarra.lider %}
-                        <a href="/perfilBandaNp/{{b.id }}" title="{{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
+                        <a href="/perfilBandaNp/{{b.id }}" title="ir a {{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
                     {% endfor %}
                 </ul>
             </li>
@@ -20,7 +20,7 @@
                 <h6>En las que Participo</h6>
                 <ul class="margin-left-1">
                     {% for b in datosBarra.participo %}
-                        <a href="/perfilBandaNp/{{b.id }}" title="{{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
+                        <a href="/perfilBandaNp/{{b.id }}" title="ir a {{ b.nombre }}"><li class="truncate">&#x25cf; {{ b.nombre }}</li></a>
                     {% endfor %}
                 </ul>
             </li>
