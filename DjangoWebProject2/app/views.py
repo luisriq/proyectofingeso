@@ -104,6 +104,7 @@ class Home(View):
                 normal = Normal.objects.filter(user = request.user)
                 urlAvatar = normal[0].imagenPerfil.url
                 tipo = "Normal :"
+                bandas = Banda.objects.all()
                 return render( 
                     request,
                     'app/mainnormal.html',
@@ -114,13 +115,14 @@ class Home(View):
                         'tipo':tipo,
                         
                         'year':datetime.now().year,
-                        'urlAvatar':urlAvatar
+                        'urlAvatar':urlAvatar,
+                        'bandas':bandas
                         #'datosBarra':datosBarra(request),
                         #'bandas':integranteEn
                     })
                 )
         except:
-            print "Usuario no logeado"
+            print "no logeado"
             return HttpResponseRedirect("/login")
             tipo = ""
             
@@ -476,16 +478,20 @@ def getUsuarioUrl(urlId):
 
     
 def datosBarra(request): #TODO: Solo tira 3 bandas
-    bandasParticipo = []
-    bandasLider = []
-    artis = Artista.objects.filter(user = request.user)[0]
-    integranteEn = IntegrantesBanda.objects.filter(integrante = artis)
-    for inte in integranteEn:
-        if(inte.esLider):
-            bandasLider.append(inte.banda)
-        else:
-            bandasParticipo.append(inte.banda)
-    return {"participo":bandasParticipo, "lider":bandasLider}  
+    tipoUsuario = verificacion(request) 
+    if tipoUsuario == 1:
+        bandasParticipo = []
+        bandasLider = []
+        artis = Artista.objects.filter(user = request.user)[0]
+        integranteEn = IntegrantesBanda.objects.filter(integrante = artis)
+        for inte in integranteEn:
+            if(inte.esLider):
+                bandasLider.append(inte.banda)
+            else:
+                bandasParticipo.append(inte.banda)
+        return {"participo":bandasParticipo, "lider":bandasLider}  
+    elif tipoUsuario == 2:
+        return "ooh"
 
 
 def guardarDatosArtista(request):
