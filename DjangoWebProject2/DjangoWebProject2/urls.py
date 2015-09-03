@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     url(r'^crearBanda', crearBanda.as_view(), name='crearBanda'),
     url(r'^busqueda$', busqueda.as_view(), name='busqueda'),
     url(r'^updatePA$', editarPerfilArtistA.as_view(), name='updatePA'),
+    url(r'^upload$', upload_file, name='upload'),
 
     url(r'^login/$',
         'django.contrib.auth.views.login',

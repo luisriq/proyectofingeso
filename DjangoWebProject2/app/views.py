@@ -331,9 +331,19 @@ class crearBanda(View):
     def get(self, request):
         # if this is a POST request we need to process the form data
         #Traer todos los generos 
+        tipoUsuario = verificacion(request)
 
         form = CrearBandaForm()
-        return render(request, 'app/crearBanda.html', {'form': form})
+        return render(
+            request, 
+            'app/crearBanda.html', 
+            context_instance = RequestContext(request,
+            {
+                'tipoUsuario':tipoUsuario,
+                'datosBarra':datosBarra(request),
+                'form': form
+            })
+        )
 
 #------------------------------
  
@@ -437,5 +447,36 @@ def datosBarra(request): #TODO: Solo tira 3 bandas
             bandasParticipo.append(inte.banda)
     return {"participo":bandasParticipo, "lider":bandasLider}  
 
+
 def guardarDatosArtista(request):
     return "yes"
+
+    
+def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        print form
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file_'])
+            u = Usuario.objects.filter(user = request.user)[0]
+            u.imagenPerfil = 'pic_folder/%s'%request.FILES['file_']
+            u.save()
+            return HttpResponseRedirect('/upload')
+    else:
+        form = UploadFileForm()
+    return render(
+        request,
+        'app/upload.html',
+        context_instance = RequestContext(request,
+        {
+            'title':'About',
+            'message':'Your application description page.',
+            'year':datetime.now().year,'form': form,
+        })
+    )
+
+def handle_uploaded_file(f):
+    with open('pic_folder/%s'%f, 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
