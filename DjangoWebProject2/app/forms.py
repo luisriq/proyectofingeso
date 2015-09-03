@@ -83,3 +83,7 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                widget=forms.PasswordInput({
                                    'id':'contras',
                                    'class': 'form-control validate'}))
+                                   
+class UploadFileForm(forms.Form):
+    title = forms.CharField(max_length=50)
+    file_ = forms.FileField()
