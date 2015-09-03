@@ -449,6 +449,13 @@ def datosBarra(request): #TODO: Solo tira 3 bandas
 
 
 def guardarDatosArtista(request):
+    if request.method == 'POST':
+        dato = request.POST.get('dato')
+        target = request.POST.get('target')
+        response_data = {}
+        print "YEEEES %s"%dato
+        print "Target %s"%target
+        
     return "yes"
 
     
