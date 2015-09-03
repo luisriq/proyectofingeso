@@ -58,6 +58,7 @@
         url : "guardarDatosArtista", // the endpoint
         type : "POST", // http method
         data : { dato : $('#first_name').val(),
+                 target : "nombre",
             "X-CSRFToken" : '{{ csrf_token }}' }, // data sent with the post request
         
         // handle a successful response

@@ -489,14 +489,24 @@ def datosBarra(request): #TODO: Solo tira 3 bandas
 
 
 def guardarDatosArtista(request):
-    if request.method == 'POST':
-        dato = request.POST.get('dato')
-        target = request.POST.get('target')
-        response_data = {}
-        print "YEEEES %s"%dato
-        print "Target %s"%target
-        
-    return "yes"
+    try:
+        if request.method == 'POST':
+            
+            print "Loged %s"%request.user.id
+            dato = request.POST.get('dato')
+            target = request.POST.get('target')
+            response_data = {}
+            if target == "nombre":
+                u = Usuario.objects.filter(user = request.user)[0]
+                u.nombre = dato
+                request.user.first_name = dato
+                request.user.save()
+                u.save()
+            print "YEEEES %s"%dato
+            print "Target %s"%target
+    except:
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
 
     
 def upload_file(request):
