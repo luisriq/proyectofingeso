@@ -268,8 +268,8 @@ white-space:nowrap;
 }
 
 @media only screen and (max-width: 600px){
-  .container{
-    
+  .container.sfull{
+    width: 100% !important;
   }
 }
 .modal{
@@ -295,4 +295,10 @@ a.color-principal:hover{
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
    color:    #999;
+}
+.hover-shadow:hover{
+      box-shadow: 1px 2px 8px 0 rgba(0,0,0,0.4)!important;
+}
+.hover-shadow:active{
+      box-shadow: 0 0px 2px 0 rgba(0,0,0,0.5)!important;
 }

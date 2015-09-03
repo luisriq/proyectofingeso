@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principal Artista - uMusic</title>
+    
+    <link rel="stylesheet" type="text/css" href="./Pagina Principal Artista - uMusic_files/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="./Pagina Principal Artista - uMusic_files/site.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="./Pagina Principal Artista - uMusic_files/modernizr-2.6.2.js"></script>
+</head>
+
+<body class="grey lighten-2">
+    
+    <div class="navbar container wide" style="position:fixed;top:0;">
+       	<div class="row color-333">
+            <div class="col left w200px">
+                
+                <a class="b-logo" href="./Pagina Principal Artista - uMusic_files/Pagina Principal Artista - uMusic.html">
+                    <img alt="Brand" class="logo-img" src="./Pagina Principal Artista - uMusic_files/logo.png">
+                </a>&nbsp;
+            </div>
+           
+            <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
+                <div class="row">
+                
+                <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-activates='dropdown1'  style="max-width:100% ">
+                    <div class="truncate" >Nombre del usuario y la cashalaspa</div>
+                    <div class="circle avatar-img dropdown-button" data-activates='dropdown1'><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+                </div>
+
+                <ul id='dropdown1' class='grey darken-3 dropdown-content' >
+                        <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
+                        <li><a href="#!">Configuraciones</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#!">Cerrar Sesion</a></li>
+                    </ul>
+
+                <script type="text/javascript">$('.dropdown-button').dropdown({
+                      inDuration: 300,
+                      outDuration: 225,
+                      constrain_width: false, // Does not change width of dropdown to that of the activator
+                      hover: true, // Activate on hover
+                      gutter: 0, // Spacing from edge
+                      belowOrigin: false // Displays dropdown below the button
+                    }
+                  );</script>
+
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+  
+
+    <div class="container">
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <br><br><br><br>
+                <H4>Información del sistema</H4>
+                    <script src="Chart.min.js"></script>
+                    <style>
+                        #canvas-holder{
+                            width:100%;
+                        }
+
+                         #canvas-holder2{
+                            width:70%;
+                        }
+                    </style>
+    
+                        <div class="col l4 s12"> 
+                            <H5>Usuarios activos</H5>
+                            <div id="canvas-holder">
+                                <canvas id="line" height="450" width="600">
+                            </div>
+                        </div>
+                        <div class="col l4 s12"> 
+                            <H5>Eventos</H5>
+                            <div id="canvas-holder">
+                                <canvas id="bar" height="450" width="600">
+                            </div>
+                        </div>
+                        <div class="col l4 s12"> 
+                            <H5 >Generos</H5>
+                            <div id="canvas-holder2">
+                                <canvas id="chart-area" width="500" height="500"/>
+                            </div>
+                        </div>
+
+                        <script>
+                                    
+                                    <!--Random para los graf 1 y 2 solo para el ejemplo -->
+                                    var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+                                    <!--Config Usuarios activos:Grafico lineas -->
+                                    var lineChartData = {
+                                                labels : ["January","February","March","April","May","June","July"],
+                                                datasets : [
+                                                    {
+                                                        label: "My First dataset",
+                                                        fillColor : "rgba(220,220,220,0.2)",
+                                                        strokeColor : "rgba(220,220,220,1)",
+                                                        pointColor : "rgba(220,220,220,1)",
+                                                        pointStrokeColor : "#fff",
+                                                        pointHighlightFill : "#fff",
+                                                        pointHighlightStroke : "rgba(220,220,220,1)",
+                                                        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                                    },
+                                                    {
+                                                        label: "My Second dataset",
+                                                        fillColor : "rgba(151,187,205,0.2)",
+                                                        strokeColor : "rgba(151,187,205,1)",
+                                                        pointColor : "rgba(151,187,205,1)",
+                                                        pointStrokeColor : "#fff",
+                                                        pointHighlightFill : "#fff",
+                                                        pointHighlightStroke : "rgba(151,187,205,1)",
+                                                        data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                                    }
+                                                ]
+
+                                    }
+
+                                    <!--Config Eventos:Grafico de Barra -->
+                                    var barChartData = {
+                                        labels : ["January","February","March","April","May","June","July"],
+                                        datasets : [
+                                            {
+                                                fillColor : "rgba(220,220,220,0.5)",
+                                                strokeColor : "rgba(220,220,220,0.8)",
+                                                highlightFill: "rgba(220,220,220,0.75)",
+                                                highlightStroke: "rgba(220,220,220,1)",
+                                                data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                            },
+                                            {
+                                                fillColor : "rgba(151,187,205,0.5)",
+                                                strokeColor : "rgba(151,187,205,0.8)",
+                                                highlightFill : "rgba(151,187,205,0.75)",
+                                                highlightStroke : "rgba(151,187,205,1)",
+                                                data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                            }
+                                        ]
+
+                                    }
+
+                                    <!--Config Generos:Grafico Circular con el hoyito en medio :3 -->
+                                    var doughnutData = [
+                                        {
+                                            value: 300,
+                                            color:"#F7464A",
+                                            highlight: "#FF5A5E",
+                                            label: "Red"
+                                        },
+                                        {
+                                            value: 50,
+                                            color: "#46BFBD",
+                                            highlight: "#5AD3D1",
+                                            label: "Green"
+                                        },
+                                        {
+                                            value: 100,
+                                            color: "#FDB45C",
+                                            highlight: "#FFC870",
+                                            label: "Yellow"
+                                        },
+                                        {
+                                            value: 40,
+                                            color: "#949FB1",
+                                            highlight: "#A8B3C5",
+                                            label: "Grey"
+                                        },
+                                        {
+                                            value: 120,
+                                            color: "#4D5360",
+                                            highlight: "#616774",
+                                            label: "Dark Grey"
+                                        }
+
+                                    ];
+
+                                    window.onload = function(){
+
+                                        var ctx1 = document.getElementById("line").getContext("2d");
+                                        window.myLine = new Chart(ctx1).Line(lineChartData, {responsive: true});
+
+                                        var ctx2 = document.getElementById("bar").getContext("2d");
+                                        window.myBar = new Chart(ctx2).Bar(barChartData, { responsive : true});
+
+                                        var ctx3 = document.getElementById("chart-area").getContext("2d");
+                                        window.myDoughnut = new Chart(ctx3).Doughnut(doughnutData, {responsive : true});
+                                    };
+                            </script>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col l6 m12 s12">
+
+            <h5>Artistas denunciados</h5>
+            <ul class="collection ">
+                <li class="collection with-header center-align">
+                    <div class="row">
+                        <div class="col s3">Nombre</div>
+                        <div class="col s3">Estado</div>
+                        <div class="col s3">Rating</div>
+                        <div class="col s3">Fecha</div>
+                    </div>
+                </li>
+                    <a href="#!"  class="collection-item avatar">
+                    <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+
+                    <div class="row">
+                        <div class="col s3"><br>
+                            <span> Zolezzi Antidemocratico </span>
+                        </div>
+                        <div class="col s3"><br>
+                            <i class="material-icons">thumb_up</i>
+                        </div>
+                        <div class="col s3"><br>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons grey-text" style="font-size:15px">grade</i>
+                        </div>
+                        <div class="col s3"><br>
+                             <span> 15 Sep, 8:29 (2013)</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+        </div>
+
+        <div class="col l6 m12 s12">
+
+            <h5>Bandas denunciadas</h5>
+            <ul class="collection">
+                <li class="collection with-header center-align">
+                    <div class="row">
+                        <div class="col s3">Nombre</div>
+                        <div class="col s3">Estado</div>
+                        <div class="col s3">Rating</div>
+                        <div class="col s3">Fecha</div>
+                    </div>
+                </li>
+                    <a href="#!"  class="collection-item avatar">
+                    <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+
+                    <div class="row">
+                        <div class="col s3"><br>
+                            <span> Cristiancito trolazo </span>
+                        </div>
+                        <div class="col s3"><br>
+                            <i class="material-icons">thumb_up</i>
+                        </div>
+                        <div class="col s3"><br>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons orange-text" style="font-size:15px">grade</i>
+                            <i class="material-icons grey-text" style="font-size:15px">grade</i>
+                        </div>
+                        <div class="col s3"><br>
+                             <span> 15 Sep, 8:29 (2013)</span>
+                        </div>
+                    </div>
+                </a>
+            </ul>
+
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+    <script src="./Pagina Principal Artista - uMusic_files/jquery-1.10.2.js"></script>
+    <script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
+    <script src="./Pagina Principal Artista - uMusic_files/respond.js"></script>
+
+	<script src="./Pagina Principal Artista - uMusic_files/jquery.validate.min.js"></script>
+	<script src="./Pagina Principal Artista - uMusic_files/materialize.min.js"></script>
+	<script src="./Pagina Principal Artista - uMusic_files/script.js"></script>
+
+
+
+
+<div class="hiddendiv common"></div></body></html>
