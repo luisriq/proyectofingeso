@@ -6,7 +6,16 @@
 
 {% block content %}
     {% load staticfiles %}
+<form  method="POST" id="post-form-archivo" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="file-field input-field">
 
+    <input class="file-path validate" type="text">
+        {{formImagen.file_}}
+    </input>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Subir</button>
+    </div>
+</form>
 <form method="POST" id="post-form-nombre">
     {% csrf_token %}
     
@@ -47,7 +56,26 @@
     }
     
     
+    function upload(event) {
+    event.preventDefault();
+    var datos = new FormData($('#post-form-archivo').get(0));
+
+    $.ajax({
+        url: "upload",
+        type: "POST",
+        data: datos,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            alert('success');
+        }
+    });
+    }
     
+    $(function() {
+        $('#post-form-archivo').submit(upload);
+    });
 
     $('#post-form-nombre').on('submit', function(event){
     event.preventDefault();

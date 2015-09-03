@@ -275,6 +275,7 @@ class perfilBanda(View):
         #holi
         instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
+        
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -287,7 +288,7 @@ class perfilBanda(View):
                 'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'artista':artista
+                'artista':artista,
             })
         )
 #------------------------
@@ -305,6 +306,7 @@ class perfilArtista(View):
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
+        formimagen = UploadFileForm()
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -317,7 +319,8 @@ class perfilArtista(View):
                 'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'artista':artista
+                'artista':artista,
+                'formImagen':formimagen,
             })
         )
 #------------------------------------------------------
