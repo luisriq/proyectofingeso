@@ -140,6 +140,45 @@ def contact(request):
             'year':datetime.now().year,
         })
     )
+
+#----------------------------------------
+#   peril normal
+#----------------------------------------
+class perfilNormal(View):
+    
+    def get(self, request):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponseRedirect("/login") 
+        normal = request.user
+        try:
+            normal = Normal.objects.filter(user = normal)[0]
+        except:
+            return HttpResponse("Debe redirigirse al home del usuario Artista")
+ 
+        else:  
+            
+            #artistas a los que sigue el usuario normal de la url
+            artistasSeguidos = Artista.objects.filter(seguidores = normal)
+        
+            #bandas a las que sigue el usuario normal de la url
+            bandasSeguidas = Banda.objects.filter(seguidores = normal)
+            
+            #llamada al template
+            assert isinstance(request, HttpRequest)
+            return render(
+                request,
+                'app/perfilNormal.html',
+                context_instance = RequestContext(request,
+                {
+                    'usuario':normal,
+                    'tipoUsuario':tipoUsuario,
+                    'datosBarra':datosBarra(request),
+                    'losquesigo':artistasSeguidos,
+                    'lasquesigo':bandasSeguidas
+                })
+            )
+        
 #-----------------------------------------------------------
 
 class perfilBandaNp(View):
@@ -178,6 +217,8 @@ class perfilNormalNp(View):
     
     def get(self, request, normalid):
         tipoUsuario = verificacion(request)
+        normal = getUsuarioUrl(normalid)
+        tipoUsuarioUrl = verificacion(normal)
         verLogVsUrl = verificarLogVsUrl(request, normalid)
         if tipoUsuario == 0:
             return HttpResponseRedirect("/login") 
@@ -188,9 +229,11 @@ class perfilNormalNp(View):
         elif verLogVsUrl and tipoUsuario == 2:
             return HttpResponseRedirect("/perfilNormal/%s" % normalid)
                 #falta hacer esta template
-        else:
-            #usuario del perfil normal
-            normal = Normal.objects.filter(id = normalid)[0]  
+                
+        elif (not verLogVsUrl) and tipoUsuarioUrl == 1:
+            return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
+                
+        else:  
             
             #artistas a los que sigue el usuario normal de la url
             artistasSeguidos = Artista.objects.filter(seguidores = normal)
@@ -213,15 +256,14 @@ class perfilNormalNp(View):
                 })
             )
         
-        
-        
-        
+      
         
 #-----------------------------------------------------------
    
 
 class perfilBanda(View):
     def get(self, request):
+        tipoUsuario = tipoUsuario(request)
         if not request.user.is_authenticated() :
             return HttpResponseRedirect("/login")
         usuario = request.user
@@ -241,6 +283,7 @@ class perfilBanda(View):
             {
                 'year':datetime.now().year,
                 'integranteEn':integranteEn,
+                'tipoUsuario':tipoUsuario,
                 'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
