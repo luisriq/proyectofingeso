@@ -111,14 +111,41 @@
 
 
 
-
-
 <div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
     <div class="row">
 
         <div class="col l12 s12">
             <br>
-            <a class="waves-effect waves-light btn">Nuevo</a>
+              <!-- Modal Trigger -->
+              <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Nuevo</a>
+                <!-- Modal Structure -->
+              <div id="modal1" class="modal">
+                    <div class="modal-content">
+                        <div class="input-field" style=" width:calc(100% - 110px);height:calc(100% - 1000px);margin-left:10px;">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">Para: Nombre</label>
+                        </div>
+                    </div>
+
+                <div class="modal-footer valign-wrapper" style="height:150px">
+                    
+
+                   <div style="overflow-y:scroll;max-height:120px;width:calc(100% - 146px);margin-left:30px;"> 
+                        
+                        <div class="input-field">
+                            <textarea id="textarea1" class="materialize-textarea" ></textarea>
+                            <label for="textarea1">Mensaje</label>
+                        </div>
+
+                    </div>
+                        
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Enviar</a>
+
+                </div>
+
+              </div>
+
+
 
                 <ul class="collection ">
                     <li class="collection with-header">
@@ -148,12 +175,6 @@
                         </div>
                     </a>
                 </ul>
-            
-
-
-
-
-
 
 	<div class="modal-content">
     <div id="modal2" class="modal modal-fixed-footer">
@@ -196,9 +217,7 @@
               </div>
             </div>
         </div>
-
         <div class="modal-footer valign-wrapper" style="height:150px">
-
          <div class="input-field" style=" width:calc(100% - 146px);margin-left:30px;" >
           <textarea id="textarea1" class="materialize-textarea" style="max-height:65px;"></textarea>
           <label for="textarea1">Mensaje</label>
