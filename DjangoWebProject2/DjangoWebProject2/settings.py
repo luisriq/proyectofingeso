@@ -129,6 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'easy_thumbnails',
     'django.contrib.staticfiles',
     'app',
     # Uncomment the next line to enable the admin:
@@ -136,6 +137,11 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (150, 150), 'crop': True},
+    },
+}
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
