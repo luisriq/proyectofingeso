@@ -5,10 +5,10 @@ Definition of views.
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponse, Http404
 from django.template import RequestContext
+from django.contrib.auth import authenticate, login
 from datetime import datetime, timedelta, date
 from django.views.generic import View
 from models import *
-import time
 from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
@@ -22,7 +22,6 @@ class VistaSignUp(View):
         # create a form instance and populate it with data from the request:
         form = RegistroForm(request.POST)
         # check whether it's valid:
-        print "lkansdlkansdlkansds"
         if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...
@@ -43,19 +42,15 @@ class VistaSignUp(View):
                              contrasena = form.cleaned_data['password2'], )
                 fecha = usuario.fechaIngreso
             	usuario.save()
-            print "EXITO!!!!"
-            return render( 
-                request,
-                'app/usuarioCreado.html',
-                context_instance = RequestContext(request,
-                {
-                    'title':'Home Page',
-                    'year':datetime.now().year,
-                    'nombre':form.cleaned_data['name'],
-                    'email':form.cleaned_data['email'],
-                    'creado':fecha,
-                })
-        	)
+            user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password2'])
+            print "user : ", form.cleaned_data['email'], "pass : ", form.cleaned_data['password2'], "login : ", user
+            login(request, user)
+            
+            if form.cleaned_data['tipo']:
+                return HttpResponseRedirect("/perfilArtista")
+            else:
+                return HttpResponseRedirect("/perfilNormal")
+            
         else:
             return render(request, 'app/registro.html', {'form': form})
     def get(self, request):
@@ -561,7 +556,6 @@ def guardarDatosArtista(request):
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 
-    
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)

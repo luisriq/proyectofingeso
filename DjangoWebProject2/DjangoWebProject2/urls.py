@@ -7,6 +7,7 @@ from django.conf.urls import patterns, url, include
 from app.forms import BootstrapAuthenticationForm
 from django.contrib import admin
 from app.views import *
+from PIL import Image
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns, static
 from django.contrib.auth.decorators import login_required
@@ -22,7 +23,6 @@ urlpatterns = patterns('',
     url(r'^about', 'app.views.about', name='about'),
     #url(r'^login', VistaSignUp.as_view(), name='login'),
     url(r'^registro', VistaSignUp.as_view(), name='signup'),
-    url(r'^landing', VistaLanding.as_view(), name='landing'),
     url(r'^perfilArtistaNp/(?P<userid>\w{1,50})$', perfilArtistaNp.as_view(), name='perfilArtistaNp'),
     url(r'^perfilArtista', perfilArtista.as_view(), name='perfilArtista'),
     url(r'^perfilNormalNp/(?P<normalid>\w{1,50})$', perfilNormalNp.as_view(), name='perfilNormalNp'),
