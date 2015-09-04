@@ -81,7 +81,8 @@ class Cancion(models.Model):
 		
 class Instrumento(models.Model):
 	tipo = models.CharField(max_length=200)
-	imagen = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
+	imagen = models.CharField(max_length=200)
+	#imagen = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
 	#artista = models.ForeignKey(Artista, related_name = 'instrumentos', null=True, blank=True)
 	cancion = models.ManyToManyField(Cancion, blank=True)
 	def __unicode__(self):
