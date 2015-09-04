@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
+<div class="container">
     <div class="row">
     
             <div class="col l12 s12">
@@ -149,15 +149,13 @@
 
 {% load staticfiles %}
 
-    <script src="% static 'app/scripts/jquery-1.10.2.js"></script>
-    <script src="% static 'app/scripts/materialize.min.js"></script>
-    <script src="% static 'app/scripts/respond.js"></script>
-    <script src="% static 'app/scripts/pop_up_vistaMisAmigos.js"></script>
+	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+	<script src="{% static 'app/scripts/script.js' %}"></script>
+    
+    <script src="{% static 'app/scripts/pop_up_mensajesUA.js' %}"></script>
 
 
-	<script src="% static 'app/scripts/jquery.validate.min.js"></script>
-	<script src="% static 'app/scripts/materialize.min.js"></script>
-	<script src="% static 'app/scripts/script.js"></script>
 
 
 {% endblock %}
