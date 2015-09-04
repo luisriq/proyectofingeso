@@ -85,5 +85,4 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control validate'}))
                                    
 class UploadFileForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    file_ = forms.FileField()
+    file_ = forms.FileField(widget = forms.ClearableFileInput({'class':'file-path validate'}))

@@ -72,6 +72,7 @@ class VistaLanding(View):
     
 class Home(View):
     def get(self, request):
+        tipoUsuario = verificacion(request)
         """Renders the home page."""
         assert isinstance(request, HttpRequest)
         urlAvatar = ""
@@ -83,30 +84,48 @@ class Home(View):
                 artista = Artista.objects.filter(user = request.user)
                 urlAvatar = artista[0].imagenPerfil.url
                 integranteEn = [ib for ib in IntegrantesBanda.objects.filter(integrante = artista)]
+                return render( 
+                    request,
+                    'app/mainartista.html',
+                    context_instance = RequestContext(request,
+                    {
+                        'title':'Pagina Principal Artista',
+                        
+                        'tipo':tipo,
+                        
+                        'year':datetime.now().year,
+                        'urlAvatar':urlAvatar,
+                        'datosBarra':datosBarra(request),
+                        'bandas':integranteEn
+                    })
+                )
+
             elif len(Normal.objects.filter(user=request.user)) == 1:
                 normal = Normal.objects.filter(user = request.user)
                 urlAvatar = normal[0].imagenPerfil.url
                 tipo = "Normal :"
+                bandas = Banda.objects.all()
+                return render( 
+                    request,
+                    'app/mainnormal.html',
+                    context_instance = RequestContext(request,
+                    {
+                        'title':'Pagina Principal Normal',
+                        
+                        'tipo':tipo,
+                        
+                        'year':datetime.now().year,
+                        'urlAvatar':urlAvatar,
+                        'bandas':bandas
+                        #'datosBarra':datosBarra(request),
+                        #'bandas':integranteEn
+                    })
+                )
         except:
-            print "Usuario no logeado"
+            print "no logeado"
             return HttpResponseRedirect("/login")
             tipo = ""
-        return render( 
-            request,
-            'app/mainartista.html',
-            context_instance = RequestContext(request,
-            {
-                'title':'Pagina Principal Artista',
-                
-                'tipo':tipo,
-                
-                'year':datetime.now().year,
-                'urlAvatar':urlAvatar,
-                'datosBarra':datosBarra(request),
-                'bandas':integranteEn
-            })
-        )
-
+            
 
 def contact(request):
     """Renders the contact page."""
@@ -121,6 +140,45 @@ def contact(request):
             'year':datetime.now().year,
         })
     )
+
+#----------------------------------------
+#   peril normal
+#----------------------------------------
+class perfilNormal(View):
+    
+    def get(self, request):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponseRedirect("/login") 
+        normal = request.user
+        try:
+            normal = Normal.objects.filter(user = normal)[0]
+        except:
+            return HttpResponse("Debe redirigirse al home del usuario Artista")
+ 
+        else:  
+            
+            #artistas a los que sigue el usuario normal de la url
+            artistasSeguidos = Artista.objects.filter(seguidores = normal)
+        
+            #bandas a las que sigue el usuario normal de la url
+            bandasSeguidas = Banda.objects.filter(seguidores = normal)
+            
+            #llamada al template
+            assert isinstance(request, HttpRequest)
+            return render(
+                request,
+                'app/perfilNormal.html',
+                context_instance = RequestContext(request,
+                {
+                    'usuario':normal,
+                    'tipoUsuario':tipoUsuario,
+                    'datosBarra':datosBarra(request),
+                    'losquesigo':artistasSeguidos,
+                    'lasquesigo':bandasSeguidas
+                })
+            )
+        
 #-----------------------------------------------------------
 
 class perfilBandaNp(View):
@@ -128,7 +186,7 @@ class perfilBandaNp(View):
     def get(self, request, bandaid):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")    
+            return HttpResponseRedirect("/login")   
                #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
         #banda = IntegrantesBanda.objects.filter(integrante =)[0].banda
         #lista de los integrantes de la banda (modelo)
@@ -159,10 +217,11 @@ class perfilNormalNp(View):
     
     def get(self, request, normalid):
         tipoUsuario = verificacion(request)
+        normal = getUsuarioUrl(normalid)
+        tipoUsuarioUrl = verificacion(normal)
         verLogVsUrl = verificarLogVsUrl(request, normalid)
-        print "tipo : ", tipoUsuario, " vs : ", verLogVsUrl, " @ : ", request.user
         if tipoUsuario == 0:
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
+            return HttpResponseRedirect("/login") 
         
         elif verLogVsUrl and tipoUsuario == 1:
             return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
@@ -170,9 +229,11 @@ class perfilNormalNp(View):
         elif verLogVsUrl and tipoUsuario == 2:
             return HttpResponseRedirect("/perfilNormal/%s" % normalid)
                 #falta hacer esta template
-        else:
-            #usuario del perfil normal
-            normal = Normal.objects.filter(id = normalid)[0]  
+                
+        elif (not verLogVsUrl) and tipoUsuarioUrl == 1:
+            return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
+                
+        else:  
             
             #artistas a los que sigue el usuario normal de la url
             artistasSeguidos = Artista.objects.filter(seguidores = normal)
@@ -195,17 +256,16 @@ class perfilNormalNp(View):
                 })
             )
         
-        
-        
-        
+      
         
 #-----------------------------------------------------------
    
 
 class perfilBanda(View):
     def get(self, request):
+        tipoUsuario = tipoUsuario(request)
         if not request.user.is_authenticated() :
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")
+            return HttpResponseRedirect("/login")
         usuario = request.user
         artista = Artista.objects.filter(user = usuario)
         #if(len(artista)==0):
@@ -215,6 +275,7 @@ class perfilBanda(View):
         #holi
         instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
+        
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -223,10 +284,11 @@ class perfilBanda(View):
             {
                 'year':datetime.now().year,
                 'integranteEn':integranteEn,
+                'tipoUsuario':tipoUsuario,
                 'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'artista':artista
+                'artista':artista,
             })
         )
 #------------------------
@@ -235,7 +297,7 @@ class perfilArtista(View):
     def get(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
+            return HttpResponseRedirect("/login")
         usuario = request.user
         try:
             artista = Artista.objects.filter(user = usuario)[0]
@@ -244,6 +306,7 @@ class perfilArtista(View):
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
+        formimagen = UploadFileForm()
         assert isinstance(request, HttpRequest)
         return render(
             request,
@@ -256,7 +319,8 @@ class perfilArtista(View):
                 'datosBarra':datosBarra(request),
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
-                'artista':artista
+                'artista':artista,
+                'formImagen':formimagen,
             })
         )
 #------------------------------------------------------
@@ -265,20 +329,35 @@ class perfilArtista(View):
 class perfilArtistaNp(View):
     def get(self, request,userid):
         tipoUsuario = verificacion(request)
+        usuario = getUsuarioUrl(userid)
+        tipoUsuarioUrl = verificacion(usuario)
+        verLogVsUrl = verificarLogVsUrl(request, userid)
         if tipoUsuario == 0:
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE")           
+            return HttpResponseRedirect("/login")           
         
-        try:
-            # si en la url se tiene la key de un normal se redirecciona en el except
+        elif verLogVsUrl and tipoUsuario == 1:
+            return HttpResponseRedirect("/perfilArtista/%s" % userid)
+            #falta termina este template
+            
+        elif verLogVsUrl and tipoUsuario == 2:
+            return HttpResponseRedirect("/perfilNormal/%s" % userid)
+            
+        elif (not verLogVsUrl) and tipoUsuarioUrl == 2:
+            return HttpResponseRedirect("/perfilNormalNp/%s" % userid)
+            
+        else:
+            #usuario del perfil artista
             artista = Artista.objects.filter(id = userid)[0]
-            # si el usuario logueado es el mismo al que se esta viendo
-            usuarioLog = Usuario.objects.filter(user = request.user)[0]
-            if usuarioLog.id == artista.id:
-                return HttpResponseRedirect("/perfilArtista")
-                
+                            
+            #bandas a las que pertenece
             integranteEn = [ib.banda for ib in IntegrantesBanda.objects.filter(integrante = artista)]
+            
+            #instrumentos que toca
             instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
+            
+            #numero de seguidores
             seguidores = len(artista.seguidores.all())
+            
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -294,15 +373,13 @@ class perfilArtistaNp(View):
                     'integranteEn':integranteEn
                 })
             )
-        except:
-            return HttpResponseRedirect("/perfilNormalNp/%s" % userid)
         
 #------------------------------
 class crearBanda(View):
     def post(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario != 1:
-            return HttpResponse("FORBIDEN 404 ERROR ACCESO DENEGADO HAY QUE LOGEARSE") 
+            return HttpResponseRedirect("/login")
          
         # create a form instance and populate it with data from the request:
         form = CrearBandaForm(request.POST)
@@ -434,19 +511,56 @@ def getUsuariolog(request):
     elif len(Artista.objects.filter(user = request.user)) == 1:
         usuario = Artista.objects.filter(user = request.user)[0]
     return usuario
+#-----------------------------------------------------
+#    devuelve el usuario url
+#-----------------------------------------------------   
+def getUsuarioUrl(urlId):
+    if len(Normal.objects.filter(id = urlId)) == 1:
+        usuario = Normal.objects.filter(id = urlId)[0]
+    elif len(Artista.objects.filter(id = urlId)) == 1:
+        usuario = Artista.objects.filter(id = urlId)[0]
+    return usuario
+      
+
     
     # sdfsdf
 def datosBarra(request): #TODO: Solo tira 3 bandas
-    bandasParticipo = []
-    bandasLider = []
-    artis = Artista.objects.filter(user = request.user)[0]
-    integranteEn = IntegrantesBanda.objects.filter(integrante = artis)
-    for inte in integranteEn:
-        if(inte.esLider):
-            bandasLider.append(inte.banda)
-        else:
-            bandasParticipo.append(inte.banda)
-    return {"participo":bandasParticipo, "lider":bandasLider}  
+    tipoUsuario = verificacion(request) 
+    if tipoUsuario == 1:
+        bandasParticipo = []
+        bandasLider = []
+        artis = Artista.objects.filter(user = request.user)[0]
+        integranteEn = IntegrantesBanda.objects.filter(integrante = artis)
+        for inte in integranteEn:
+            if(inte.esLider):
+                bandasLider.append(inte.banda)
+            else:
+                bandasParticipo.append(inte.banda)
+        return {"participo":bandasParticipo, "lider":bandasLider}  
+    elif tipoUsuario == 2:
+        return "ooh"
+
+
+def guardarDatosArtista(request):
+    try:
+        if request.method == 'POST':
+            
+            print "Loged %s"%request.user.id
+            dato = request.POST.get('dato')
+            target = request.POST.get('target')
+            response_data = {}
+            if target == "nombre":
+                u = Usuario.objects.filter(user = request.user)[0]
+                u.nombre = dato
+                request.user.first_name = dato
+                request.user.save()
+                u.save()
+            print "YEEEES %s"%dato
+            print "Target %s"%target
+    except:
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+
     
 def upload_file(request):
     if request.method == 'POST':
@@ -475,3 +589,4 @@ def handle_uploaded_file(f):
     with open('pic_folder/%s'%f, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+

@@ -5,41 +5,109 @@
 {% endblock %}
 
 {% block content %}
-<a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="Crunchyroll">Tweets por el @Crunchyroll.</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    {% load staticfiles %}
+<form  method="POST" id="post-form-archivo" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="file-field input-field">
 
-<h2>{{ title }}.</h2>
-<h3>{{ message }}</h3>
-{{ artista.imagenPerfil.url }}
-<img src="{{ artista.imagenPerfil.url }}"/>
-<details>
-    <summary>Usuario creado correctamente</summary>
-    <table>
-      <tr>
-        <th scope="row">Nombre</th>
-        <td>{{artista.nombre}}</td>
-      </tr>
-      <tr>
-        <th scope="row">Seguidores</th>
-        <td>{{seguidores}}</td>
-      </tr>
-      
-       <tr>
-        <th scope="row">Instrumentos</th>
-        {% for instrumento in instrumentos %}
-            <td>{{ instrumento.nombre }}</td>
-        {% endfor %}
-      </tr> 
-      <tr>
-        <th scope="row">Bandas</th>
-        {% for b in integranteEn %}
-            <td>{{ b.banda.nombre }}</td>
-            <td>{{ b.ocupacion }}</td>
-            <td>{{ b.fechaIngreso }}</td>
-        {% endfor %}
-      </tr>
-      
-	</table>
-</details>
+    <input class="file-path validate" type="text">
+        {{formImagen.file_}}
+    </input>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Subir</button>
+    </div>
+</form>
+<form method="POST" id="post-form-nombre">
+    {% csrf_token %}
+    
+    <div class="fieldWrapper" id="the_post">
+        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+        <label for="first_name">First Name</label>
+    </div>
+    <div id="results"></div> <!-- errors go here -->
+    <input type="submit" value="Post" class="tiny button">
+</form>
+<script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
+<script src="{% static 'app/scripts/respond.js' %}"></script>
+<script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(document).ajaxSend(function (event, jqxhr, settings) {
+            jqxhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        });
+    });
+    
+
+    function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+                }
+            }
+        }
+    return cookieValue;
+    }
+    
+    
+    function upload(event) {
+    event.preventDefault();
+    var datos = new FormData($('#post-form-archivo').get(0));
+
+    $.ajax({
+        url: "upload",
+        type: "POST",
+        data: datos,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+            alert('success');
+        }
+    });
+    }
+    
+    $(function() {
+        $('#post-form-archivo').submit(upload);
+    });
+
+    $('#post-form-nombre').on('submit', function(event){
+    event.preventDefault();
+    create_post();
+    });
+    function create_post(){
+        $.ajax({
+        url : "guardarDatosArtista", // the endpoint
+        type : "POST", // http method
+        data : { dato : $('#first_name').val(),
+                 target : "nombre",
+            "X-CSRFToken" : '{{ csrf_token }}' }, // data sent with the post request
+        
+        // handle a successful response
+        success : function(json) {
+            $('#post-text-nombre').val(''); // remove the value from the input
+            console.log(json); // log the returned json to the console
+            console.log("success"); // another sanity check
+        },
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+    }
+    
+    
+
+    
+</script>
 
 
 {% endblock %}

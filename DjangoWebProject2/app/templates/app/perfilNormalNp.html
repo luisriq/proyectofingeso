@@ -3,13 +3,14 @@
 {% block sidebar %}
     {% if tipoUsuario == 1  %}
         {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
     {% endif%}
         
 {% endblock %}
 
 
 {% block content %}
-<div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
 <div class="container">
         <div class="row">
             <div class="col l8 s12 columna-complemento-calendario grey lighten-4 card-panel" style="margin-top:30px">
@@ -139,7 +140,6 @@
         </div>
     </div>
     
-</div>
 {% endblock %}
 
 {% block scripts %}
