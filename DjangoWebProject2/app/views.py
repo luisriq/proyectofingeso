@@ -518,6 +518,7 @@ def getUsuarioUrl(urlId):
       
 
     
+    # sdfsdf
 def datosBarra(request): #TODO: Solo tira 3 bandas
     tipoUsuario = verificacion(request) 
     if tipoUsuario == 1:
