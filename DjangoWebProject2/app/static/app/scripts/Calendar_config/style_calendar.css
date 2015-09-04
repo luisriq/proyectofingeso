@@ -1,0 +1,48 @@
+.over{
+      font-family: "Arial";
+    }
+    #datepicker{
+      width: 300px;
+      margin: auto;
+      display: block;
+      position: relative;
+    }
+    .over{
+      width: 85%;
+      height: 90%;
+      padding: 5px;
+      margin: auto;
+      display: block;
+      position: absolute;
+      top: 5px;
+      left: 20px;
+      background-color: rgba(0,0,0,.8);
+      display: none;
+      color: white;
+      text-align: center;
+      z-index: 9999;
+      font-family: "Arial";
+      font-size: 16px;
+    }
+    .over h1{
+      font-size: 1.2em;
+      margin: 1em 0 0 0;
+    }
+    .over p{
+      font-weight: 300;
+            line-height: 140%;
+    }
+    .close{
+      display: block;
+      height: 20px;
+      width: 20px;
+      color: white;
+      font-family: "Arial";
+      font-size: 14px;
+      background-color: #f36800;
+      text-decoration: none;
+      padding: 3px;
+      position: absolute;
+      top:0;
+      right: 0;
+    }
