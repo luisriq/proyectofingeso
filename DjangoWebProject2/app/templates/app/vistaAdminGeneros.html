@@ -1,0 +1,118 @@
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+        <div class="row">
+            <br><br>
+            <h4>Agregar nuevos generos</h4> 
+            <div class="input-field col s12">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Nombre</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8">
+                <select class="browser-default">
+                    <option value="" disabled selected>Genero relacionado</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+
+            <div class="input-field col s1">
+                <a class="btn-floating btn-small waves-effect waves-light blue"><i class="material-icons">add</i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s12 right-align">             
+                <a class="waves-effect waves-light btn">Cancelar</a>
+                <a class="waves-effect waves-light btn">Aceptar</a>
+            </div>
+        </div>
+              
+        <div class="row">
+            <div class="col l12 m12 s12">
+                <h5>Popularidad de generos</h5>
+                <ul class="collection ">
+                    <li class="collection with-header center-align">
+                        <div class="row">
+                            <div class="col s3">Nombre</div>
+                            <div class="col s3">Adm.Genero</div>
+                            <div class="col s3">Popularidad</div>
+                            <div class="col s3">Ultima Actualización</div>
+                        </div>
+                    </li>
+                        <li  class="collection-item avatar">
+                        <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+
+                        <div class="row">
+                            <div class="col s3"><br>
+                                <span> PUNK-FUNK </span>
+                            </div>
+                            <div class="col s3"><br>
+                                <a class="waves-effect waves-light btn">Eliminar</a>
+                            </div>
+                            <div class="col s3"><br>
+                                <i class="material-icons orange-text" style="font-size:20px">grade</i>
+                                <i class="material-icons orange-text" style="font-size:20px">grade</i>
+                                <i class="material-icons orange-text" style="font-size:20px">grade</i>
+                                <i class="material-icons orange-text" style="font-size:20px">grade</i>
+                                <i class="material-icons grey-text" style="font-size:20px">grade</i>
+                            </div>
+                            <div class="col s3"><br>
+                                 <span> 15 Sep, 8:29 (2013)</span>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li  class="collection-item avatar">
+                        <div class="circle avatar-img dropdown-button"><img src="./Pagina Principal Artista - uMusic_files/avatar.jpg" alt="" style="height:50px;"></div>
+
+                        <div class="row">
+                            <div class="col s3"><br>
+                                <span> REGGGGGETON </span>
+                            </div>
+                            <div class="col s3"><br>
+                                <a class="btn disabled">Eliminado</a>
+                            </div>
+                            <div class="col s3"><br>
+                                <i class="material-icons grey-text" style="font-size:20px">grade</i>
+                                <i class="material-icons grey-text" style="font-size:20px">grade</i>
+                                <i class="material-icons grey-text" style="font-size:20px">grade</i>
+                                <i class="material-icons grey-text" style="font-size:20px">grade</i>
+                                <i class="material-icons grey-text" style="font-size:20px">grade</i>
+                            </div>
+                            <div class="col s3"><br>
+                                 <span> 15 Sep, 8:29 (2013)</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+
+
+{% endblock %}
