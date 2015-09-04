@@ -557,9 +557,14 @@ def guardarDatosArtista(request):
                 u.cuentaTwitter = dato
                 u.save()
                 print "cuentaTwitter saved"
+            elif target == "instrumento":
+                a = Artista.objects.filter(user = request.user)[0]
+                i = Instrumento.objects.filter(id = dato)[0]
+                toca = Toca(instrumento=i,artista=a,nivel=1)
+                toca.save()
             print "YEEEES %s"%dato
             print "Target %s"%target
-    except:
+    except :
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 

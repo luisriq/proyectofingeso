@@ -14,7 +14,7 @@ $( document ).ready(function(){
 	//Realizar cambio algi asi como un submit
 	$(".btn.editar.submit").click(function(){
 		var formulario = $(this).parent("form");
-		var dato = $(this).parent().find('input[name=dato], textarea[name=dato]');
+		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log(dato.val());
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
 		if (true){

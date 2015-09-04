@@ -88,7 +88,7 @@
                     <div class="col center-align" style="width:160px"> 
                         <div class="card color-333">
                             <div class="card-image">
-                            <img src="{{b.instrumento.imagen.url}}" alt="" style="height:150px;">
+                            <img src="{{b.instrumento.imagen}}{%if b.nivel < 5%}{{b.nivel}}.jpg{%elif b.nivel == 5%}.gif{% endif%}" alt="" style="height:150px;">
                             </div>
                             <!--div class="card-content ">
                             <p class=" white-text">LVL:{{b.nivel}}</p>
@@ -121,17 +121,26 @@
     </div>
     <div id="modal1" class="modal">
     <div class="modal-content">
-        <h4>Modal Header</h4>
-        <select class="browser-default">
+        
+        <h4>Seleccione un Instrumento</h4>
+        <form method="POST" data-target="instrumento" >
+                        {% csrf_token %}
+        <select class="browser-default" name="dato">
             <option value="" disabled selected>Elige un insturmento</option>
         {%for instrumento in allInstruments%}
             <option value="{{instrumento.id}}">{{instrumento.tipo}}</option>
         {%endfor%}
         </select>
+            <a id="modal-hide-button" class="btn editar submit hide"></a>
+        </form>
+        
     </div>
     <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modal-hide-button').click();">Aceptar</a>
+        
     </div>
+    
   </div>
 
 </div>
