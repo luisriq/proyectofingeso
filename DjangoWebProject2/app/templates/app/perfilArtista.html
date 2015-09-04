@@ -55,7 +55,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="z-depth-1"><a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                <div class="twiter card-panel white-text campo-editable" style="background:#5faad8;text-shadow: 0 1px 2px rgba(0,0,0,.2);font-size: 18px;">
+                    
+                    <form method="POST" data-target="cuentaTwitter" >
+                        {% csrf_token %}
+                        <span>Cuenta de twitter : </span>
+                        {%if artista.cuentaTwitter %}
+                            <span class="no-hide dato">{{artista.cuentaTwitter}}</span>
+                            <br class="hide"/>
+                            <input class=" hide  light-blue lighten-4 grey-text text-darken-4" style="width:calc(60% - 40px); padding:0 10px;" type="text" name="dato" value="{{artista.cuentaTwitter}}" /> 
+                        {%else%}
+                            <span class="no-hide dato">Sin Cuenta</span>
+                            <br class="hide"/>
+                            <input class="hide  light-blue lighten-4 grey-text text-darken-4" style="width:calc(60% - 40px); padding:0 10px;" type="text" name="dato" /> 
+                        {%endif%}
+                        <a class="btn no-hide editar toggle color-principal hover-shadow">
+                            <i class="material-icons">&#xE254;</i>
+                        </a> 
+                        <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
+                            <i class="material-icons">&#xE5CA;</i>
+                        </a>
+                    </form>
+                </div>
+                <div class="z-depth-1 twitter-container"><a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a>
+                <script></script>
                 </div> 
         </div>
         <div class="card-panel grey lighten-3 col offset-l1 l5 s12 center-align">
