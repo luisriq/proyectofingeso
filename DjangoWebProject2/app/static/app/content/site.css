@@ -308,3 +308,6 @@ a.color-principal:hover{
 .w60p{
   width: 60% !important;
 }
+.manito{
+  cursor: pointer !important;
+}

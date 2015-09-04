@@ -56,7 +56,9 @@ $( document ).ready(function(){
 			}
 		});}
 	});
-
+	$('.addInstrumento').click(function(){
+		$('#modal1').openModal();
+	});
 	
 	twitLoad();
 }); 

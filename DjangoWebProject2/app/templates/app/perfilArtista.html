@@ -96,6 +96,15 @@
                         </div>
                     </div>
                     {% endfor %}
+                    
+                    <div class="col center-align addInstrumento" style="width:160px"> 
+                        <div class="card color-333 hover-shadow tooltipped" data-tooltip="Agregar Instrumento">
+                            <div class="card-image manito">
+                                <img src="/media/app/static/app/images/addInstrument.jpg" style="height:150px;">
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>  
             </div>
             <h5>Bandas a los que pertenezco</h5>
@@ -110,7 +119,25 @@
             </ul>
         </div>
     </div>
+    <div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Modal Header</h4>
+        <select class="browser-default">
+            <option value="" disabled selected>Elige un insturmento</option>
+        {%for instrumento in allInstruments%}
+            <option value="{{instrumento.id}}">{{instrumento.tipo}}</option>
+        {%endfor%}
+        </select>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
 </div>
+
+
+
 
 
 {% endblock %}
@@ -119,7 +146,6 @@
 
 {% load staticfiles %}
 	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
-	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
 	<script src="{% static 'app/scripts/script.js' %}"></script>
     {#script para configurar ajax#}
     <script type="text/javascript">
