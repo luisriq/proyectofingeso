@@ -188,11 +188,11 @@ class perfilBandaNp(View):
         if tipoUsuario == 0:
             return HttpResponseRedirect("/login")   
                #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
-        #banda = IntegrantesBanda.objects.filter(integrante =)[0].banda
-        #lista de los integrantes de la banda (modelo)
-        #ide = banda.id
-        #if ide == bandaid:
-        #    return HttpResponseRedirect("/perfilBanda")
+        artista = Artista.objects.filter(user = request.user)[0]
+        banda = Banda.objects.filter(id = bandaid)[0]
+        pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
+        if len(pertenece) == 1:
+            return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
         banda = Banda.objects.filter(id = bandaid)[0]
         integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
         seguidores = len(banda.seguidores.all())
@@ -262,35 +262,31 @@ class perfilNormalNp(View):
    
 
 class perfilBanda(View):
-    def get(self, request):
-        tipoUsuario = tipoUsuario(request)
-        if not request.user.is_authenticated() :
+    def get(self, request, bandaid):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
             return HttpResponseRedirect("/login")
-        usuario = request.user
-        artista = Artista.objects.filter(user = usuario)
-        #if(len(artista)==0):
-        #    return HttpResponse("Solo artista")
-        artista = artista[0]
-        integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
-        #holi
-        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
-        seguidores = len(artista.seguidores.all())
-        
-        assert isinstance(request, HttpRequest)
-        return render(
-            request,
-            'app/perfilArtista.html',
-            context_instance = RequestContext(request,
-            {
-                'year':datetime.now().year,
-                'integranteEn':integranteEn,
-                'tipoUsuario':tipoUsuario,
-                'datosBarra':datosBarra(request),
-                'instrumentos':instrumentos,
-                'seguidores':seguidores,
-                'artista':artista,
-            })
-        )
+        artista = Artista.objects.filter(user = request.user)[0]
+        banda = Banda.objects.filter(id = bandaid)[0]
+        pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
+        if len(pertenece) == 1:
+            integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
+            seguidores = len(banda.seguidores.all())
+            
+            assert isinstance(request, HttpRequest)
+            return render(
+                request,
+                'app/perfilBandaNp.html',
+                context_instance = RequestContext(request,
+                {
+                    'banda':banda,
+                    'artista':artista,
+                    'tipoUsuario':tipoUsuario,
+                    'datosBarra':datosBarra(request),
+                    'integrantes':integrantes,
+                    'seguidores':seguidores
+                })
+            )
 #------------------------
 
 class perfilArtista(View):
@@ -336,11 +332,11 @@ class perfilArtistaNp(View):
             return HttpResponseRedirect("/login")           
         
         elif verLogVsUrl and tipoUsuario == 1:
-            return HttpResponseRedirect("/perfilArtista/%s" % userid)
+            return HttpResponseRedirect("/perfilArtista")
             #falta termina este template
             
         elif verLogVsUrl and tipoUsuario == 2:
-            return HttpResponseRedirect("/perfilNormal/%s" % userid)
+            return HttpResponseRedirect("/perfilNormal")
             
         elif (not verLogVsUrl) and tipoUsuarioUrl == 2:
             return HttpResponseRedirect("/perfilNormalNp/%s" % userid)
@@ -384,7 +380,6 @@ class crearBanda(View):
         # create a form instance and populate it with data from the request:
         form = CrearBandaForm(request.POST)
         # check whether it's valid:
-        print "lkansdlkansdlkansds"
         if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...
