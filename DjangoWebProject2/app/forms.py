@@ -21,7 +21,7 @@ class CrearBandaForm(forms.Form):
     nombre = forms.CharField(max_length=254,
                                widget=forms.TextInput({
                                    'class': 'form-control validate'}))
-    choice_g = [ (gen.nombre,gen.nombre) for gen in Genero.objects.all()]
+    choice_g = sorted([ (gen.nombre,gen.nombre) for gen in Genero.objects.all()])
     choice_y = [(str(year), year) for year in range(1900, 2016) ]
     choice_y.reverse()
     meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septembrie", "Octubre", "Noviembre", "Diciembre"]

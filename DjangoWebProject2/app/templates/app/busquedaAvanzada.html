@@ -1,0 +1,133 @@
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col s12"> 
+            
+            <h4>Búsqueda avanzada</h4>
+            <div class="input-field col s12">
+                
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Nombre</label>
+                <select class="browser-default">
+                    <option value="" disabled selected>Target</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+    
+            <div class="row">
+                <div class="col s12"> 
+                    <div class="input-field col s12">
+                        <input disabled id="disabled" type="text" class="validate">
+                    </div>
+                </div>
+            </div>
+
+                <div class="row">
+                    <div class="col s12">
+             
+                        <h5>Usuario artista</h5>
+                        <div class="input-field col s6">                
+                            <label>Instrumento que toca</label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Seleccione un instrumento</option>
+                                <option value="1">Ukulele</option>
+                                <option value="2">Ocarina</option>
+                                <option value="3">Corneta</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s6">                
+                            <label>Instrumento que toca</label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Seleccione un instrumento</option>
+                                <option value="1">Ukulele</option>
+                                <option value="2">Ocarina</option>
+                                <option value="3">Corneta</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12"> 
+                        <div class="input-field col s12">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">Banda a la que pertenesco</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                <div class="col s12"> 
+                    <div class="input-field col s12">
+                        <input disabled id="disabled" type="text" class="validate">
+                    </div>
+                </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <h5>Banda</h5>
+                        <div class="input-field col s6">                
+                            <label>Genero</label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Seleccione un genero</option>
+                                <option value="1">Funk</option>
+                                <option value="2">Punk</option>
+                                <option value="3">Anglo</option>
+                            </select>
+                        </div>
+
+                        <div class="input-field col s6">                
+                            <label>Genero</label>
+                            <br><br>
+                            <select class="browser-default">
+                                <option value="" disabled selected>Seleccione un genero</option>
+                                <option value="1">Funk</option>
+                                <option value="2">Punk</option>
+                                <option value="3">Anglo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12"> 
+                        <div class="input-field col s12">
+                            <input id="last_name" type="text" class="validate">
+                            <label for="last_name">Banda a la que pertenesco</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col s12">
+                        <a class="waves-effect waves-light btn">Buscar</a>
+       
+                </div>
+
+    </div>
+</div>  
+
+</div>
+
+{% endblock %}
+{% block scripts %}
+
+
+{% endblock %}

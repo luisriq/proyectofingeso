@@ -3,6 +3,8 @@
 {% block sidebar %}
     {% if tipoUsuario == 1  %}
         {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
     {% endif%}
         
 {% endblock %}

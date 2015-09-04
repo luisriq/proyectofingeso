@@ -1,0 +1,59 @@
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+  
+    <ul class="collapsible" data-collapsible="accordion">
+
+    <li class="collection with-header">
+        <div class="row">
+        <div class="col s6"><h6>&nbsp&nbsp&nbspFAQS</h6></div>
+        <div class="col s6"><h6 class="right-align">Ultima actualización&nbsp&nbsp&nbsp</h6></div>
+        </div>
+    </li>
+
+    <li>
+      <div class="collapsible-header">
+        <div class="col s6"><h6>¿Cómo veo mi perfil?</h6></div>
+        <div class="col s6"><h6 class="right-align">15 Sep, 4:34 AM (2015)</h6></div>
+      </div>
+      <div class="collapsible-body"><p>No cacho hermano :c</p></div>
+    </li>
+    <li>
+      <div class="collapsible-header">
+        <div class="col s6"><h6>¿Pasare FINGESO??</h6></div>
+        <div class="col s6"><h6 class="right-align">15 Sep, 4:34 AM (2015)</h6></div>
+      </div>
+      <div class="collapsible-body"><p>Solo confia en tu corazón</p></div>
+    </li>
+    <li>
+      <div class="collapsible-header">
+        <div class="col s6"><h6>¿Como creo una banda?</h6></div>
+        <div class="col s6"><h6 class="right-align">15 Sep, 4:34 AM (2015)</h6></div>
+      </div>
+      <div class="collapsible-body"><p>Aquí debería ir la respuesta n_n</p></div>
+    </li>
+  </ul>
+
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block scripts %}
+
+
+{% endblock %}

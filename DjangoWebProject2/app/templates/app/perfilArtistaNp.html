@@ -48,7 +48,7 @@
                     <div class="col center-align" style="width:160px"> 
                         <div class="card color-333">
                             <div class="card-image">
-                            <img src="{{b.instrumento.imagen.url}}" alt="" style="height:150px;">
+                            <img src="{{b.instrumento.imagen}}{%if b.nivel < 5%}{{b.nivel}}.jpg{%elif b.nivel == 5%}.gif{% endif%}" alt="" style="height:150px;">
                             </div>
                             <!--div class="card-content ">
                             <p class=" white-text">LVL:{{b.nivel}}</p>
