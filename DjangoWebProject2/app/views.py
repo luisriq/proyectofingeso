@@ -555,6 +555,11 @@ def guardarDatosArtista(request):
                 u.biografia = dato
                 u.save()
                 print "saved"
+            elif target == "cuentaTwitter":
+                u = Artista.objects.filter(user = request.user)[0]
+                u.cuentaTwitter = dato
+                u.save()
+                print "cuentaTwitter saved"
             print "YEEEES %s"%dato
             print "Target %s"%target
     except:
