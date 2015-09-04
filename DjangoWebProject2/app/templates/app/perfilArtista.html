@@ -5,109 +5,105 @@
 {% endblock %}
 
 {% block content %}
-    {% load staticfiles %}
-<form  method="POST" id="post-form-archivo" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="file-field input-field">
+<div class="container sfull">
+    <div class="row">
+        <div class="card-panel grey lighten-4 col l6 s12 center-align">
 
-    <input class="file-path validate" type="text">
-        {{formImagen.file_}}
-    </input>
-    <button class="btn waves-effect waves-light" type="submit" name="action">Subir</button>
+             <div class="circle avatar-perfil" ><img src="{{artista.imagenPerfil.url}}" alt="" 
+                style="height:150px;"></div>
+                <h4 class="campo-editable"> 
+                    <form method="POST" data-target="nombre" >
+                        {% csrf_token %}
+                        <span class="no-hide dato">{{artista.nombre}}</span> 
+                        <input class="w60p hide" type="text" name="dato" value="{{artista.nombre}}" />
+                        <a class="btn no-hide editar toggle color-principal hover-shadow">
+                            <i class="material-icons">&#xE254;</i>
+                        </a> 
+                        <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
+                            <i class="material-icons">&#xE5CA;</i>
+                        </a>
+                    </form>
+                </h4>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s8 offset-s2"> 
+                                <div class="card-panel color-principal lighten-3">
+                                    <b class="">{{seguidores}}</b> Seguidor{%if seguidores != 1%}es{% endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="left-align">
+                    <h6>Sobre mi:</h6>
+                    <div class="card-panel color-principal lighten-3">
+                        <div class="campo-editable">
+                            <form method="POST" data-target="biografia" >
+                                {% csrf_token %}
+                                <span class="no-hide dato">{{artista.biografia|linebreaksbr}}</span> 
+                                <div class="input-field hide" style="width:calc(100% - 30px);">
+                                    <textarea name="dato" class="materialize-textarea cyan lighten-4" style="padding:0 15px;">{{artista.biografia}}</textarea>
+                                </div>
+                                <a class="btn no-hide editar toggle color-principal hover-shadow">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a> 
+                                <a class="btn hide editar submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios">
+                                    <i class="material-icons">&#xE5CA;</i>
+                                </a>
+                                <hr style="border:none;width:auto;height:0px;clear:both;"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="z-depth-1"><a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                </div> 
+        </div>
+        <div class="card-panel grey lighten-3 col offset-l1 l5 s12 center-align">
+            <div class="container">
+                <div class="row">
+                    {% for b in instrumentos %}
+                    <div class="col center-align" style="width:160px"> 
+                        <div class="card color-333">
+                            <div class="card-image">
+                            <img src="{{b.instrumento.imagen.url}}" alt="" style="height:150px;">
+                            </div>
+                            <!--div class="card-content ">
+                            <p class=" white-text">LVL:{{b.nivel}}</p>
+                            </div-->
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>  
+            </div>
+            <h5>Bandas a los que pertenezco</h5>
+            <ul class="collection">
+                {% for b in integranteEn %}
+                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
+                <div class="circle avatar-img dropdown-button"><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
+                </div>
+                <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>
+                </a>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-</form>
-<form method="POST" id="post-form-nombre">
-    {% csrf_token %}
-    
-    <div class="fieldWrapper" id="the_post">
-        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
-        <label for="first_name">First Name</label>
-    </div>
-    <div id="results"></div> <!-- errors go here -->
-    <input type="submit" value="Post" class="tiny button">
-</form>
-<script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
-<script src="{% static 'app/scripts/respond.js' %}"></script>
-<script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
-<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+</div>
 
-<script type="text/javascript">
+
+{% endblock %}
+
+{% block scripts %}
+
+{% load staticfiles %}
+	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+	<script src="{% static 'app/scripts/script.js' %}"></script>
+    {#script para configurar ajax#}
+    <script type="text/javascript">
     $(document).ready(function(){
         $(document).ajaxSend(function (event, jqxhr, settings) {
             jqxhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
         });
     });
-    
-
-    function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                    var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-            // Does this cookie string begin with the name we want?
-            if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-                }
-            }
-        }
-    return cookieValue;
-    }
-    
-    
-    function upload(event) {
-    event.preventDefault();
-    var datos = new FormData($('#post-form-archivo').get(0));
-
-    $.ajax({
-        url: "upload",
-        type: "POST",
-        data: datos,
-        cache: false,
-        processData: false,
-        contentType: false,
-        success: function(data) {
-            alert('success');
-        }
-    });
-    }
-    
-    $(function() {
-        $('#post-form-archivo').submit(upload);
-    });
-
-    $('#post-form-nombre').on('submit', function(event){
-    event.preventDefault();
-    create_post();
-    });
-    function create_post(){
-        $.ajax({
-        url : "guardarDatosArtista", // the endpoint
-        type : "POST", // http method
-        data : { dato : $('#first_name').val(),
-                 target : "nombre",
-            "X-CSRFToken" : '{{ csrf_token }}' }, // data sent with the post request
-        
-        // handle a successful response
-        success : function(json) {
-            $('#post-text-nombre').val(''); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-        },
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-    }
-    
-    
-
-    
-</script>
-
-
+    </script>
+    <script src="{% static 'app/scripts/editarcampos.js' %}"></script>
 {% endblock %}

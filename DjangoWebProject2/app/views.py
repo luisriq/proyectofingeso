@@ -550,6 +550,11 @@ def guardarDatosArtista(request):
                 request.user.first_name = dato
                 request.user.save()
                 u.save()
+            elif target == "biografia":
+                u = Artista.objects.filter(user = request.user)[0]
+                u.biografia = dato
+                u.save()
+                print "saved"
             print "YEEEES %s"%dato
             print "Target %s"%target
     except:
