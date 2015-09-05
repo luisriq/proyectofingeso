@@ -298,7 +298,7 @@ class perfilArtista(View):
         instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
         formimagen = UploadFileForm()
-        allInstruments = Instrumento.all()
+        allInstruments = Instrumento.objects.all()
         assert isinstance(request, HttpRequest)
         return render(
             request,
