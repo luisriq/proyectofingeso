@@ -295,10 +295,12 @@ class perfilArtista(View):
         except:
             return HttpResponse("Debe redirigirse al home del usuario normal")
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
-        instrumentos = [ib.instrumento for ib in Toca.objects.filter(artista = artista)]
+        instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
         formimagen = UploadFileForm()
         allInstruments = Instrumento.objects.all()
+        
+            
         assert isinstance(request, HttpRequest)
         return render(
             request,
