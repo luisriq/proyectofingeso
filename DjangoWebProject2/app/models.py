@@ -19,7 +19,7 @@ class Usuario(models.Model):
 		return self.nombre + " / " + self.correo
 
 class Artista(Usuario):
-	biografia = models.TextField()
+	biografia	 = models.TextField()
 	seguidores = models.ManyToManyField("Normal", blank=True)
 	cuentaTwitter = models.CharField(max_length=200, null = True)
 	

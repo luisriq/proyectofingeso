@@ -514,6 +514,21 @@ def getUsuarioUrl(urlId):
     elif len(Artista.objects.filter(id = urlId)) == 1:
         usuario = Artista.objects.filter(id = urlId)[0]
     return usuario
+
+#-----------------------------------------------------
+#    funcion para saber si una palabra es muy larga
+#    dentro de un texto
+#-----------------------------------------------------  
+def largoPalabra(texto, largo):
+    palabras = texto.split(" ")
+    lista = []
+    for palabra in palabras:
+        lista.append(palabra.strip("\n"))
+    for palabra in lista:
+        if len(palabra) >= largo:
+            return 1
+    return 0
+
       
 
     
