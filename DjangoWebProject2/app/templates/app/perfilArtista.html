@@ -111,9 +111,9 @@
             <ul class="collection">
                 {% for b in integranteEn %}
                 <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
-                <div class="circle avatar-img dropdown-button"><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
+                <div class="circle avatar-img dropdown-button"><img src="{{b.banda.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
-                <span class="title left-align"><br>nombre :{{b.nombre}} Genero: {{b.genero}}</span>
+                <span class="title left-align"><br>nombre :{{b.banda.nombre}} Genero: {{b.banda.genero}}</span>
                 </a>
                 {% endfor %}
             </ul>
