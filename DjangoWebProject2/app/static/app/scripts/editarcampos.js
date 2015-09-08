@@ -17,7 +17,7 @@ $( document ).ready(function(){
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log(dato.val());
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
-		if (true){
+		if (largoPalabra(dato.val()[0], formulario.attr("largomaximo"))){
 		$.ajax({
 			url : "/guardarDatosArtista", // the endpoint
 			type : "POST", // http method
@@ -54,7 +54,7 @@ $( document ).ready(function(){
 				Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
 				console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 			}
-		});}
+		});}else{Materialize.toast('Error al cambiar, las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);}
 	});
 	$('.addInstrumento').click(function(){
 		$('#modal1').openModal();
@@ -62,6 +62,15 @@ $( document ).ready(function(){
 	
 	twitLoad();
 }); 
+function largoPalabra(texto, maximo){
+	var palabras = texto.split(" ").replace("\n", "");
+	for (var palabra in palabras){
+		if (palabra.length() >= maximo)
+			return false
+	}
+	return true
+}
+
 
 function twitLoad(){
 	window.twttr = (function(d, s, id) {

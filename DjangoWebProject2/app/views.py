@@ -566,13 +566,9 @@ def guardarDatosArtista(request):
                 u.save()
             elif target == "biografia":
                 u = Artista.objects.filter(user = request.user)[0]
-                largo = 40
-                if largoPalabra(dato, largo):
-                    u.biografia = dato
-                    u.save()
-                    print "saved"
-                else:
-                    print "Error, las palabras deben tener menos de %s caracteres", largo
+                u.biografia = dato
+                u.save()
+                print "saved"
             elif target == "cuentaTwitter":
                 u = Artista.objects.filter(user = request.user)[0]
                 u.cuentaTwitter = dato

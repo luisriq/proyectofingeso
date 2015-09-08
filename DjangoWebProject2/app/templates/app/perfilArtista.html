@@ -12,7 +12,7 @@
              <div class="circle avatar-perfil" ><img src="{{artista.imagenPerfil.url}}" alt="" 
                 style="height:150px;"></div>
                 <h4 class="campo-editable"> 
-                    <form method="POST" data-target="nombre" >
+                    <form method="POST" data-target="nombre" largomaximo="20">
                         {% csrf_token %}
                         <span class="no-hide dato">{{artista.nombre}}</span> 
                         <input class="w60p hide" type="text" name="dato" value="{{artista.nombre}}" />
@@ -37,12 +37,12 @@
                     <h6>Sobre mi:</h6>
                     <div class="card-panel color-principal lighten-3">
                         <div class="campo-editable">
-                            <form method="POST" data-target="biografia" >
+                            <form method="POST" data-target="biografia" largomaximo = "40">
                                 {% csrf_token %}
                                 <a class="btn no-hide editar toggle color-principal hover-shadow right">
                                     <i class="material-icons">&#xE254;</i>
                                 </a> 
-                                <span class="no-hide dato">{{artista.biografia}}</span> 
+                                <span class="no-hide dato">{{artista.biografia|linebreaksbr}}</span> 
                                 <div class="input-field hide" style="width:calc(100% - 30px);">
                                     <textarea name="dato" class="materialize-textarea cyan lighten-4" style="padding:0 15px;">{{artista.biografia}}</textarea>
                                 </div>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="twiter card-panel white-text campo-editable" style="background:#5faad8;text-shadow: 0 1px 2px rgba(0,0,0,.2);font-size: 18px;">
                     
-                    <form method="POST" data-target="cuentaTwitter" >
+                    <form method="POST" data-target="cuentaTwitter" largomaximo="40">
                         {% csrf_token %}
                         <span>Cuenta de twitter : </span>
                         {%if artista.cuentaTwitter %}
