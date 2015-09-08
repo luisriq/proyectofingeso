@@ -15,46 +15,49 @@ $( document ).ready(function(){
 	$(".btn.editar.submit").click(function(){
 		var formulario = $(this).parent("form");
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
-		console.log(dato.val());
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
-		if (largoPalabra(dato.val()[0], formulario.attr("largomaximo"))){
-		$.ajax({
-			url : "/guardarDatosArtista", // the endpoint
-			type : "POST", // http method
-			data : { dato : dato.val(),
-					target : formulario.attr('data-target'),
-				"X-CSRFToken" : token.val() }, // data sent with the post request
-			
-			// handle a successful response
-			success : function(response) {
-				console.log(response); // log the returned json to the console
-				if(response=="OK"){
-					Materialize.toast('Se han guardado cambios en '+formulario.attr('data-target'), 4000);
-					if(formulario.attr('data-target')=="nombre")
-						$("#nombre-navbar").text(dato.val());
-					else if(formulario.attr('data-target')=="cuentaTwitter"){
-						$('.twitter-container').html('');
-						$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
-						twttr.widgets.load()
-						console.log("holi");
+		console.log("func:"+largoPalabra(dato.val(), formulario.attr("largomaximo")));
+		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
+			console.log("que mierda")
+			$.ajax({
+				url : "/guardarDatosArtista", // the endpoint
+				type : "POST", // http method
+				data : { dato : dato.val(),
+						target : formulario.attr('data-target'),
+					"X-CSRFToken" : token.val() }, // data sent with the post request
+				// handle a successful response
+				success : function(response) {
+					console.log(response); // log the returned json to the console
+					if(response=="OK"){
+						Materialize.toast('Se han guardado cambios en '+formulario.attr('data-target'), 4000);
+						if(formulario.attr('data-target')=="nombre")
+							$("#nombre-navbar").text(dato.val());
+						else if(formulario.attr('data-target')=="cuentaTwitter"){
+							$('.twitter-container').html('');
+							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
+							twttr.widgets.load()
+							console.log("holi");
+						}
+						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />');
+						formulario.find(".dato").html(txtconbr);
+						var no_hide = formulario.find(".no-hide");
+						var hide = formulario.find(".hide");
+						no_hide.removeClass("no-hide").addClass("hide");
+						hide.removeClass("hide").addClass("no-hide");
+						
 					}
-					var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />');
-					formulario.find(".dato").html(txtconbr);
-					var no_hide = formulario.find(".no-hide");
-					var hide = formulario.find(".hide");
-					no_hide.removeClass("no-hide").addClass("hide");
-					hide.removeClass("hide").addClass("no-hide");
-					
-				}
-				else
+					else
+						Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
+				},
+				// handle a non-successful response
+				error : function(xhr,errmsg,err) {
 					Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
-			},
-			// handle a non-successful response
-			error : function(xhr,errmsg,err) {
-				Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
-				console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-			}
-		});}else{Materialize.toast('Error al cambiar, las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);}
+					console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+				}
+			});
+		}
+		else
+			Materialize.toast('Error al cambiar, las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
 	});
 	$('.addInstrumento').click(function(){
 		$('#modal1').openModal();
@@ -63,12 +66,15 @@ $( document ).ready(function(){
 	twitLoad();
 }); 
 function largoPalabra(texto, maximo){
-	var palabras = texto.split(" ").replace("\n", "");
-	for (var palabra in palabras){
-		if (palabra.length() >= maximo)
-			return false
-	}
-	return true
+	var palabras = texto.split(" ");
+	for (p in palabras)
+		p=p.replace("\n", "");
+	var g=true;
+	$(palabras).each(function (index,el){
+		if(el.length > parseInt(maximo))
+			g=false;
+	});
+	return g;
 }
 
 
