@@ -90,9 +90,10 @@
                             <div class="card-image">
                             <img src="{{b.instrumento.imagen}}{%if b.nivel < 5%}{{b.nivel}}.jpg{%elif b.nivel == 5%}.gif{% endif%}" alt="" style="height:150px;">
                             </div>
-                            <!--div class="card-content ">
-                            <p class=" white-text">LVL:{{b.nivel}}</p>
-                            </div-->
+                            <div class="card-content range-field" style="padding: 0 20px;">
+                                <input type="range" id="test5" min="1" max="5" value="1" />
+                                <style type="text/css"></style> 
+                            </div>
                         </div>
                     </div>
                     {% endfor %}

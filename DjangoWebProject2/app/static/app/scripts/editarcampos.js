@@ -60,10 +60,13 @@ $( document ).ready(function(){
 		else
 			Materialize.toast('Error al cambiar, las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
 	});
+	
 	$('.addInstrumento').click(function(){
 		$('#modal1').openModal();
 	});
-	
+	$('input[type=range]').change(function(){
+		console.log($(this).val());
+	});
 	twitLoad();
 }); 
 function largoPalabra(texto, maximo){
