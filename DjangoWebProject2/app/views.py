@@ -577,6 +577,10 @@ def guardarDatosArtista(request):
             elif target == "instrumento":
                 a = Artista.objects.filter(user = request.user)[0]
                 i = Instrumento.objects.filter(id = dato)[0]
+                existe = Toca.objects.filter(instrumento=i,artista=a)
+                print existe
+                if(len(existe)!=0):
+                    return HttpResponse("ERROR")
                 toca = Toca(instrumento=i,artista=a,nivel=1)
                 toca.save()
             print "YEEEES %s"%dato
