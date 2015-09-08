@@ -38,13 +38,14 @@ $( document ).ready(function(){
 							twttr.widgets.load()
 							console.log("holi");
 						}
+						else if(formulario.attr('data-target')=="instrumento")
+							location.reload();
 						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />');
 						formulario.find(".dato").html(txtconbr);
 						var no_hide = formulario.find(".no-hide");
 						var hide = formulario.find(".hide");
 						no_hide.removeClass("no-hide").addClass("hide");
 						hide.removeClass("hide").addClass("no-hide");
-						
 					}
 					else
 						Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
