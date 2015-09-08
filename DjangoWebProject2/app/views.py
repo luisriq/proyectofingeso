@@ -526,8 +526,8 @@ def largoPalabra(texto, largo):
         lista.append(palabra.strip("\n"))
     for palabra in lista:
         if len(palabra) >= largo:
-            return 1
-    return 0
+            return False
+    return True
 
       
 
@@ -566,9 +566,13 @@ def guardarDatosArtista(request):
                 u.save()
             elif target == "biografia":
                 u = Artista.objects.filter(user = request.user)[0]
-                u.biografia = dato
-                u.save()
-                print "saved"
+                largo = 40
+                if largoPalabra(dato, largo):
+                    u.biografia = dato
+                    u.save()
+                    print "saved"
+                else:
+                    print "Error, las palabras deben tener menos de %s caracteres", largo
             elif target == "cuentaTwitter":
                 u = Artista.objects.filter(user = request.user)[0]
                 u.cuentaTwitter = dato
