@@ -4,6 +4,7 @@ Definition of models.
 
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 # Crear modelos aqui.
 
 
@@ -11,7 +12,6 @@ class Usuario(models.Model):
 	user = models.OneToOneField(User, null=True, related_name="profile")
 	nombre = models.CharField(max_length=200)
 	correo = models.EmailField(unique=True)
-	contrasena =  models.CharField(max_length=200)
 	fechaIngreso =  models.DateTimeField(auto_now_add=True)
 	usuarioActivo = models.BooleanField(default=True)
 	imagenPerfil = models.ImageField(upload_to = 'app/static/app/images', default = 'pic_folder/None/no-img.jpg')
@@ -158,3 +158,11 @@ class Comentario(models.Model):
 	material = models.ForeignKey(Material, related_name = 'comenta', null=True)
 	def __unicode__(self):
 		return self.texto
+		
+class Solicitud(models.Model):
+	banda = models.ForeignKey(Banda, related_name = 'invita', null=True)
+	artista = models.ForeignKey(Artista, related_name='invitado', null=True)
+	direccion = models.CharField(max_length=3)
+	guid = models.CharField(max_length=36)
+	def __unicode__(self):
+		return self.banda.nombre + " " + self.direccion + self.artisata.nombre

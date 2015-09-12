@@ -31,15 +31,11 @@ class VistaSignUp(View):
                              first_name=form.cleaned_data['name'])
             fecha = 0
             if not form.cleaned_data['tipo']:
-                usuario = Normal(user = _user, correo=form.cleaned_data['email'], 
-                             nombre = form.cleaned_data['name'], 
-                             contrasena = form.cleaned_data['password2'], )
+                usuario = Normal(user = _user)
                 fecha = usuario.fechaIngreso
                 usuario.save()
             else:
-                usuario = Artista(user = _user, correo=form.cleaned_data['email'], 
-                             nombre = form.cleaned_data['name'], 
-                             contrasena = form.cleaned_data['password2'], )
+                usuario = Artista(user = _user)
                 fecha = usuario.fechaIngreso
             	usuario.save()
             user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password2'])

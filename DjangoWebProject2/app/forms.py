@@ -12,11 +12,7 @@ from models import *
 from datetime import datetime, timedelta, date
 
 
-class UserForm(ModelForm):
-    class Meta:
-        model = Usuario
-        fields = ('nombre', 'correo', 'contrasena')
-        
+
 class CrearBandaForm(forms.Form):
     nombre = forms.CharField(max_length=254,
                                widget=forms.TextInput({
