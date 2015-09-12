@@ -56,11 +56,13 @@
                                 <div class="col s12 left-align">
                                     <h5>Discografia</h5>
                                     <ul class="collection">
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
+                                        {% for disco in discos %}
+                                        <li class="collection-item valign-wrapper" data-url="{url}" data-dId="{{disco.id}}">
+                                            <i class="material-icons blue white-text" style="padding:8px;">&#xE030;</i>
+                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{disco.nombre}}</span>
+                                            <span class="secondary-content">{{disco.lanzamiento}}</span>
                                         </li>
+                                        {% endfor %}
                                         <li class="collection-item valign-wrapper">
                                             <i class="material-icons blue white-text" style="padding:8px;">folder</i>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>

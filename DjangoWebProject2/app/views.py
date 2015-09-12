@@ -188,7 +188,7 @@ class perfilBandaNp(View):
             return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
         banda = Banda.objects.filter(id = bandaid)[0]
         integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
-        discos = [di for di in Disco.objects.filter(banda = banda)]
+        discos =  Disco.objects.filter(banda = banda)
         seguidores = len(banda.seguidores.all())
         
         assert isinstance(request, HttpRequest)
@@ -263,6 +263,7 @@ class perfilBanda(View):
             return HttpResponseRedirect("/login")
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
+        discos =  Disco.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
@@ -275,6 +276,7 @@ class perfilBanda(View):
                 context_instance = RequestContext(request,
                 {
                     'banda':banda,
+                    'discos':discos,
                     'artista':artista,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
