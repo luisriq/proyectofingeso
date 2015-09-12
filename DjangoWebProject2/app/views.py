@@ -177,7 +177,6 @@ class perfilNormal(View):
 class perfilBandaNp(View):
     def get(self, request, bandaid):
         tipoUsuario = verificacion(request)
-<<<<<<< HEAD
         pertenece = 0
         try:
             banda = Banda.objects.filter(id = bandaid)[0]
@@ -222,7 +221,6 @@ class perfilBandaNp(View):
                     'seguidores':seguidores
                 })
             )
-=======
         if tipoUsuario == 0:
             return HttpResponseRedirect("/login")   
                #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
@@ -250,7 +248,6 @@ class perfilBandaNp(View):
                 'seguidores':seguidores
             })
         )
->>>>>>> fcb1f8ca43fb8c48c8aaf7df04c0be097b19ec1d
 #-----------------------------------------------------------
 #    clase perfil normal no propietario
 #-----------------------------------------------------------

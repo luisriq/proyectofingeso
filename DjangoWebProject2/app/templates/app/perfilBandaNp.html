@@ -55,16 +55,15 @@
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Discografia</h5>
-                                    <div class="collection">
+                                    <ul class="collection">
                                         {% for disco in discos %}
-                                        <a class="collection-item valign-wrapper" data-url="{url}" data-dId="{{disco.id}}">
+                                        <li class="collection-item valign-wrapper" data-url="{url}" data-dId="{{disco.id}}">
                                             <i class="material-icons orange darken-3 white-text" style="padding:8px;">&#xE030;</i>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{disco.nombre}}</span>
                                             <span class="secondary-content stext orange-text text-darken-4">{{disco.lanzamiento.year}}</span>
-                                        </a>
-                                        
+                                        </li>
                                         {% endfor %}
-                                      </div>
+                                      </ul>
                                 </div>
                             </div>
                             
