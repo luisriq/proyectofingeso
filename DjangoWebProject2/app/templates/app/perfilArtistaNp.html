@@ -36,7 +36,7 @@
                     </div>
                 </div>
 
-                <div class="z-depth-1"><a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                <div class="z-depth-1 twitter-container"><a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                 </div> 
         </div>
 
@@ -59,11 +59,21 @@
             </div>
             <h5>Bandas a los que pertenezco</h5>
             <ul class="collection">
+<<<<<<< HEAD
                 {% for pertenezco in integranteEn %}
                 <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
                 <div class="circle avatar-img dropdown-button"><img src="{{pertenezco.banda.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
                 <span class="title left-align"><br>nombre :{{pertenezco.banda.nombre}} Genero: {{pertenezco.banda.genero}} ocupacion: {{pertenezco.ocupacion}}</span>
+=======
+                {% for b in integranteEn %}
+                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar valign-wrapper">
+                <div class="circle avatar-img "><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
+                </div>
+                <div class="right grey-text text-darken-2 valign-wrapper" style="max-width:40%;height:100%">{rol}</div>
+                <div class="title left-align truncate" style="margin-top:10px">{{b.nombre}}<br> <span class="grey-text stext">{{b.genero}}</span></div>
+                
+>>>>>>> d31d4792c67c94a1ae109669573237800d285eb9
                 </a>
                 {% endfor %}
             </ul>
