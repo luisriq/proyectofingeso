@@ -77,16 +77,21 @@
                         </a>
                     </form>
                 </div>
-                <div class="z-depth-1 twitter-container"><a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a>
-                <script></script>
-                </div> 
+                <div class="z-depth-1 twitter-container"><a class="twitter-timeline"  href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a>
+               
+                </div>
+               {# consola para debug en ipad  XD #}
+               {# <div class="console black white-text left-align" ></div> #}
         </div>
         <div class="card-panel grey lighten-3 col offset-l1 l5 s12 center-align">
             <div class="container">
                 <div class="row">
+                    <h5 class="col s12 left-align" style="padding-top:10px">Instrumentos:</h5>
+                </div>
+                <div class="row">
                     {% for b in instrumentos %}
                     <div class="col center-align" style="width:160px"> 
-                        <div class="card color-333">
+                        <div class="card color-333" style="display:inline-block">
                             <div class="card-image">
                             <img src="{{b.instrumento.imagen}}{%if b.nivel < 5%}{{b.nivel}}.jpg{%elif b.nivel == 5%}.gif{% endif%}" alt="" style="height:150px;">
                             </div>

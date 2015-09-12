@@ -114,6 +114,20 @@ $( document ).ready(function(){
 		console.log("jakdjfsba")
 	});
 	twitLoad();
+	for(var i=1;i<20;i++)
+		setTimeout(function(){
+			if($('iframe').width()>$('iframe').parent().width()){
+				var pw=$('iframe').parent().width(); 
+				$('iframe').width(pw);
+				$('iframe').parent('div').resize(function (){
+					if($('iframe').width() != $('iframe').parent().width()){
+						$('iframe').width($(this).width());
+						//$('.console').append("Fireness:~ fireness$ fit "+$('iframe').width()+"px<br>");
+					}
+				})
+					
+			}
+		}, i*500);//arrgla problemas de visualizacion en ipad
 }); 
 function largoPalabra(texto, maximo){
 	var palabras = texto.split(" ");
@@ -145,5 +159,5 @@ function twitLoad(){
 	
 	return t;
 	}(document, "script", "twitter-wjs"));
-
+	
 }

@@ -311,3 +311,10 @@ a.color-principal:hover{
 .manito{
   cursor: pointer !important;
 }
+.stext{
+  font-size: 11px !important;
+}
+.twitter-container{
+  max-height: 295px;
+  margin-bottom: 15px;
+}
