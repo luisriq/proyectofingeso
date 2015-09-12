@@ -60,10 +60,59 @@ $( document ).ready(function(){
 		else
 			Materialize.toast('Error al cambiar, las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
 	});
+	
 	$('.addInstrumento').click(function(){
 		$('#modal1').openModal();
 	});
-	
+	$('input[type=range]').change(function(){
+		var img = $(this).parent().parent().find(".card-image").find('img');
+		var path = $(this).attr("data-img-url");
+		var token = $(this).attr("data-img-url");
+		var value=$(this).val()
+		//cambiar en la bd
+		$.ajax({
+			url : "/guardarDatosArtista", // the endpoint
+			type : "POST", // http method
+			data : { dato : $(this).val(),
+					idToca: $(this).attr("data-id"),
+					target : 'iNivel',
+				"X-CSRFToken" : token }, // data sent with the post request
+			// handle a successful response
+			success : function(response) {
+				console.log(response); // log the returned json to the console
+				if(response=="OK"){
+					console.log("servidor responde OK")
+					switch (value){
+						case "1":
+							img.attr("src",path+"1.jpg");
+							break; 
+						case "2":
+							img.attr("src",path+"2.jpg");
+							break; 
+						case "3":
+							img.attr("src",path+"3.jpg");
+							break; 
+						case "4":
+							img.attr("src",path+"4.jpg");
+							break; 
+						case "5":
+							img.attr("src",path+".gif");
+							break; 
+					}
+				}
+				else{
+					Materialize.toast('Error al cambiar el nivel del instrumento', 4000);
+					console.log("error en el servidor");
+				}
+			},
+			// handle a non-successful response
+			error : function(xhr,errmsg,err) {
+				Materialize.toast('Error al cambiar el nivel del instrumento', 4000);
+				console.log("error en la comunicación");
+			}
+		});
+		console.log("jakdjfsba")
+	});
 	twitLoad();
 }); 
 function largoPalabra(texto, maximo){

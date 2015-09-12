@@ -579,6 +579,12 @@ def guardarDatosArtista(request):
                     return HttpResponse("ERROR")
                 toca = Toca(instrumento=i,artista=a,nivel=1)
                 toca.save()
+            elif target == "iNivel": 
+                print request.POST.get('idToca')
+                t = Toca.objects.filter( id =  request.POST.get('idToca'))[0] 
+                t.nivel = dato
+                t.save()
+                print "nivel cambiado"
             print "YEEEES %s"%dato
             print "Target %s"%target
     except :
