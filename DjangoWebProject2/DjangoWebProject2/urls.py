@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact$', 'app.views.contact', name='contact'),
+    url(r'^error404', error404.as_view(), name='404'),
     url(r'^about', 'app.views.about', name='about'),
     #url(r'^login', VistaSignUp.as_view(), name='login'),
     url(r'^registro', VistaSignUp.as_view(), name='signup'),
