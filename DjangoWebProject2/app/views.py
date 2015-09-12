@@ -188,6 +188,7 @@ class perfilBandaNp(View):
             return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
         banda = Banda.objects.filter(id = bandaid)[0]
         integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
+        discos = [di for di in Disco.objects.filter(banda = banda)]
         seguidores = len(banda.seguidores.all())
         
         assert isinstance(request, HttpRequest)
@@ -197,6 +198,7 @@ class perfilBandaNp(View):
             context_instance = RequestContext(request,
             {
                 'banda':banda,
+                'discos':discos,
                 'tipoUsuario':tipoUsuario,
                 'datosBarra':datosBarra(request),
                 'integrantes':integrantes,
