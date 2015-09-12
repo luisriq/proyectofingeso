@@ -31,11 +31,13 @@ class VistaSignUp(View):
                              first_name=form.cleaned_data['name'])
             fecha = 0
             if not form.cleaned_data['tipo']:
-                usuario = Normal(user = _user)
+                usuario = Normal(user = _user, nombre = form.cleaned_data['name'],
+                    correo = form.cleaned_data['email'])
                 fecha = usuario.fechaIngreso
                 usuario.save()
             else:
-                usuario = Artista(user = _user)
+                usuario = Artista(user = _user, nombre = form.cleaned_data['name'],
+                    correo = form.cleaned_data['email'])
                 fecha = usuario.fechaIngreso
             	usuario.save()
             user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password2'])
@@ -341,7 +343,7 @@ class perfilArtistaNp(View):
             artista = Artista.objects.filter(id = userid)[0]
             
             #bandas a las que pertenece
-            integranteEn = [ib.banda for ib in IntegrantesBanda.objects.filter(integrante = artista)]
+            integranteEn = [ib for ib in IntegrantesBanda.objects.filter(integrante = artista)]
             
             #instrumentos que toca
             instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
