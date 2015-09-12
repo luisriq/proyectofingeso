@@ -77,9 +77,7 @@
                         </a>
                     </form>
                 </div>
-                <div class="z-depth-1 twitter-container"><a class="twitter-timeline"  href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a>
-               
-                </div>
+                <div class="z-depth-1 twitter-container" style="max-width:520px"><a class="twitter-timeline"  href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a></div>
                {# consola para debug en ipad  XD #}
                {# <div class="console black white-text left-align" ></div> #}
         </div>
@@ -116,10 +114,11 @@
             <h5>Bandas a los que pertenezco</h5>
             <ul class="collection">
                 {% for b in integranteEn %}
-                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
-                <div class="circle avatar-img dropdown-button"><img src="{{b.banda.imagenPerfil.url}}" alt="" style="height:50px;">
+                <a href="/perfilBandaNp/{{b.banda.id}}"  class="collection-item avatar valign-wrapper">
+                <div class="circle avatar-img "><img src="{{b.banda.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
-                <span class="title left-align"><br>nombre :{{b.banda.nombre}} Genero: {{b.banda.genero}}</span>
+                <div class="right grey-text text-darken-2 valign-wrapper" style="max-width:40%;height:100%">{{b.ocupacion}}</div>
+                <div class="title left-align truncate" style="margin-top:10px">{{b.banda.nombre}}<br> <span class="grey-text stext">{{b.banda.genero}}</span></div>
                 </a>
                 {% endfor %}
             </ul>
