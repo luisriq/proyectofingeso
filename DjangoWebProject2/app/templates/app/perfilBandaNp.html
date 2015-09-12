@@ -52,6 +52,8 @@
                                 <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
                                 <!--a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a-->
                             </div>
+                            {# hay que quitar esta wea de if al pasarlo pa la wea de la otra wea #}
+                            {%if discos|length > 0  %}
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Discografia</h5>
@@ -66,6 +68,7 @@
                                       </ul>
                                 </div>
                             </div>
+                            {%endif%}
                             
                         </div>
                     </div>
