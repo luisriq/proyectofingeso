@@ -115,7 +115,7 @@
             <ul class="collection">
                 {% for b in integranteEn %}
                 <a href="/perfilBandaNp/{{b.banda.id}}"  class="collection-item avatar valign-wrapper">
-                <div class="circle avatar-img "><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
+                <div class="circle avatar-img "><img src="{{b.banda.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
                 <div class="right grey-text text-darken-2 valign-wrapper" style="max-width:40%;height:100%">{{b.ocupacion}}</div>
                 <div class="title left-align truncate" style="margin-top:10px">{{b.banda.nombre}}<br> <span class="grey-text stext">{{b.banda.genero}}</span></div>
