@@ -59,21 +59,12 @@
             </div>
             <h5>Bandas a los que pertenezco</h5>
             <ul class="collection">
-<<<<<<< HEAD
                 {% for pertenezco in integranteEn %}
                 <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
                 <div class="circle avatar-img dropdown-button"><img src="{{pertenezco.banda.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
                 <span class="title left-align"><br>nombre :{{pertenezco.banda.nombre}} Genero: {{pertenezco.banda.genero}} ocupacion: {{pertenezco.ocupacion}}</span>
-=======
-                {% for b in integranteEn %}
-                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar valign-wrapper">
-                <div class="circle avatar-img "><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
-                </div>
-                <div class="right grey-text text-darken-2 valign-wrapper" style="max-width:40%;height:100%">{rol}</div>
-                <div class="title left-align truncate" style="margin-top:10px">{{b.nombre}}<br> <span class="grey-text stext">{{b.genero}}</span></div>
-                
->>>>>>> d31d4792c67c94a1ae109669573237800d285eb9
+
                 </a>
                 {% endfor %}
             </ul>
