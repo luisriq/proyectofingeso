@@ -1,1 +1,23 @@
-<h1>Error 404</h1>
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col l6 offset-l3 m8 offset-m2 s12 center-align card-panel grey lighten-4">
+            <h2>404</h2>
+            <h5>Ooops, no hemos encontrado el link que buscas.</h5>
+            <img alt="Dead_Link" class="responsive-img" src="./Pagina Principal Artista - uMusic_files/404_dead_link.png">
+            
+
+        </div>
+    </div>
+</div>
+{% endblock %}

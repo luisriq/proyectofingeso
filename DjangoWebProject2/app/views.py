@@ -177,6 +177,7 @@ class perfilNormal(View):
 class perfilBandaNp(View):
     def get(self, request, bandaid):
         tipoUsuario = verificacion(request)
+<<<<<<< HEAD
         pertenece = 0
         try:
             banda = Banda.objects.filter(id = bandaid)[0]
@@ -221,6 +222,35 @@ class perfilBandaNp(View):
                     'seguidores':seguidores
                 })
             )
+=======
+        if tipoUsuario == 0:
+            return HttpResponseRedirect("/login")   
+               #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
+        artista = Artista.objects.filter(user = request.user)[0]
+        banda = Banda.objects.filter(id = bandaid)[0]
+        pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
+        if len(pertenece) == 1:
+            return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
+        banda = Banda.objects.filter(id = bandaid)[0]
+        integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
+        discos =  Disco.objects.filter(banda = banda)
+        seguidores = len(banda.seguidores.all())
+        
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/perfilBandaNp.html',
+            context_instance = RequestContext(request,
+            {
+                'banda':banda,
+                'discos':discos,
+                'tipoUsuario':tipoUsuario,
+                'datosBarra':datosBarra(request),
+                'integrantes':integrantes,
+                'seguidores':seguidores
+            })
+        )
+>>>>>>> fcb1f8ca43fb8c48c8aaf7df04c0be097b19ec1d
 #-----------------------------------------------------------
 #    clase perfil normal no propietario
 #-----------------------------------------------------------
@@ -279,6 +309,7 @@ class perfilBanda(View):
             return HttpResponseRedirect("/login")
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
+        discos =  Disco.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
@@ -291,6 +322,7 @@ class perfilBanda(View):
                 context_instance = RequestContext(request,
                 {
                     'banda':banda,
+                    'discos':discos,
                     'artista':artista,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),

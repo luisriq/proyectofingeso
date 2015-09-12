@@ -15,12 +15,12 @@
     
     <div class="col s12">
         <div class="card white">
-            <div class="foto-portada" style="background:url({{banda.imagenPortada.url}}) ;" >
+            <div class="foto-portada" style="background:url({{banda.imagenPortada.url}});" >
             </div>
             <div class="container center-align">
                 <div class="row">
                     <div class="col s12 ">
-                        <div class="inline blue"><img src="{{banda.imagenPerfil.url}}" alt="" 
+                        <div class="inline blue z-depth-1"><img src="{{banda.imagenPerfil.url}}" alt="" 
                 style="width:100px;height:100px;border:solid 1px #444;margin-top:-50px;"></div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                     <div class="col l6 s12 ">
                         <div class="container sfull">
                             <div class="row">   
-                                <div class="col s12 left-align"><span >{{banda.biografia}}</span></div>
+                                <div class="col s12 left-align card-panel grey lighten-4" style="padding:15px 10px"><span >{{banda.biografia}}</span></div>
                             </div>
                             <div class="row">
                                 <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"><b> {{ seguidores }} Seguidor{%if seguidores != 1%}es{% endif%}</b></div>
@@ -55,28 +55,16 @@
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Discografia</h5>
-                                    <ul class="collection">
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
-                                        </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
-                                        </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
-                                        </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
-                                        </li>
-                                      </ul>
+                                    <div class="collection">
+                                        {% for disco in discos %}
+                                        <a class="collection-item valign-wrapper" data-url="{url}" data-dId="{{disco.id}}">
+                                            <i class="material-icons orange darken-3 white-text" style="padding:8px;">&#xE030;</i>
+                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{disco.nombre}}</span>
+                                            <span class="secondary-content stext orange-text text-darken-4">{{disco.lanzamiento.year}}</span>
+                                        </a>
+                                        
+                                        {% endfor %}
+                                      </div>
                                 </div>
                             </div>
                             
