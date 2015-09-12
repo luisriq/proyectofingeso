@@ -60,11 +60,11 @@
             <h5>Bandas a los que pertenezco</h5>
             <ul class="collection">
                 {% for pertenezco in integranteEn %}
-                <a href="/perfilBandaNp/{{b.id}}"  class="collection-item avatar">
-                <div class="circle avatar-img dropdown-button"><img src="{{pertenezco.banda.imagenPerfil.url}}" alt="" style="height:50px;">
+                <a href="/perfilBandaNp/{{pertenezco.banda.id}}"  class="collection-item avatar valign-wrapper">
+                <div class="circle avatar-img "><img src="{{b.imagenPerfil.url}}" alt="" style="height:50px;">
                 </div>
-                <span class="title left-align"><br>nombre :{{pertenezco.banda.nombre}} Genero: {{pertenezco.banda.genero}} ocupacion: {{pertenezco.ocupacion}}</span>
-
+                <div class="right grey-text text-darken-2 valign-wrapper" style="max-width:40%;height:100%">{{pertenezco.ocupacion}}</div>
+                <div class="title left-align truncate" style="margin-top:10px">{{pertenezco.banda.nombre}}<br> <span class="grey-text stext">{{pertenezco.banda.genero}}</span></div>
                 </a>
                 {% endfor %}
             </ul>
