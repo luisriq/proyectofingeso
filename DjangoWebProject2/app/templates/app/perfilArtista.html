@@ -64,6 +64,40 @@
                         </div>
                     </div>
                 </div>
+                
+                
+                <div class="left-align">
+                    <h6>Cambiar password:</h6>
+                    <div class="card-panel color-principal lighten-3">
+                        <div class="campo-editable">
+                            <form method="POST" data-target="passwordUpdate" largomaximo = "25">
+                                {% csrf_token %}
+                                <a class="btn no-hide editar toggle color-principal hover-shadow right">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a> 
+                                <span class="no-hide dato"></span> 
+                                <div class="input-field hide" style="width:calc(100% - 30px);">
+                                               <div class="input-field col-md-10"> 
+                                    <input name="olddato" id="olddato" type="password" class="validate">
+                                    <label for="olddato">Old Password</label>
+                                   </div>
+                                               <div class="input-field col-md-10">
+                                    <input name="dato" id="password" type="password" class="validate">
+                                    <label for="password">New Password</label>
+                                   </div>
+                                </div>
+                                
+                                <a class="btn hide editar submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios">
+                                    <i class="material-icons">&#xE5CA;</i>
+                                </a>
+                                <hr style="border:none;width:auto;height:0px;clear:both;"/>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
                 <div class="twiter card-panel white-text campo-editable" style="background:#5faad8;text-shadow: 0 1px 2px rgba(0,0,0,.2);font-size: 18px;">
                     
                     <form method="POST" data-target="cuentaTwitter" largomaximo="40">

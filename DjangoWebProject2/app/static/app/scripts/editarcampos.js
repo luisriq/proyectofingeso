@@ -14,6 +14,8 @@ $( document ).ready(function(){
 	//Realizar cambio algi asi como un submit
 	$(".btn.editar.submit").click(function(){
 		var formulario = $(this).parent("form");
+		var olddato = $(this).parent().find('input[name=olddato]');
+		console.log(olddato);
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
 		console.log("func:"+largoPalabra(dato.val(), formulario.attr("largomaximo")));
@@ -23,6 +25,7 @@ $( document ).ready(function(){
 				url : "/guardarDatosArtista", // the endpoint
 				type : "POST", // http method
 				data : { dato : dato.val(),
+						 olddato: olddato.val(),
 						target : formulario.attr('data-target'),
 					"X-CSRFToken" : token.val() }, // data sent with the post request
 				// handle a successful response

@@ -661,6 +661,15 @@ def guardarDatosArtista(request):
                     return HttpResponse("ERROR")
                 t[0].delete()
                 print "instrumento eliminado"
+            elif target == "passwordUpdate": 
+                print dato
+                user = User.objects.get(username=request.user.username)
+                if(user.check_password(request.POST.get('olddato'))):
+                    user.set_password(dato)
+                    user.save()
+                else:
+                    return HttpResponse("ERROR")
+            
             print "YEEEES %s"%dato
             print "Target %s"%target
     except :
