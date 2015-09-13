@@ -26,22 +26,22 @@ class VistaSignUp(View):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            _user = User.objects.create_user(username=form.cleaned_data['email'],
+            _user = User.objects.create_user(username=form.cleaned_data['email'].lower(),
                              password=form.cleaned_data['password2'],
                              first_name=form.cleaned_data['name'])
             fecha = 0
             if not form.cleaned_data['tipo']:
                 usuario = Normal(user = _user, nombre = form.cleaned_data['name'],
-                    correo = form.cleaned_data['email'])
+                    correo = form.cleaned_data['email'].lower())
                 fecha = usuario.fechaIngreso
                 usuario.save()
             else:
                 usuario = Artista(user = _user, nombre = form.cleaned_data['name'],
-                    correo = form.cleaned_data['email'])
+                    correo = form.cleaned_data['email'].lower())
                 fecha = usuario.fechaIngreso
             	usuario.save()
-            user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password2'])
-            print "user : ", form.cleaned_data['email'], "pass : ", form.cleaned_data['password2'], "login : ", user
+            user = authenticate(username=form.cleaned_data['email'].lower(), password=form.cleaned_data['password2'])
+            print "user : ", form.cleaned_data['email'].lower(), "pass : ", form.cleaned_data['password2'], "login : ", user
             login(request, user)
             
             if form.cleaned_data['tipo']:
