@@ -8,21 +8,18 @@
 <div class="container sfull">
     <div class="row">
         <div class="card-panel grey lighten-4 col l6 s12 center-align">
-
-             <div class="circle avatar-perfil" ><img src="{{artista.imagenPerfil.url}}" alt="" 
+            
+             <div class="circle avatar-perfil myavatar" ><img id="preview" src="{{artista.imagenPerfil.url}}" data-src="{{artista.imagenPerfil.url}}" alt="" 
                 style="height:150px;"></div>
-                <form class="file-form" method="POST" enctype="multipart/form-data">
+             <div style="margin-top:-30px">
+                <button class="btn fileChange ajax-file green" style="display:none"><i class="material-icons">&#xE5CA;</i></button>
+                <button class="btn fileChange cancel red" style="display:none"><i class="material-icons">&#xE14C;</i></button>
+                <button class="btn fileChange ajax-file-selection color-principal" ><i class="material-icons">&#xE254;</i></button>
+                <form class="file-form" method="POST" enctype="multipart/form-data" action="/upload">
                     {% csrf_token %}
-                    
-                    <button class="btn waves-effect waves-light" type="submit" name="action">Subir</button>
-                    <div class="file-field input-field">
-                        <input class="file-path validate" type="text"/>
-                        <div class="btn">
-                            <span>File</span>
-                            {{formImagen.file_}}
-                        </div>
-                    </div>
+                    <input name="image" type="file" accept="image/*" style="height:0;width:0;overflow:hidden;">
                 </form>
+            </div>
                 <h4 class="campo-editable"> 
                     <form method="POST" data-target="nombre" largomaximo="20">
                         {% csrf_token %}

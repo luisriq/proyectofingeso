@@ -113,26 +113,46 @@ $( document ).ready(function(){
 		});
 		console.log("jakdjfsba")
 	});
-	$('.file-form').submit(function upload(event) {
-		console.log("submitiando");
-		event.preventDefault();
-		var datos = new FormData($(this));
-		$.ajax({
-			url: "upload",
-			type: "POST",
-			data: datos,
-			cache: false,
-			processData: false,
-			contentType: false,
-			success: function(data) {
-				$('.console').text(data);
-			},
-			error:function(data) {
-				$('.console').html(data.responseText);
-			},
-		
-		});
+	//hay que hacer que sea mas elegante... meh
+	$('.ajax-file-selection').click(function(){
+		input = $('.file-form').find('input[type=file]');
+		input.trigger('click'); 
 	});
+	$('.file-form input[type=file]').change(function(){
+		readURL(this);
+		$('.fileChange').toggle();
+	});
+	$('.fileChange.cancel').click(function(){
+		$('#preview').attr('src', $('#preview').attr('data-src'));
+		$('.fileChange').toggle();
+	});
+	$('.ajax-file').click(function(){
+		form = $('.file-form');
+		var formData = new FormData(form[0]);
+		if(form.find('input[type=file]').val()!=''){
+			$.ajax({
+				url: form.attr('action'),
+				type: 'POST',
+				data: formData,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function (returndata) {
+					$('.myavatar img').attr('src',"/media/"+returndata);
+					Materialize.toast('<span class="green-text">Imagen de perfíl cambiada con exito</span>', 4000);
+					$('.fileChange').toggle();
+				},
+				error: function (returndata) {
+					$('#preview').attr('src', $('#preview').attr('data-src'));
+					Materialize.toast('<span class="red-text">Error al cambiar Imagen de perfíl</span>', 4000);
+					$('.fileChange').toggle();
+				},
+			});
+		}else{
+			Materialize.toast('<span class="yellow-text">Debes seleccionar una imagen</span>', 4000);
+		}
+	})
+	//fin de cambio archivo
 	twitLoad();
 	for(var i=1;i<20;i++)
 		setTimeout(function(){
@@ -142,7 +162,6 @@ $( document ).ready(function(){
 				$('iframe').parent('div').resize(function (){
 					if($('iframe').width() != $('iframe').parent().width()){
 						$('iframe').width($(this).width());
-						//$('.console').append("Fireness:~ fireness$ fit "+$('iframe').width()+"px<br>");
 					}
 				})
 					
@@ -180,4 +199,16 @@ function twitLoad(){
 	return t;
 	}(document, "script", "twitter-wjs"));
 	
+}
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+			$('#preview').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }

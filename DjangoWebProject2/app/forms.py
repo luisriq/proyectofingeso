@@ -80,5 +80,6 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'id':'contras',
                                    'class': 'form-control validate'}))
                                    
-class UploadFileForm(forms.Form):
-    file_ = forms.FileField(widget = forms.ClearableFileInput({'class':'file-path validate'}))
+#class UploadFileForm(forms.Form):
+#    file_ = forms.FileField(widget = focrms.ClearableFileInput({'class':'file-path validate'}))
+

@@ -13,7 +13,7 @@ from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
-
+import uuid
 
 from django.views.generic.edit import CreateView
 
@@ -357,7 +357,7 @@ class perfilArtista(View):
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
-        formimagen = UploadFileForm()
+        #formimagen =  ImageUploadForm()
         allInstruments = Instrumento.objects.all()
         
             
@@ -375,7 +375,7 @@ class perfilArtista(View):
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
                 'artista':artista,
-                'formImagen':formimagen,
+                #'formImagen':formimagen,
             })
         )
 #------------------------------------------------------
@@ -659,27 +659,28 @@ def guardarDatosArtista(request):
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 
+
 def upload_file(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
         
-        if form.is_valid():
-            print "valid"
-            handle_uploaded_file(request.FILES['file_'])
+        try:
+            print request.FILES['image']
+            path = handle_uploaded_file(request.FILES['image'])
             u = Usuario.objects.filter(user = request.user)[0]
-            u.imagenPerfil = 'pic_folder/%s'%request.FILES['file_']
+            u.imagenPerfil = 'pic_folder/%s'%request.FILES['image']
+            u.imagenPerfil = path  
             u.save()
-            return HttpResponseRedirect('/upload')
-        else:
-            
-            return HttpResponse(form)
-    else:
-        
-        form = UploadFileForm()
-    return HttpResponse("OK")
+            return HttpResponse(path)
+        except:
+            print "error en el request.FILES['image']"
+            return HttpResponse("Error al subir archivo")
+    return HttpResponse("procesado")
 
 def handle_uploaded_file(f):
-    with open('pic_folder/%s'%f, 'wb+') as destination:
+    guid = uuid.uuid4()
+    path = 'pic_folder/%s_%s'%(str(guid),f)
+    with open('pic_folder/%s_%s'%(str(guid),f), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+    return path
 
