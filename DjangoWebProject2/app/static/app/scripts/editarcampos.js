@@ -15,17 +15,31 @@ $( document ).ready(function(){
 	$(".btn.editar.submit").click(function(){
 		var formulario = $(this).parent("form");
 		var olddato = $(this).parent().find('input[name=olddato]');
-		console.log(olddato);
+		console.log(olddato.val());
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
+		var datoValue = dato.val();
+		if(typeof olddato === 'undefined'){
+  			datoValue = dato.val().trim().capitalizeFirstLetter();
+ 		};
+		
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
+		console.log(dato);
+		if(dato.val()==null){
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
+			return null
+		}else if(dato.val().trim()==''){
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
+			return null
+		}
+		
 		console.log("func:"+largoPalabra(dato.val(), formulario.attr("largomaximo")));
 		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
 			console.log("que mierda")
 			$.ajax({
 				url : "/guardarDatosArtista", // the endpoint
 				type : "POST", // http method
-				data : { dato : dato.val(),
-						 olddato: olddato.val(),
+				data : { olddato: olddato.val(),
+						 dato : datoValue,
 						target : formulario.attr('data-target'),
 					"X-CSRFToken" : token.val() }, // data sent with the post request
 				// handle a successful response
@@ -33,8 +47,9 @@ $( document ).ready(function(){
 					console.log(response); // log the returned json to the console
 					if(response=="OK"){
 						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
-						if(formulario.attr('data-target')=="nombre")
-							$("#nombre-navbar").text(dato.val());
+						if(formulario.attr('data-target')=="nombre"){
+							$("#nombre-navbar").text(dato.val().capitalizeFirstLetter());
+						}
 						else if(formulario.attr('data-target')=="cuentaTwitter"){
 							$('.twitter-container').html('');
 							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
@@ -43,8 +58,8 @@ $( document ).ready(function(){
 						}
 						else if(formulario.attr('data-target')=="instrumento")
 							location.reload();
-						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />');
-						formulario.find(".dato").html(txtconbr);
+						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
+						formulario.find(".dato").html(txtconbr.capitalizeFirstLetter());
 						var no_hide = formulario.find(".no-hide");
 						var hide = formulario.find(".hide");
 						no_hide.removeClass("no-hide").addClass("hide");
@@ -242,4 +257,7 @@ function readURL(input) {
 
         reader.readAsDataURL(input.files[0]);
     }
+}
+String.prototype.capitalizeFirstLetter = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
