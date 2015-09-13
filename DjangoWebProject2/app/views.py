@@ -234,7 +234,11 @@ class perfilNormalNp(View):
     
     def get(self, request, normalid):
         tipoUsuario = verificacion(request)
-        normal = getUsuarioUrl(normalid)
+        try:
+            normal = getUsuarioUrl(normalid)
+        except:
+            return HttpResponseRedirect("/error404") 
+        
         tipoUsuarioUrl = verificacion(normal)
         verLogVsUrl = verificarLogVsUrl(request, normalid)
         if tipoUsuario == 0:
@@ -325,7 +329,7 @@ class infoDisco(View):
         
 #-------------------------
 class error404(View):
-    def get(self, request):
+    def get(self, request, loquesea):
         tipoUsuario = verificacion(request)
             
         assert isinstance(request, HttpRequest)
@@ -380,7 +384,11 @@ class perfilArtista(View):
 class perfilArtistaNp(View):
     def get(self, request,userid):
         tipoUsuario = verificacion(request)
-        usuario = getUsuarioUrl(userid)
+        try:
+            usuario = getUsuarioUrl(userid)
+        except:
+            return HttpResponseRedirect("/error404") 
+        
         tipoUsuarioUrl = verificacion(usuario)
         verLogVsUrl = verificarLogVsUrl(request, userid)
         if tipoUsuario == 0:

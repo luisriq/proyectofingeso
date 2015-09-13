@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^$', Home.as_view(), name='home'),
     url(r'^contact$', 'app.views.contact', name='contact'),
-    url(r'^error404', error404.as_view(), name='404'),
+    #url(r'^error404', error404.as_view(), name='404'),
     url(r'^about', 'app.views.about', name='about'),
     #url(r'^login', VistaSignUp.as_view(), name='login'),
     url(r'^registro', VistaSignUp.as_view(), name='signup'),
@@ -60,4 +60,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^(?P<loquesea>\w{1,300})$', error404.as_view(), name='error'),
+    
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
