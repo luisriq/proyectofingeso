@@ -170,7 +170,6 @@
     </div>
     <div id="modal1" class="modal">
     <div class="modal-content">
-        
         <h4>Seleccione un Instrumento</h4>
         <form method="POST" data-target="instrumento" >
                         {% csrf_token %}
@@ -182,11 +181,10 @@
         </select>
             <a id="modal-hide-button" class="btn editar submit hide"></a>
         </form>
-        
     </div>
     <div class="modal-footer">
         <a href="#!" class=" modal-action modal-close waves-effect waves-red btn-flat">Cancelar</a>
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat disabled" onclick="$('#modal-hide-button').click();">Aceptar</a>
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modal-hide-button').click();">Aceptar</a>
         
     </div>
     

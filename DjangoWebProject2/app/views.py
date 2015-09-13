@@ -676,7 +676,37 @@ def guardarDatosArtista(request):
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 
-
+def guardarDatosBanda(request):
+    try:
+        if request.method == 'POST':
+           
+            print "Loged %s"%request.user.id
+            bandId = request.POST.get('bid')            
+            dato = request.POST.get('dato')
+            target = request.POST.get('target')
+            print IntegrantesBanda.objects.filter(
+                banda=Banda.objects.filter(id = bandId)[0],
+                integrante=Artista.objects.filter(id=request.user.id)[0])
+                
+            print 
+            if target == "nombre":
+                b = Banda.objects.filter(id = bandId)[0]
+                b.nombre = dato
+                b.save()
+            elif target == "biografia":
+                b = Banda.objects.filter(id = bandId)[0]
+                b.biografia = dato
+                b.save()
+                print "saved"
+            elif target == "cuentaTwitter":
+                b = Banda.objects.filter(id = bandId)[0]
+                b.cuentaTwitter = dato
+                b.save()
+                print "cuentaTwitter saved"
+    except :
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+    
 def upload_file(request):
     if request.method == 'POST':
         
