@@ -116,7 +116,7 @@ class Home(View):
                 )
         except:
             print "no logeado"
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
             tipo = ""
             
 
@@ -142,7 +142,7 @@ class perfilNormal(View):
     def get(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login") 
+            return HttpResponseRedirect("/login/") 
         normal = request.user
         try:
             normal = Normal.objects.filter(user = normal)[0]
@@ -186,7 +186,7 @@ class perfilBandaNp(View):
         material =  Material.objects.filter(banda = banda)
         
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login") 
+            return HttpResponseRedirect("/login/") 
         elif tipoUsuario == 1:
             usuario = Artista.objects.filter(user = request.user)[0]
             pertenece = IntegrantesBanda.objects.filter(integrante = usuario, banda = banda)
@@ -242,7 +242,7 @@ class perfilNormalNp(View):
         tipoUsuarioUrl = verificacion(normal)
         verLogVsUrl = verificarLogVsUrl(request, normalid)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login") 
+            return HttpResponseRedirect("/login/") 
         
         elif verLogVsUrl and tipoUsuario == 1:
             return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
@@ -286,7 +286,7 @@ class perfilBanda(View):
     def get(self, request, bandaid):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
         discos =  Disco.objects.filter(banda = banda)
@@ -348,7 +348,7 @@ class perfilArtista(View):
     def get(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
         usuario = request.user
         try:
             artista = Artista.objects.filter(user = usuario)[0]
@@ -392,7 +392,7 @@ class perfilArtistaNp(View):
         tipoUsuarioUrl = verificacion(usuario)
         verLogVsUrl = verificarLogVsUrl(request, userid)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")           
+            return HttpResponseRedirect("/login/")           
         
         elif verLogVsUrl and tipoUsuario == 1:
             return HttpResponseRedirect("/perfilArtista")
@@ -438,7 +438,7 @@ class crearBanda(View):
     def post(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario != 1:
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
          
         # create a form instance and populate it with data from the request:
         form = CrearBandaForm(request.POST)
@@ -542,9 +542,11 @@ def verificacion(request):
                 normal = Normal.objects.filter(user = request.user)[0]
                 tipo = 2
             except:
-                admin = Administrador.objects.filter(user = request.user)[0]
-                
-                tipo = 3
+                try:
+                    admin = Administrador.objects.filter(user = request.user)[0]
+                    tipo = 3
+                except:
+                    tipo = 0
     else:
         tipo = 0
     return tipo
