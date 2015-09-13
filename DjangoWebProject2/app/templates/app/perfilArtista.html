@@ -23,8 +23,8 @@
                 <h4 class="campo-editable"> 
                     <form method="POST" data-target="nombre" largomaximo="20">
                         {% csrf_token %}
-                        <span class="no-hide dato">{{artista.nombre}}</span> 
-                        <input class="w60p hide" type="text" name="dato" value="{{artista.nombre}}" />
+                        <span class="no-hide dato">{{artista.nombre|title}}</span> 
+                        <input class="w60p hide" type="text" name="dato" value="{{artista.nombre|title}}" />
                         <a class="btn no-hide editar toggle color-principal hover-shadow">
                             <i class="material-icons">&#xE254;</i>
                         </a> 
