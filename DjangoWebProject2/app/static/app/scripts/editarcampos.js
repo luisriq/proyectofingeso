@@ -16,6 +16,15 @@ $( document ).ready(function(){
 		var formulario = $(this).parent("form");
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
+		console.log(dato);
+		if(dato.val()==null){
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
+			return null
+		}else if(dato.val().trim()==''){
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
+			return null
+		}
+		
 		console.log("func:"+largoPalabra(dato.val(), formulario.attr("largomaximo")));
 		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
 			console.log("que mierda")
