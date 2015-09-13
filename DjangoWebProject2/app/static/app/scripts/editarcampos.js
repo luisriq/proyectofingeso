@@ -29,7 +29,7 @@ $( document ).ready(function(){
 				success : function(response) {
 					console.log(response); // log the returned json to the console
 					if(response=="OK"){
-						Materialize.toast('Se han guardado cambios en '+formulario.attr('data-target'), 4000);
+						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
 						if(formulario.attr('data-target')=="nombre")
 							$("#nombre-navbar").text(dato.val());
 						else if(formulario.attr('data-target')=="cuentaTwitter"){
@@ -48,17 +48,17 @@ $( document ).ready(function(){
 						hide.removeClass("hide").addClass("no-hide");
 					}
 					else
-						Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
+						Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
 				},
 				// handle a non-successful response
 				error : function(xhr,errmsg,err) {
-					Materialize.toast('Error al cambiar : '+formulario.attr('data-target'), 4000);
+					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
 					console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 				}
 			});
 		}
 		else
-			Materialize.toast('Error al cambiar, las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
 	});
 	
 	$('.addInstrumento').click(function(){
@@ -67,7 +67,7 @@ $( document ).ready(function(){
 	$('input[type=range]').change(function(){
 		var img = $(this).parent().parent().find(".card-image").find('img');
 		var path = $(this).attr("data-img-url");
-		var token = $(this).attr("data-img-url");
+		var token = $(this).attr("data-token");
 		var value=$(this).val()
 		//cambiar en la bd
 		$.ajax({
@@ -101,13 +101,13 @@ $( document ).ready(function(){
 					}
 				}
 				else{
-					Materialize.toast('Error al cambiar el nivel del instrumento', 4000);
+					Materialize.toast(' <span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el nivel del instrumento', 4000);
 					console.log("error en el servidor");
 				}
 			},
 			// handle a non-successful response
 			error : function(xhr,errmsg,err) {
-				Materialize.toast('Error al cambiar el nivel del instrumento', 4000);
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el nivel del instrumento ', 4000);
 				console.log("error en la comunicación");
 			}
 		});
@@ -139,20 +139,48 @@ $( document ).ready(function(){
 				processData: false,
 				success: function (returndata) {
 					$('.myavatar img').attr('src',"/media/"+returndata);
-					Materialize.toast('<span class="green-text">Imagen de perfíl cambiada con exito</span>', 4000);
+					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Imagen de perfíl cambiada con exito', 4000);
 					$('.fileChange').toggle();
 				},
 				error: function (returndata) {
 					$('#preview').attr('src', $('#preview').attr('data-src'));
-					Materialize.toast('<span class="red-text">Error al cambiar Imagen de perfíl</span>', 4000);
+					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar Imagen de perfíl', 4000);
 					$('.fileChange').toggle();
 				},
 			});
 		}else{
-			Materialize.toast('<span class="yellow-text">Debes seleccionar una imagen</span>', 4000);
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar una imagen', 4000);
 		}
 	})
 	//fin de cambio archivo
+	$('.del-instrumento').click(function(){
+		var this_= $(this);
+		var token = $(this).attr("data-token");
+		$.ajax({
+			url : "/guardarDatosArtista", // the endpoint
+			type : "POST", // http method
+			data : { dato : $(this).val(),
+					idToca: $(this).attr("data-id"),
+					target : 'delToca',
+				"X-CSRFToken" : token }, // data sent with the post request
+			// handle a successful response
+			success : function(response) {
+				if(response=="OK"){
+					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Ya no tocas ese instumento', 4000);
+					this_.parent().remove();
+				}
+				else if(response="ERROR")
+					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al eliminar el instrumento', 4000);
+			},
+			// handle a non-successful response
+			error : function(xhr,errmsg,err) {
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al eliminar el instrumento', 4000);
+				console.log("error en la comunicación");
+			}
+		});
+	});
+	
+	
 	twitLoad();
 	for(var i=1;i<20;i++)
 		setTimeout(function(){

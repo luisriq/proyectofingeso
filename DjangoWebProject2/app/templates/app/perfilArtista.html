@@ -98,7 +98,8 @@
                 <div class="row">
                     {% for b in instrumentos %}
                     <div class="col center-align" style="width:160px"> 
-                        <div class="card color-333" style="display:inline-block">
+                        <a class="del-instrumento btn-floating right circle red" data-id="{{b.id}}" data-token="{{csrf_token}}" ><i class="material-icons">&#xE14C;</i></a>
+                        <div class="instrumento card color-333"  style="display:inline-block">
                             <div class="card-image">
                             <img src="{{b.instrumento.imagen}}{%if b.nivel < 5%}{{b.nivel}}.jpg{%elif b.nivel == 5%}.gif{% endif%}" alt="" style="height:150px;">
                             </div>

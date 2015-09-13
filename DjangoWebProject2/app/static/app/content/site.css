@@ -327,3 +327,10 @@ a.color-principal:hover{
   max-height: 295px;
   margin-bottom: 15px;
 }
+.del-instrumento{
+  margin:0 -20px -20px 0;
+  opacity:.3;
+}
+.del-instrumento:hover{
+  opacity:1;
+}

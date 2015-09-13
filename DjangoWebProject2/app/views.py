@@ -653,6 +653,14 @@ def guardarDatosArtista(request):
                 t.nivel = dato
                 t.save()
                 print "nivel cambiado"
+            elif target == "delToca": 
+                print request.POST.get('idToca')
+                t = Toca.objects.filter( id =  request.POST.get('idToca'))
+                if len(t)==0:
+                    print t
+                    return HttpResponse("ERROR")
+                t[0].delete()
+                print "instrumento eliminado"
             print "YEEEES %s"%dato
             print "Target %s"%target
     except :
