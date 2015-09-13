@@ -227,7 +227,6 @@ class perfilBandaNp(View):
                     'seguidores':seguidores
                 })
             )
-        
 #-----------------------------------------------------------
 #    clase perfil normal no propietario
 #-----------------------------------------------------------
@@ -327,6 +326,7 @@ class infoDisco(View):
 #-------------------------
 class error404(View):
     def get(self, request):
+        tipoUsuario = verificacion(request)
             
         assert isinstance(request, HttpRequest)
         return render(
@@ -334,6 +334,7 @@ class error404(View):
             'app/404.html',
             context_instance = RequestContext(request,
             {
+                'tipoUsuario': tipoUsuario,
                 'datosBarra':datosBarra(request)
             })
         )
