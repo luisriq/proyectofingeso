@@ -31,11 +31,11 @@ urlpatterns = patterns('',
     url(r'^perfilBandaNp/(?P<bandaid>\w{1,50})$', perfilBandaNp.as_view(), name='perfilBandaNp'),
     url(r'^noImplementado/(?P<template>\w{1,50})$', NoImplementado.as_view(), name='noImplementado'),
     url(r'^perfilBanda/(?P<bandaid>\w{1,50})$', perfilBanda.as_view(), name='perfilBanda'),
+    url(r'^infoDisco/(?P<dId>\w{1,50})$', infoDisco.as_view(), name='infoDisco'),
     url(r'^crearBanda', crearBanda.as_view(), name='crearBanda'),
     url(r'^busqueda$', busqueda.as_view(), name='busqueda'),
     url(r'^guardarDatosArtista$', guardarDatosArtista, name='updatePA'),
     url(r'^upload$', upload_file, name='upload'),
-
     url(r'^login/$',
         'django.contrib.auth.views.login',
         {

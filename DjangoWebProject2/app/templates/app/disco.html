@@ -1,0 +1,9 @@
+<h5 class="white-text">{{disco.banda}}</h5>
+<h5 class="white-text" style="margin-left:20px">{{disco.nombre|title}} <span class="grey-text text-darken-2" style="font-size:15px">{{disco.lanzamiento.year}}</span></h5>
+<ul class="collection">
+{%for c in canciones%}
+	<li class="collection-item">{{c.nombre|title}}<br><span class="stext grey-text">{{c.autor}}</span>
+		<span class="secondary-content">{{c.duracion}}</span>
+	</li>
+{%endfor%}
+</ul>

@@ -11,6 +11,18 @@
 
              <div class="circle avatar-perfil" ><img src="{{artista.imagenPerfil.url}}" alt="" 
                 style="height:150px;"></div>
+                <form class="file-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <button class="btn waves-effect waves-light" type="submit" name="action">Subir</button>
+                    <div class="file-field input-field">
+                        <input class="file-path validate" type="text"/>
+                        <div class="btn">
+                            <span>File</span>
+                            {{formImagen.file_}}
+                        </div>
+                    </div>
+                </form>
                 <h4 class="campo-editable"> 
                     <form method="POST" data-target="nombre" largomaximo="20">
                         {% csrf_token %}
@@ -79,7 +91,7 @@
                 </div>
                 <div class="z-depth-1 twitter-container" style="max-width:520px"><a class="twitter-timeline"  href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{artista.cuentaTwitter}}"></a></div>
                {# consola para debug en ipad  XD #}
-               {# <div class="console black white-text left-align" ></div> #}
+                <div class="console black white-text left-align" ></div> 
         </div>
         <div class="card-panel grey lighten-3 col offset-l1 l5 s12 center-align">
             <div class="container">

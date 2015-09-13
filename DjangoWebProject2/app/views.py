@@ -182,13 +182,15 @@ class perfilBandaNp(View):
             banda = Banda.objects.filter(id = bandaid)[0]
         except:
             return HttpResponseRedirect("/error404") 
+        discos =  Disco.objects.filter(banda = banda)
+        material =  Material.objects.filter(banda = banda)
         
         if tipoUsuario == 0:
             return HttpResponseRedirect("/login") 
         elif tipoUsuario == 1:
             usuario = Artista.objects.filter(user = request.user)[0]
-            pertenece = IntegrantesBanda.objects.filter(integrante = usuario)[0]
-            if pertenece == 1:
+            pertenece = IntegrantesBanda.objects.filter(integrante = usuario, banda = banda)
+            if len(pertenece) == 1:
                 return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
             else:
                 integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
@@ -199,6 +201,8 @@ class perfilBandaNp(View):
                     context_instance = RequestContext(request,
                     {
                         'banda':banda,
+                        'discos':discos,
+                        'material':material,
                         'tipoUsuario':tipoUsuario,
                         'datosBarra':datosBarra(request),
                         'integrantes':integrantes,
@@ -215,39 +219,15 @@ class perfilBandaNp(View):
                 context_instance = RequestContext(request,
                 {
                     'banda':banda,
+                    'discos':discos,
+                    'material':material,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'integrantes':integrantes,
                     'seguidores':seguidores
                 })
             )
-        if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")   
-               #banda seleccionada proveniente del modelo, por medio del ntegrante logeado
-        artista = Artista.objects.filter(user = request.user)[0]
-        banda = Banda.objects.filter(id = bandaid)[0]
-        pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
-        if len(pertenece) == 1:
-            return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
-        banda = Banda.objects.filter(id = bandaid)[0]
-        integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
-        discos =  Disco.objects.filter(banda = banda)
-        seguidores = len(banda.seguidores.all())
         
-        assert isinstance(request, HttpRequest)
-        return render(
-            request,
-            'app/perfilBandaNp.html',
-            context_instance = RequestContext(request,
-            {
-                'banda':banda,
-                'discos':discos,
-                'tipoUsuario':tipoUsuario,
-                'datosBarra':datosBarra(request),
-                'integrantes':integrantes,
-                'seguidores':seguidores
-            })
-        )
 #-----------------------------------------------------------
 #    clase perfil normal no propietario
 #-----------------------------------------------------------
@@ -307,6 +287,7 @@ class perfilBanda(View):
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
         discos =  Disco.objects.filter(banda = banda)
+        material =  Material.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
@@ -320,6 +301,7 @@ class perfilBanda(View):
                 {
                     'banda':banda,
                     'discos':discos,
+                    'material':material,
                     'artista':artista,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
@@ -328,7 +310,21 @@ class perfilBanda(View):
                 })
             )
 #------------------------
-
+class infoDisco(View):
+    def get(self, request, dId):
+        disco =  Disco.objects.filter(id = dId)[0]
+        canciones =   Cancion.objects.filter(disco = disco)
+        return render(
+            request,
+            'app/disco.html',
+            context_instance = RequestContext(request,
+            {
+                'disco':disco,
+                'canciones':canciones
+            })
+        )
+        
+#-------------------------
 class error404(View):
     def get(self, request):
             
@@ -657,25 +653,21 @@ def guardarDatosArtista(request):
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        print form
+        
         if form.is_valid():
+            print "valid"
             handle_uploaded_file(request.FILES['file_'])
             u = Usuario.objects.filter(user = request.user)[0]
             u.imagenPerfil = 'pic_folder/%s'%request.FILES['file_']
             u.save()
             return HttpResponseRedirect('/upload')
+        else:
+            
+            return HttpResponse(form)
     else:
+        
         form = UploadFileForm()
-    return render(
-        request,
-        'app/upload.html',
-        context_instance = RequestContext(request,
-        {
-            'title':'About',
-            'message':'Your application description page.',
-            'year':datetime.now().year,'form': form,
-        })
-    )
+    return HttpResponse("OK")
 
 def handle_uploaded_file(f):
     with open('pic_folder/%s'%f, 'wb+') as destination:

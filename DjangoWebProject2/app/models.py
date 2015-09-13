@@ -87,6 +87,7 @@ class Cancion(models.Model):
 	nombre = models.CharField(max_length=200)
 	autor = models.CharField(max_length=200)
 	disco = models.ForeignKey(Disco, related_name = 'pertenece', null=True)
+	duracion = models.CharField(max_length=200 , null=True)
 	def __unicode__(self):
 		return self.nombre
 		
@@ -142,7 +143,7 @@ class Material(models.Model):
 	tipo = models.CharField(max_length=200)
 	privado = models.BooleanField()
 	banda = models.ForeignKey(Banda, related_name = 'publica')
-	def _unicode_(self):
+	def __unicode__(self):
 		return self.nombre
 		
 class Calificacion(models.Model):

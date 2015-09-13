@@ -37,20 +37,21 @@
                                 <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"><b> {{ seguidores }} Seguidor{%if seguidores != 1%}es{% endif%}</b></div>
                             </div>
                             <div class="row">
-                                <div class="col s12" >
-                                    <!--caracteristica no implementada debido a que esmanejada por usuarios normales-->
-                                    <i class="material-icons orange-text" style="font-size:28px">grade</i>
-                                    <i class="material-icons orange-text" style="font-size:28px">grade</i>
-                                    <i class="material-icons orange-text" style="font-size:28px">grade</i>
-                                    <i class="material-icons orange-text" style="font-size:28px">grade</i>
-                                    <i class="material-icons grey-text" style="font-size:28px">grade</i>
+                                <div class="col s12 grade-container" data-grade="4"  >
+                                    
+                                    {#caracteristica no implementada debido a que esmanejada por usuarios normales#}
+                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons inline grade grey-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
                                 </div>
                             </div>
                             <div class="row">
                                 <a class="col hover-shadow s5 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>
                                 <a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text"  onclick="Materialize.toast('Solicitud enviada, espere respuesta.', 4000)" style="padding:10px">Solicitar Ingreso</a>
                                 <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
-                                <!--a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a-->
+                                {#<a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>#}
                             </div>
                             {# hay que quitar esta wea de if al pasarlo pa la wea de la otra wea #}
                             {%if discos|length > 0  %}
@@ -59,10 +60,10 @@
                                     <h5>Discografia</h5>
                                     <ul class="collection">
                                         {% for disco in discos %}
-                                        <li class="collection-item valign-wrapper" data-url="{url}" data-dId="{{disco.id}}">
+                                        <li class="collection-item disco valign-wrapper"  data-dId="{{disco.id}}">
                                             <i class="material-icons orange darken-3 white-text" style="padding:8px;">&#xE030;</i>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{disco.nombre}}</span>
-                                            <span class="secondary-content stext orange-text text-darken-4">{{disco.lanzamiento.year}}</span>
+                                            <span class="secondary-content stext cyan-text text-darken-4">{{disco.lanzamiento.year}}</span>
                                         </li>
                                         {% endfor %}
                                       </ul>
@@ -82,39 +83,46 @@
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Integrantes</h5>
-                                    <ul class="collection">
+                                    <div class="collection">
                                         {% for integrante in integrantes %}
-                                       <a  href="/perfilArtistaNp/{{integrante.integrante.id}}">
                                         <li class="collection-item valign-wrapper">
-                                            <div class="circle avatar-perfil"style="height:50px;width:50px" ><img src="{{integrante.integrante.imagenPerfil.url}}" alt=""style="height:50px;"></div>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{integrante.integrante.nombre}}</span>
-                                            <span class="secondary-content">{{integrante.ocupacion}}</span>
+                                            <a class="valign-wrapper" href="/perfilArtistaNp/{{integrante.integrante.id}}">
+                                                <div class="circle avatar-perfil small" style="background: url({{integrante.integrante.imagenPerfil.url}}); " ></div>
+                                                <div class="" style="margin-left:20px;"><span >{{integrante.integrante.nombre}}</span>
+                                                <br><span class="grey-text ">{{integrante.ocupacion}}</span></div>
+                                            </a>
                                         </li>
-                                        </a>
                                         {% endfor %}
-                                      </ul>
+                                    </div>
                                 </div>
                             </div>
+                           
                             <div class="row">
                                 <div class="col s12 left-align">
-                                    <h5>Material</h5>
+                                    <h5>Material</h5> 
+                                    {%if material|length > 0%}
                                     <ul class="collection">
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
+                                    {% for m in material %}
+                                        <li class="collection-item  ">
+                                            <a class="valign-wrapper tooltipped" href="{{m.enlace}}" data-tooltip="ir al enlace" target="_blank">
+                                                <div class="inline" style="margin:0"><i class="material-icons red white-text " style="padding:8px;">{{m.tipo}}</i></div>
+                                                <div class="inline">{{m.nombre|title}}<br><span class="truncate grey-text stext">{{m.descripcion}}</span></div>
+                                                {#<span class="secondary-content">{algo pondré}</span>#}
+                                            </a>
                                         </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
+                                    {% endfor %}
+                                    </ul>
+                                    {%else%}
+                                    <ul class="collection">
+                                        <li class="collection-item valign-wrapper ">
+                                            
+                                                <div class="inline" style="margin:0"><i class="material-icons grey lighten-1 white-text " style="padding:8px;">link</i></div>
+                                                <div class="inline grey-text text-darken-2">No hay Material<br><span class="truncate grey-text stext">La banda aún no adjunta material</span></div>
+                                                {#<span class="secondary-content">{algo pondré}</span>#}
+                                            
                                         </li>
-                                        <li class="collection-item valign-wrapper">
-                                            <i class="material-icons blue white-text" style="padding:8px;">folder</i>
-                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Disco</span>
-                                            <span class="secondary-content">3333</span>
-                                        </li>
-                                      </ul>
+                                    </ul>
+                                    {%endif%}
                                 </div>
                             </div>
                         </div>
@@ -134,24 +142,32 @@
       <h4>Reportar Mala conducta</h4>
       <p>
       <input name="group1" type="radio" id="test1" />
-      <label for="test1">Red</label>
+      <label for="test1">Opcion 1</label>
     </p>
     <p>
       <input name="group1" type="radio" id="test2" />
-      <label for="test2">Yellow</label>
+      <label for="test2">Opcion 2</label>
     </p>
     <p>
       <input class="with-gap" name="group1" type="radio" id="test3"  />
-      <label for="test3">Green</label>
+      <label for="test3">Opcion 3</label>
     </p>
     <div class="input-field col s12">
             <textarea id="textarea1" class="materialize-textarea" length="120"></textarea>
-            <label for="textarea1">Textarea</label>
+            <label for="textarea1">Comentario</label>
           </div>
     </div>
     <div class="modal-footer">
       <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Su caso será revisado por un administrador.', 4000);$('#modalReport').closeModal();"  >Aceptar</a>
       <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modalReport').closeModal();"  >Cancelar</a>
+    </div>
+  </div>
+  <div id="modalDisco" class="modal modal-fixed-footer">
+    <div class="modal-content" style="background:url( '/media/app/static/app/images/discbg.jpg');background-size:100%">
+        
+    </div>
+    <div class="modal-footer color-principal" >
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modalDisco').closeModal();"  >Salir</a>
     </div>
   </div>
 
@@ -161,5 +177,59 @@
 
 
 <script type="text/javascript">$('.modal-trigger').leanModal();</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        //funcion para activar las estrellas
+        $('.grade').mouseover(function(){
+            var grade = $('.grade').index($(this));
+            $('.grade').each(function (k,el){
+                if(k<=grade){
+                    if($(el).hasClass('grey-text')){
+                        $(el).removeClass('grey-text')
+                        $(el).addClass('orange-text')
+                    }
+                }else{
+                    if($(el).hasClass('orange-text')){
+                        $(el).removeClass('orange-text')
+                        $(el).addClass('grey-text')
+                    }
+                }
+            });
+        });
+        $('.grade').mouseout(function(){
+            var grade= $('.grade-container').attr('data-grade');
+            $('.grade').each(function (k,el){
+                if(k<grade){
+                    if($(el).hasClass('grey-text')){
+                        $(el).removeClass('grey-text')
+                        $(el).addClass('orange-text')
+                    }
+                }else{
+                    if($(el).hasClass('orange-text')){
+                        $(el).removeClass('orange-text')
+                        $(el).addClass('grey-text')
+                    }
+                }
+            });
+        });
+        $('.grade').click(function(){
+            var grade = $('.grade').index(this)+1;
+             $('.grade-container').attr('data-grade',grade);
+        });
+            
+    });
+    //{# solo para no lider #}
+    $('.disco').click(function(){
+       console.log("disco id:"+$(this).attr('data-dId'));
+       $('#modalDisco').openModal();
+       var modal = $('#modalDisco .modal-content')
+       $.get("/infoDisco/"+$(this).attr('data-dId'),function(data){
+            modal.html("")
+            modal.html(data)
+       }).fail(function() {
+            console.error( "error" );
+       })
+    });
+</script>
 
 {% endblock %}

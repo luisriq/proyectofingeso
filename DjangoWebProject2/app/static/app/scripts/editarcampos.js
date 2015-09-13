@@ -1,5 +1,5 @@
 $( document ).ready(function(){
-	$('form').on('submit', function(event){
+	$('form').not(".file-form").on('submit', function(event){
 		console.log("entra y la wea")
 		event.preventDefault();
     });
@@ -112,6 +112,26 @@ $( document ).ready(function(){
 			}
 		});
 		console.log("jakdjfsba")
+	});
+	$('.file-form').submit(function upload(event) {
+		console.log("submitiando");
+		event.preventDefault();
+		var datos = new FormData($(this));
+		$.ajax({
+			url: "upload",
+			type: "POST",
+			data: datos,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function(data) {
+				$('.console').text(data);
+			},
+			error:function(data) {
+				$('.console').html(data.responseText);
+			},
+		
+		});
 	});
 	twitLoad();
 	for(var i=1;i<20;i++)

@@ -205,8 +205,16 @@ input, select, textarea {
   padding:0 !important;
   border:solid 2px #666;
 }
+.avatar-perfil.small{
+  height:50px;
+  min-width:50px;
+  max-width:50px;
+  background-size: 50px!important;
+  background-position: center!important;
+  
+}
 .inline{
-  display: inline-block ;
+  display: inline-block !important;
   margin: 0 10px;
 }
 .login.dropdown-content li>a, .login.dropdown-content li>span {
