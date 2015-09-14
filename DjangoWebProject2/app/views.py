@@ -3,7 +3,7 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponse, Http404
+from django.http import HttpRequest, HttpResponse, Http404, HttpResponseBadRequest
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from datetime import datetime, timedelta, date
@@ -15,6 +15,8 @@ from django.http import HttpResponseRedirect
 import json
 import uuid
 import sys, os
+from django.core import serializers
+import re
 
 from django.views.generic.edit import CreateView
 
@@ -457,7 +459,27 @@ class perfilArtistaNp(View):
                     'integranteEn':integranteEn
                 })
             )
-        
+
+#----------------------------------
+
+def search(request):
+
+    # si no es una peticion ajax, devolvemos error 400
+    if not request.is_ajax() or request.method != "POST":
+        return HttpResponseBadRequest()
+    
+    q = request.POST['q']     
+    artistas = Artista.objects.filter(nombre__contains=q)
+
+    artista_fields = (
+        'nombre',
+    )
+    # to json!
+    data = serializers.serialize('json', artistas, fields=artista_fields)
+
+    # eso es todo por hoy ^^
+    return HttpResponse(data, content_type="application/json")   
+    
 #------------------------------
 class crearBanda(View):
     def post(self, request):
