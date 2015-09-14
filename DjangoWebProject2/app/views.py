@@ -320,7 +320,7 @@ class perfilBanda(View):
             assert isinstance(request, HttpRequest)
             return render(
                 request,
-                'app/perfilBandaNp.html',
+                'app/perfilBanda.html',
                 context_instance = RequestContext(request,
                 {
                     'banda':banda,
