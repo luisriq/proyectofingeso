@@ -13,6 +13,7 @@ from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
+import unicodedata
 import uuid
 import sys, os
 from django.core import serializers
@@ -468,9 +469,9 @@ def search(request):
     if not request.is_ajax() or request.method != "POST":
         return HttpResponseBadRequest()
     
-    q = request.POST['q']     
-    artistas = Artista.objects.filter(nombre__contains=q).values('id', 'nombre', 'imagenPerfil')
-    print q
+    q = request.POST['q']
+    artistas = Artista.objects.filter(nombre__icontains=q).values('id', 'nombre', 'imagenPerfil')
+    print artistas
 
     artista_fields = (
         'nombre',
@@ -478,8 +479,18 @@ def search(request):
     data = json.dumps( list(artistas))
 
     # eso es todo por hoy ^^
-    return HttpResponse(data, content_type="application/json")   
+    return HttpResponse(data, content_type="application/json")
     
+#-----------------------------
+
+#def elimina_tildes(request):
+#   return ''.join((c for c in unicodedata.normalize('NFD', request) if unicodedata.category(c) != 'Mn'))
+ 
+#-----------------------------
+
+#def remove_accents(input_str):
+#    nfkd_form = unicodedata.normalize('NFKD', input_str)
+#    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])    
 #------------------------------
 class crearBanda(View):
     def post(self, request):
