@@ -382,13 +382,14 @@ a.color-principal:hover{
 	position:absolute;
   z-index: 9999;
 	background-color:#FFF;
-	padding:15px;
+	padding:5px;
+  margin-top:-20px;
 	border:solid 1px #CCC;
 }
 .selector div{
 	text-align:center;
-	height:100px;
-	width:200px;
+	height:70px;
+	width:70px;
 	overflow:scroll;
 	overflow-x:hidden;
 }
@@ -397,7 +398,13 @@ a.color-principal:hover{
 	list-style:none;
 	margin:0;
 	padding:0;	
-	font-size:40px;
+}
+.cabezaSelect{
+  width:35px;
+  height:35px;
+}
+.selector div ul li i{
+	font-size: 50px !important;
 }
 .selector div ul li:hover{
 	background-color:#EEE;
