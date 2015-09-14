@@ -196,6 +196,19 @@ input, select, textarea {
   padding:0 !important;
   border:solid 2px #666;
 }
+.avatar-img-30{
+  display: inline-block;
+  overflow:hidden;
+  height:30px;
+  width:30px;
+  margin:3px;
+  margin-right:20px;
+  padding:0 !important;
+  border:solid 2px #666;
+}
+.avatar-img-30 img{
+  height:30px;
+}
 .avatar-perfil{
   display: inline-block;
   overflow:hidden;

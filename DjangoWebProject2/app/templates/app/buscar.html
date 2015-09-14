@@ -1,0 +1,62 @@
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+<div class="container sfull">
+	<div class="row">
+		<div class="col s12 offset-l2 l8 card-panel center-align">
+			<h5>Datos personales</h5>	
+			<div class="divider color-principal" style="margin-bottom:30px"></div>
+			<div class="container left-align">
+				<div class="row">
+					<div class="col s12 l9  campo-editable">
+						<h5 style="font-size:1.2rem">Buscación</h5>
+						<form method="POST" data-target="email" largomaximo="25">
+							{% csrf_token %}
+							<div class="input-field " style="width:100%;">
+								<i class="material-icons prefix">&#xE8B6;</i>{#search icon#}
+								<input name="search" id="seach" type="text" class="validate">
+								<label for="seach" class="active">buscar</label>
+							</div>
+							<ul class="collection" style="border-top:none;margin-left:45px;width:calc(100% - 75px);margin-top:-15px;">
+								<li class="collection-item valign-wrapper" >
+									<div class="circle avatar-img-30 "><img src="http://k45.kn3.net/taringa/5/0/7/8/8/3/6/blizzer34/F8B.jpg?1294" "></div>
+									Nombre y la wea
+								</li>
+								<li class="collection-item valign-wrapper" >
+									<div class="circle avatar-img-30 "><img src="http://k45.kn3.net/taringa/5/0/7/8/8/3/6/blizzer34/F8B.jpg?1294" "></div>
+									Nombre y la wea
+								</li>
+							</ul>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{% load staticfiles %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+	<script type="text/javascript">
+    $(document).ready(function(){
+        $(document).ajaxSend(function (event, jqxhr, settings) {
+            jqxhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        });
+    });
+    </script>
+	<script src="{% static 'app/scripts/artistasearch.js' %}"></script>
+
+{% endblock %}
