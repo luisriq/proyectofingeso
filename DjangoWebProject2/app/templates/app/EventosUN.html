@@ -11,7 +11,7 @@
 {% block content %}
 <div class="container" style="width:100%;padding:0;">
     <div class="row" style="    margin-left: 0;margin-right: 0;">
-    {% for i in "aaaaaaaaaaaaaaa" %}
+    {% for i in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" %}
       <div class="col l4 m6 s12"> 
         <div class="card color-principal">
             <div class="card-image ">
@@ -71,4 +71,10 @@
     </div>
 </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{% load staticfiles %}
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+
 {% endblock %}
