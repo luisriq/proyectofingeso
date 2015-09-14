@@ -579,6 +579,8 @@ def about(request):
 class NoImplementado(View):
     def get(self, request, template):
         assert isinstance(request, HttpRequest)
+        tipoUsuario = verificacion(request)
+        sinBarra = False
         return render(
         request,
         'app/%s.html'%template,
@@ -586,6 +588,9 @@ class NoImplementado(View):
         {
             'title':'No implementado',
             'message':'Your application description page.',
+            'datosBarra':datosBarra(request),
+            'tipoUsuario'tipoUsuario,
+            'sinBarra':sinBarra,
             'year':datetime.now().year,
         }))
 #----------------------------------------------------
