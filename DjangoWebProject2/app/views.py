@@ -469,15 +469,14 @@ def search(request):
         return HttpResponseBadRequest()
     
     q = request.POST['q']     
-    artistas = Artista.objects.filter(nombre__contains=q)
+    artistas = Artista.objects.filter(nombre__contains=q).values('id', 'nombre', 'imagenPerfil')
     print q
     print artistas
 
     artista_fields = (
         'nombre',
     )
-    # to json!
-    data = serializers.serialize('json', artistas, fields=artista_fields)
+    data = json.dumps( list(artistas))
 
     # eso es todo por hoy ^^
     return HttpResponse(data, content_type="application/json")   

@@ -1,7 +1,9 @@
 $( document ).ready(function(){
 	$('input[name=search]').keyup(function(){
-		console.log($(this).val().length);
-		this_=$(this);
+		var this_=$(this);
+		var collectionContainer=this_.parent('div').parent('form').find('.result-list');
+		collectionContainer.html('')
+		console.log(this_.val()>2);
 		if($(this).val().length>1)
 			$.ajax({
                 dataType : 'json',
@@ -13,18 +15,18 @@ $( document ).ready(function(){
                 },
                 success : function(data) {
                     var users = [];
-					var collectionContainer=this_.parent().parent().find('result-list');
-					collectionContainer.html('');
+					console.log(collectionContainer.length);
                     for(var x in data)
                     {
-                        collectionContainer.append(liGen(data[x].fields['nombre'],data[x].fields['imagenPerfil']));
+						//console.log(data[x])
+                        collectionContainer.append(liGen(data[x].nombre,data[x].imagenPerfil));
                     }
                 }
             });
 	});
 });
 function imgGen(url){
-	var pre='<div class="circle avatar-img-30 "><img src="';
+	var pre='<div class="circle avatar-img-30 "><img src="/media/';
 	var pos='"></div>';
 	return pre+url+pos;
 }
