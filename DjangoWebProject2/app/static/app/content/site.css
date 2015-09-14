@@ -357,3 +357,61 @@ a.color-principal:hover{
 .side-nav li:hover, .side-nav li.active {
     background-color: transparent !important;
 }
+.hover-grey:hover{
+  
+  background: #eee;
+}
+.hover-grey:active{
+  
+  background: #ddd;
+}
+.no-select{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.pointer{
+  cursor: default;
+}
+.select{
+	font-size:large;
+}
+.selector{
+	display:none;
+	position:absolute;
+  z-index: 9999;
+	background-color:#FFF;
+	padding:15px;
+	border:solid 1px #CCC;
+}
+.selector div{
+	text-align:center;
+	height:100px;
+	width:200px;
+	overflow:scroll;
+	overflow-x:hidden;
+}
+.selector div ul{
+	cursor:pointer;
+	list-style:none;
+	margin:0;
+	padding:0;	
+	font-size:40px;
+}
+.selector div ul li:hover{
+	background-color:#EEE;
+}
+.select{
+	list-style:none;
+	padding:0;
+	
+}
+.select li{
+	padding:5px;
+	cursor:pointer;
+	border:solid 1px #CCC;
+}
+.cabezaSelect:hover{
+	background-color:#EEE;
+}

@@ -7,7 +7,6 @@
         {% include "app/sidebarnormalpartial.html" %}
     {% endif%}
 {% endblock %}
-
 {% block content %}
 
 <div class="container sfull" id-banda="{{ idBanda }}">
@@ -47,6 +46,9 @@
                                     <i class="material-icons manito inline grade grey-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
                                 </div>
                             </div>
+
+                            
+
                             {# hay que quitar esta wea de if al pasarlo pa la wea de la otra wea #}
                             {%if discos|length > 0  %}
                             <div class="row">
@@ -60,6 +62,7 @@
                                             <span class="secondary-content stext cyan-text text-darken-4">{{disco.lanzamiento.year}}</span>
                                         </li>
                                         {% endfor %}
+
                                       </ul>
                                 </div>
                             </div>
@@ -101,6 +104,7 @@
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Integrantes</h5>
+
                                     <div id="integrante" class="collection">
                                         {% for integrante in integrantes %}
                                         <li class="collection-item valign-wrapper">
@@ -117,29 +121,80 @@
                            
                             <div class="row">
                                 <div class="col s12 left-align">
+
+                                    <ul class="select">
+                                        <li class="cabezaSelect">Icono</li>
+                                    </ul>
+                                    <input class="inIcon" name="icon" style="display:none;" type="text" /> 
+                                    <div class="selector" >
+                                        <div>
+                                            <ul>
+                                                <li value="1"><i class="material-icons">explore</i></li>
+                                                <li value="2"><i class="material-icons">announcement</i></li>
+                                                <li value="3"><i class="material-icons">book</i></li>
+                                                <li value="3"><i class="material-icons">description</i> </li>
+                                                <li value="3"><i class="material-icons">favorite</i> </li>
+                                                <li value="3"><i class="material-icons">input</i> </li>
+                                                <li value="3"><i class="material-icons">info</i> </li>
+                                                <li value="3"><i class="material-icons">label</i> </li>
+                                                <li value="3"><i class="material-icons">language</i> </li>
+                                                <li value="3"><i class="material-icons">room</i> </li>
+                                                <li value="3"><i class="material-icons">receipt</i> </li>
+                                                <li value="3"><i class="material-icons">shop</i> </li>
+                                                <li value="3"><i class="material-icons">visibility</i> </li>
+                                                <li value="3"><i class="material-icons">work</i> </li>
+                                                <li value="3"><i class="material-icons">equalizer</i> </li>
+                                                <li value="3"><i class="material-icons">library_music</i> </li>
+                                                <li value="3"><i class="material-icons">mic</i> </li>
+                                                <li value="3"><i class="material-icons">movie</i> </li>
+                                                <li value="3"><i class="material-icons">new_releases</i> </li>
+                                                <li value="3"><i class="material-icons">radio</i> </li>
+                                                <li value="3"><i class="material-icons">volume_up</i> </li>
+                                                <li value="3"><i class="material-icons">web</i> </li>
+                                                <li value="3"><i class="material-icons">drafts</i> </li>
+                                                <li value="3"><i class="material-icons">link</i> </li>
+                                                <li value="3"><i class="material-icons">devices</i> </li>
+                                                <li value="3"><i class="material-icons">usb</i> </li>
+                                                <li value="3"><i class="material-icons">widgets</i> </li>
+                                                <li value="3"><i class="material-icons">attach_file</i> </li>
+                                                <li value="3"><i class="material-icons">insert_drive_file</i> </li>
+                                                <li value="3"><i class="material-icons">cloud_circle</i> </li>
+                                                <li value="3"><i class="material-icons">gamepad</i> </li>
+                                                <li value="3"><i class="material-icons">camera_alt</i> </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <label>Materialize Select</label>
+
                                     <h5>Material</h5> 
-                                    {%if material|length > 0%}
                                     <ul class="collection">
+                                    {%if material|length > 0%}
                                     {% for m in material %}
-                                        <li class="collection-item manito ">
+                                        <li class="collection-item manito">
+
                                             <a class="valign-wrapper tooltipped" href="{{m.enlace}}" data-tooltip="ir al enlace" target="_blank">
                                                 <div class="inline" style="margin:0"><i class="material-icons red white-text " style="padding:8px;">{{m.tipo}}</i></div>
                                                 <div class="inline">{{m.nombre|title}}<br><span class="truncate grey-text stext">{{m.descripcion}}</span></div>
                                                 {#<span class="secondary-content">{algo pondré}</span>#}
                                             </a>
+
                                         </li>
                                     {% endfor %}
-                                    </ul>
                                     {%else%}
-                                    <ul class="collection">
-                                        <li class="collection-item valign-wrapper">
+                                        <li class="collection-item valign-wrapper no-select pointer">
                                                 <div class="inline" style="margin:0"><i class="material-icons grey lighten-1 white-text " style="padding:8px;">link</i></div>
                                                 <div class="inline grey-text text-darken-2">No hay Material<br><span class="truncate grey-text stext">La banda aún no adjunta material</span></div>
                                                 {#<span class="secondary-content">{algo pondré}</span>#}
                                             
                                         </li>
-                                    </ul>
                                     {%endif%}
+                                        <li class="collection-item valign-wrapper manito hover-grey no-select">
+                                                <div class="inline" style="margin:0"><i class="material-icons blue darken-2 white-text " style="padding:8px;">&#xE2C6;</i></div>
+                                                <div class="inline grey-text text-darken-3">Agregar material<br><span class="truncate grey-text stext text-darken-1">Adjunta material para que todos puedan verla</span></div>
+                                        </li>
+                                    </ul>
+                                    
+
                                 </div>
                             </div>
                         </div>
@@ -193,9 +248,23 @@
 {% block scripts %}
 
 {% load staticfiles %}
+
 <script type="text/javascript">$('.modal-trigger').leanModal();</script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('.cabezaSelect').click(function(e) {
+			var cabezaSelect=$(this);
+           $('.selector').show();
+			$('.selector li').click(function(e) {
+              var clase=$(this).find('i').text();
+				$(cabezaSelect).html('<i class=\"material-icons\">'+clase+'</i>')
+				$('.inIcon').val(clase);
+				$('.selector').hide();
+           });
+		   
+        });
+        
+         $('select').material_select();
         //funcion para activar las estrellas
         $('.grade').mouseover(function(){
             var grade = $('.grade').index($(this));
@@ -213,7 +282,6 @@
                 }
             });
         });
-        
         $('.grade').mouseout(function(){
             var grade= $('.grade-container').attr('data-grade');
             $('.grade').each(function (k,el){
