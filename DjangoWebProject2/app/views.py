@@ -161,6 +161,7 @@ class perfilNormal(View):
             #bandas a las que sigue el usuario normal de la url
             bandasSeguidas = Banda.objects.filter(seguidores = normal)
             
+            title = 'perfil '+normal.nombre
             #llamada al template
             assert isinstance(request, HttpRequest)
             return render(
@@ -172,7 +173,8 @@ class perfilNormal(View):
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'losquesigo':artistasSeguidos,
-                    'lasquesigo':bandasSeguidas
+                    'lasquesigo':bandasSeguidas,
+                    'title':title
                 })
             )
         
@@ -203,6 +205,7 @@ class perfilBandaNp(View):
                     solicitado = len(Solicitud.objects.filter(banda=banda, artista=usuario))==1
                 except:
                     solicitado = False
+                title = 'perfil de la banda' + banda.nombre
                 print "solicitado",solicitado
                 return render(
                     request,
@@ -216,12 +219,14 @@ class perfilBandaNp(View):
                         'datosBarra':datosBarra(request),
                         'integrantes':integrantes,
                         'solicitado':solicitado,
-                        'seguidores':seguidores
+                        'seguidores':seguidores,
+                        'title':title
                     })
                 )
         else:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
+            title = 'perfil de la banda ' + banda.nombre
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -234,7 +239,8 @@ class perfilBandaNp(View):
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'integrantes':integrantes,
-                    'seguidores':seguidores
+                    'seguidores':seguidores,
+                    'title':title
                 })
             )
 #-----------------------------------------------------------
@@ -272,6 +278,8 @@ class perfilNormalNp(View):
             #bandas a las que sigue el usuario normal de la url
             bandasSeguidas = Banda.objects.filter(seguidores = normal)
             
+            title = 'perfil ' + normal.nombre
+            
             #llamada al template
             assert isinstance(request, HttpRequest)
             return render(
@@ -283,7 +291,8 @@ class perfilNormalNp(View):
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'losquesigo':artistasSeguidos,
-                    'lasquesigo':bandasSeguidas
+                    'lasquesigo':bandasSeguidas,
+                    'title':title
                 })
             )
         
@@ -306,6 +315,8 @@ class perfilBanda(View):
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
             
+            title = 'perfil de la banda' + banda.nombre
+            
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -319,7 +330,8 @@ class perfilBanda(View):
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'integrantes':integrantes,
-                    'seguidores':seguidores
+                    'seguidores':seguidores,
+                    'title':title
                 })
             )
 #------------------------
@@ -341,6 +353,7 @@ class infoDisco(View):
 class error404(View):
     def get(self, request, loquesea):
         tipoUsuario = verificacion(request)
+        title = 'Error 404'
             
         assert isinstance(request, HttpRequest)
         return render(
@@ -349,7 +362,8 @@ class error404(View):
             context_instance = RequestContext(request,
             {
                 'tipoUsuario': tipoUsuario,
-                'datosBarra':datosBarra(request)
+                'datosBarra':datosBarra(request),
+                'title':title
             })
         )
 #------------------------
@@ -370,6 +384,8 @@ class perfilArtista(View):
         #formimagen =  ImageUploadForm()
         allInstruments = Instrumento.objects.all()
         
+        title = 'perfil ' + artista.nombre
+        
             
         assert isinstance(request, HttpRequest)
         return render(
@@ -385,6 +401,7 @@ class perfilArtista(View):
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
                 'artista':artista,
+                'title':title
                 #'formImagen':formimagen,
             })
         )
@@ -445,6 +462,8 @@ class perfilArtistaNp(View):
             #numero de seguidores
             seguidores = len(artista.seguidores.all())
             
+            title = 'perfil ' + artista.nombre
+            
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -457,7 +476,8 @@ class perfilArtistaNp(View):
                     'datosBarra':datosBarra(request),
                     'artista':artista,
                     'tipoUsuario':tipoUsuario,
-                    'integranteEn':integranteEn
+                    'integranteEn':integranteEn,
+                    'title':title
                 })
             )
 
@@ -527,6 +547,7 @@ class crearBanda(View):
         tipoUsuario = verificacion(request)
 
         form = CrearBandaForm()
+        title = 'Creacion de banda'
         return render(
             request, 
             'app/crearBanda.html', 
@@ -534,7 +555,8 @@ class crearBanda(View):
             {
                 'tipoUsuario':tipoUsuario,
                 'datosBarra':datosBarra(request),
-                'form': form
+                'form': form,
+                'title':title
             })
         )
 
@@ -550,17 +572,7 @@ class busqueda(View):
         else:
                    return HttpResponse("['nombre':0]");
         
-#----------------------------------------------
-class editarPerfilArtistA(View):
-    def get(self, request):
-        
-        if  request.user.is_authenticated():
-            
-                   return HttpResponse( request.GET["target"] + " - " +request.GET["data"]) 
-                   #return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
-        else:
-                   return HttpResponse("a la mierda ");
-        
+
 #----------------------------------------------
 def about(request):
     raise Http404("Pagina no existe 404 dead link")
@@ -580,6 +592,7 @@ class NoImplementado(View):
     def get(self, request, template):
         tipoUsuario = verificacion(request)
         sinBarra = False
+        title = 'No implementado/'+template
         assert isinstance(request, HttpRequest)
         return render(
         request,
@@ -592,6 +605,7 @@ class NoImplementado(View):
             'tipoUsuario':tipoUsuario,
             'sinBarra':sinBarra,
             'year':datetime.now().year,
+            'title':title
         }))
 #----------------------------------------------------
 #    funcion para verificar si esta login el usuaario  
