@@ -1,6 +1,6 @@
 $( document ).ready(function(){
 	$('form').not(".file-form").on('submit', function(event){
-		console.log("entra y la wea")
+		
 		event.preventDefault();
     });
 	$(".btn.editar.toggle").click(function(){

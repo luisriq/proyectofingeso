@@ -347,3 +347,10 @@ a.color-principal:hover{
 .del-instrumento:hover{
   opacity:1;
 }
+.result-list{
+  position:fixed;
+  border-top:none;
+  margin-left:44px;
+  width:inherit;
+  margin-top:-13px;
+}
