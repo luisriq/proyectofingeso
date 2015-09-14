@@ -578,9 +578,9 @@ def about(request):
     )
 class NoImplementado(View):
     def get(self, request, template):
-        assert isinstance(request, HttpRequest)
         tipoUsuario = verificacion(request)
         sinBarra = False
+        assert isinstance(request, HttpRequest)
         return render(
         request,
         'app/%s.html'%template,
