@@ -159,6 +159,7 @@ $( document ).ready(function(){
 					$('.myavatar img').attr('src',"/media/"+returndata);
 					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Imagen de perfíl cambiada con exito', 4000);
 					$('.fileChange').toggle();
+					$('#preview').attr('data-src',"/media/"+returndata);
 				},
 				error: function (returndata) {
 					$('#preview').attr('src', $('#preview').attr('data-src'));

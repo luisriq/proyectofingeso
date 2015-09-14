@@ -589,7 +589,7 @@ class NoImplementado(View):
             'title':'No implementado',
             'message':'Your application description page.',
             'datosBarra':datosBarra(request),
-            'tipoUsuario'tipoUsuario,
+            'tipoUsuario':tipoUsuario,
             'sinBarra':sinBarra,
             'year':datetime.now().year,
         }))
