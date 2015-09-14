@@ -40,11 +40,11 @@
                                 <div class="col s12 grade-container" data-grade="4"  >
                                     
                                     {#caracteristica no implementada debido a que esmanejada por usuarios normales#}
-                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
-                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
-                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
-                                    <i class="material-icons inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
-                                    <i class="material-icons inline grade grey-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons manito inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons manito inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons manito inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons manito inline grade orange-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
+                                    <i class="material-icons manito inline grade grey-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
                                 </div>
                             </div>
                             <div class="row">
@@ -68,7 +68,7 @@
                                     <h5>Discografia</h5>
                                     <ul class="collection">
                                         {% for disco in discos %}
-                                        <li class="collection-item disco valign-wrapper"  data-dId="{{disco.id}}">
+                                        <li class="collection-item disco valign-wrapper manito"  data-dId="{{disco.id}}">
                                             <i class="material-icons orange darken-3 white-text" style="padding:3px;font-size:40px">&#xE019;</i>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{disco.nombre}}</span>
                                             <span class="secondary-content stext cyan-text text-darken-4">{{disco.lanzamiento.year}}</span>
@@ -111,7 +111,7 @@
                                     {%if material|length > 0%}
                                     <ul class="collection">
                                     {% for m in material %}
-                                        <li class="collection-item  ">
+                                        <li class="collection-item manito ">
                                             <a class="valign-wrapper tooltipped" href="{{m.enlace}}" data-tooltip="ir al enlace" target="_blank">
                                                 <div class="inline" style="margin:0"><i class="material-icons red white-text " style="padding:8px;">{{m.tipo}}</i></div>
                                                 <div class="inline">{{m.nombre|title}}<br><span class="truncate grey-text stext">{{m.descripcion}}</span></div>
@@ -123,7 +123,6 @@
                                     {%else%}
                                     <ul class="collection">
                                         <li class="collection-item valign-wrapper ">
-                                            
                                                 <div class="inline" style="margin:0"><i class="material-icons grey lighten-1 white-text " style="padding:8px;">link</i></div>
                                                 <div class="inline grey-text text-darken-2">No hay Material<br><span class="truncate grey-text stext">La banda aún no adjunta material</span></div>
                                                 {#<span class="secondary-content">{algo pondré}</span>#}
