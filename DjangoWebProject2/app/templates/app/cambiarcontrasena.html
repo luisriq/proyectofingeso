@@ -1,0 +1,105 @@
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+<div class="container sfull">
+	<div class="row">
+		<div class="col s12 offset-l2 l8 card-panel center-align">
+			<h5>Datos personales</h5>	
+			<div class="divider color-principal" style="margin-bottom:30px"></div>
+			<div class="container left-align">
+				<div class="row">
+					<div class="col s12 l9  campo-editable">
+						<h5 style="font-size:1.2rem">Cambiar Correo</h5>
+						<form method="POST" data-target="email" largomaximo="25">
+							{% csrf_token %}
+							<a class="btn editar toggle color-principal hover-shadow right hide">
+								<i class="material-icons"></i>
+							</a> 
+							<span class="dato hide">nestor@BTE.cl</span>
+							<a class="btn editar submit email green hover-shadow tooltipped right no-hide" data-tooltip="Guardar cambios">
+								<i class="material-icons"></i>
+							</a> 
+							<div class="input-field no-hide" style="width:calc(100% - 50px);">
+								<div class="input-field">
+									<input name="dato" id="email" type="email" value="nestor@BTE.cl" class="validate">
+									<label for="email" data-error="Debe tener formato de email" class="active">Correo</label>
+								</div>
+							</div>
+							<hr style="border:none;width:auto;height:0px;clear:both;">
+						</form>
+					</div>
+				</div>
+				<div class="divider"></div>
+				<div class="row">
+					<div class="col s12 l9  campo-editable">
+						<h5 style="font-size:1.2rem">Cambiar contraseña</h5>
+						<form method="POST" data-target="pass" largomaximo="25">
+							{% csrf_token %}
+							<a class="btn no-hide editar toggle color-principal hover-shadow right">
+								<i class="material-icons"></i>
+							</a> 
+							<span class="no-hide dato"><b>·············</b></span> 
+							<div class="input-field hide" style="width:calc(100% - 30px);">
+								<div class="input-field col-md-10"> 
+									<input name="oldpass" id="olddato" type="password" class="validate" requiered="">
+									<label for="olddato">Contraseña actual</label>
+								</div>
+								<div class="input-field col-md-10">
+									<input name="pass" id="password" type="password" class="validate" requiered="">
+									<label for="password">Nueva Contraseña</label>
+								</div>
+								<div class="input-field col-md-10">
+									<input name="repeat" id="password" type="password" class="validate" requiered="">
+									<label for="password">Repita la Contraseña</label>
+								</div>
+							</div>
+							<a class="btn hide editar pass submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios">
+								<i class="material-icons"></i>
+							</a>
+							<hr style="border:none;width:auto;height:0px;clear:both;">
+						</form>
+					</div>
+				</div>
+				<div class="divider"></div>
+				<div class="row">
+					<div class="col s12 l9  campo-editable">
+						<h5 style="font-size:1.2rem">Desactivar cuenta</h5>
+						<form method="POST" data-target="passwordUpdate">
+							{% csrf_token %}
+							<a class="btn no-hide editar toggle grey darken-1 hover-shadow ">Desactivar</a> 
+							<div class="input-field hide" style="width:calc(100% - 30px);">
+								<span class="grey-text text-darken-2">Para desactivar tu cuenta necesitamos verificar tu contraseña</span>
+								<div class="input-field "> 
+									<input name="pass" id="pass" type="password" class="validate disabled">
+									<label for="pass">Contraseña</label>
+								</div>
+							</div>
+							<a class="btn hide editar submit desactivar right grey darken-1 hover-shadow">Desactivar</a> 
+							
+							<hr style="border:none;width:auto;height:0px;clear:both;">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+{% load staticfiles %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+	<script src="{% static 'app/scripts/personal.js' %}"></script>
+
+{% endblock %}
