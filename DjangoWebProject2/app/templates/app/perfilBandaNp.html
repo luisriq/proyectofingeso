@@ -55,7 +55,7 @@
                                 {% if solicitado%}
                                     <a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text disabled" style="padding:10px">Solicitado</a>
                                 {% else %}
-                                    <a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text submit editar"  onclick="Materialize.toast('Solicitud enviada, espere respuesta.', 4000)" style="padding:10px" data-tooltip="Enviar solicitud">Solicitar ingreso</a>
+                                    <a id="botonSolicitar" class="col hover-shadow s5 offset-s2 card-panel color-principal white-text submit editar"  onclick="Materialize.toast('Solicitud enviada, espere respuesta.', 4000)" style="padding:10px" data-tooltip="Enviar solicitud">Solicitar ingreso</a>
                                 {%endif%}
                                 </form>
                                 <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
@@ -78,7 +78,6 @@
                                 </div>
                             </div>
                             {%endif%}
-                            
                         </div>
                     </div>
                     <div class="col l6 s12 ">

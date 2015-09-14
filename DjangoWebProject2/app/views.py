@@ -16,6 +16,7 @@ import json
 import unicodedata
 import uuid
 import sys, os
+import traceback
 from django.core import serializers
 import re
 
@@ -302,14 +303,18 @@ class perfilBanda(View):
         discos =  Disco.objects.filter(banda = banda)
         material =  Material.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
+        
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
-            
+            solicitantes = Solicitud.objects.filter(banda = banda, direccion=True)
+            print solicitantes
+            if(len(solicitantes)==0):
+                solicitantes = None
             assert isinstance(request, HttpRequest)
             return render(
                 request,
-                'app/perfilBandaNp.html',
+                'app/perfilBanda.html',
                 context_instance = RequestContext(request,
                 {
                     'banda':banda,
@@ -319,6 +324,7 @@ class perfilBanda(View):
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'integrantes':integrantes,
+                    'solicitantes':solicitantes,
                     'seguidores':seguidores
                 })
             )
@@ -746,12 +752,22 @@ def guardarDatosArtista(request):
                     s.save()
                 else:
                     return HttpResponse("ERROR")
+            elif target == "aceptarSolicitud": 
+                print "id",dato
+                s = Solicitud.objects.filter(id=dato)[0]
+                accion = request.POST.get('olddato')
+                if(accion == "aceptar"):
+                    integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion="S", fechaIngreso=datetime.now())
+                    integr.save()
+                    print "AcEPTAR"
+                s.delete()
             print "YEEEES %s"%dato
             print "Target %s"%target
     except Exception as e:
         exc_type, exc_obj, exc_tb = sys.exc_info()
         fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
         print(exc_type, fname, exc_tb.tb_lineno)
+        print(traceback.format_exc())
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 

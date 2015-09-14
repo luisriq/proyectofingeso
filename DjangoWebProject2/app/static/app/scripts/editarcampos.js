@@ -13,17 +13,18 @@ $( document ).ready(function(){
 	});
 	//Realizar cambio algi asi como un submit
 	$(".editar.submit").click(function(){
-		var formulario = $(this).parent("form");
+		var formulario = $(this).closest("form");
 		var olddato = $(this).parent().find('input[name=olddato]');
-		console.log(olddato.val());
+		console.log(formulario.find('input[name=olddato]').val());
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
+		console.log(dato.val());
 		var datoValue = dato.val();
 		if(typeof olddato === 'undefined'){
   			datoValue = dato.val().trim().capitalizeFirstLetter();
  		};
 		
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
-		console.log(dato);
+
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
 			return null
@@ -35,6 +36,8 @@ $( document ).ready(function(){
 		console.log("func:"+largoPalabra(dato.val(), formulario.attr("largomaximo")));
 		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
 			console.log("que mierda")
+			
+			
 			$.ajax({
 				url : "/guardarDatosArtista", // the endpoint
 				type : "POST", // http method
@@ -55,6 +58,28 @@ $( document ).ready(function(){
 							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
 							twttr.widgets.load()
 							console.log("holi");
+						}else if(formulario.attr('data-target')=="solicitar"){
+							//TODO: Cambiar html 
+							$('#botonSolicitar').replaceWith('<a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text disabled" style="padding:10px">Solicitado</a>');
+						}
+						else if(formulario.attr('data-target')=="aceptarSolicitud"){
+							console.log("MEEEE");
+							formulario.hide();
+							if(olddato.val()=='aceptar'){
+								hrefItem = formulario.find('.valign-wrapper').attr('href');
+								imagen = formulario.find('.circle').attr('style');
+								nombre = formulario.find('span').text()
+								console.log(hrefItem+"\n"+imagen);
+								$('#integrante').append('<li class="collection-item valign-wrapper">'+
+												'<a class="valign-wrapper" href="'+hrefItem+'">'+
+													'<div class="circle avatar-perfil small" style="'+imagen+'" ></div>'+
+													'<div class="" style="margin-left:20px;"><span >'+nombre+'</span>'+
+													'<br><span class="grey-text ">S</span></div>'+
+												'</a>'+
+											'</li>');
+							}
+							
+							
 						}
 						else if(formulario.attr('data-target')=="instrumento")
 							location.reload();
