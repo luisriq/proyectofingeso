@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
 import uuid
+import sys, os
 
 from django.views.generic.edit import CreateView
 
@@ -195,6 +196,11 @@ class perfilBandaNp(View):
             else:
                 integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
                 seguidores = len(banda.seguidores.all())
+                try:
+                    solicitado = len(Solicitud.objects.filter(banda=banda, artista=usuario))==1
+                except:
+                    solicitado = False
+                print "solicitado",solicitado
                 return render(
                     request,
                     'app/perfilBandaNp.html',
@@ -206,6 +212,7 @@ class perfilBandaNp(View):
                         'tipoUsuario':tipoUsuario,
                         'datosBarra':datosBarra(request),
                         'integrantes':integrantes,
+                        'solicitado':solicitado,
                         'seguidores':seguidores
                     })
                 )
@@ -378,6 +385,24 @@ class perfilArtista(View):
                 #'formImagen':formimagen,
             })
         )
+class config(View):
+    def get(self, request):
+        tipoUsuario = verificacion(request)
+        if tipoUsuario == 0:
+            return HttpResponseRedirect("/login/")
+        usuario = request.user
+        assert isinstance(request, HttpRequest)
+        return render(
+            request,
+            'app/cambiarcontrasena.html',
+            context_instance = RequestContext(request,
+            {
+                'year':datetime.now().year,
+                'tipoUsuario': tipoUsuario,
+                'datosBarra':datosBarra(request),
+                #'formImagen':formimagen,
+            })
+        )
 #------------------------------------------------------
 #    clase perfil Artista No propietario
 #------------------------------------------------------
@@ -520,12 +545,13 @@ def about(request):
     )
 class NoImplementado(View):
     def get(self, request, template):
+        assert isinstance(request, HttpRequest)
         return render(
         request,
         'app/%s.html'%template,
         context_instance = RequestContext(request,
         {
-            'title':'About',
+            'title':'No implementado',
             'message':'Your application description page.',
             'year':datetime.now().year,
         }))
@@ -671,10 +697,23 @@ def guardarDatosArtista(request):
                     user.save()
                 else:
                     return HttpResponse("ERROR")
-            
+            elif target == "solicitar": 
+                print "idbanda:",dato
+                a = Artista.objects.filter(user = request.user)[0]
+                b = Banda.objects.filter(id=dato)[0]
+                print "b", b.nombre,"a",a.nombre
+                
+                if(len(Solicitud.objects.filter(artista = a, banda = b, direccion = True))==0):
+                    s = Solicitud(artista = a, banda = b, direccion = True)
+                    s.save()
+                else:
+                    return HttpResponse("ERROR")
             print "YEEEES %s"%dato
             print "Target %s"%target
-    except :
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 
@@ -708,7 +747,41 @@ def guardarDatosBanda(request):
     except :
         return HttpResponse("ERROR")
     return HttpResponse("OK")
-    
+    #--------
+def guardarDatosPersonales(request):
+    try:
+        if request.method == 'POST':
+            print "Loged %s"%request.user.id
+            target = request.POST.get('target')
+            if(target=="email"):
+                dato = request.POST.get('dato')
+                u = User.objects.filter(username= dato)
+                if(len(u) > 0):
+                    print u[0]==request.user
+                    if u[0]==request.user:
+                        return HttpResponse("w,No se cambi&oacute; el correo ya que no era distinto")
+                    else :
+                        return HttpResponse("e,Ese correo no est&aacute; disponible")
+                else:
+                    #cambiar el email
+                    user = User.objects.filter( id = request.user.id)[0]
+                    usuario = Usuario.objects.filter(user = user)[0]
+                    usuario.correo = dato
+                    user.username = dato
+                    user.save()
+                    usuario.save()
+            elif target == "pass": 
+                user = User.objects.get(username=request.user.username)
+                dato = request.POST.get('dato')                
+                if(user.check_password(request.POST.get('olddato'))):
+                    user.set_password(dato)
+                    user.save()
+                else:
+                     return HttpResponse("e,Error de autenticaci&oacute;n")   
+    except :
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+    #---------
 def upload_file(request):
     if request.method == 'POST':
         
