@@ -18,15 +18,14 @@
 				<div class="row">
 					<div class="col s12 l9  campo-editable">
 						<h5 style="font-size:1.2rem">Buscación</h5>
-						<form method="POST" data-target="email" largomaximo="25">
+						<form method="POST" data-target="seach" largomaximo="25" autocomplete="off">
 							{% csrf_token %}
 							<div class="input-field " style="width:100%;">
 								<i class="material-icons prefix">&#xE8B6;</i>{#search icon#}
 								<input name="search" id="seach" type="text" class="validate">
 								<label for="seach" class="active">buscar</label>
 							</div>
-							<ul class="collection result-list" style="border-top:none;margin-left:45px;width:calc(100% - 75px);margin-top:-15px;">
-								
+							<ul class="collection result-list">
 							</ul>
 						</form>
 					</div>
