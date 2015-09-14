@@ -2,7 +2,7 @@ $( document ).ready(function(){
 	$('input[name=search]').keyup(function(){
 		console.log($(this).val().length);
 		this_=$(this);
-		if($(this).val().length>3)
+		if($(this).val().length>1)
 			$.ajax({
                 dataType : 'json',
                 method : 'POST',

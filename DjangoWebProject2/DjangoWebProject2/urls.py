@@ -39,6 +39,7 @@ urlpatterns = patterns('',
     url(r'^guardarDatosBanda$', guardarDatosBanda, name='updateB'),
     url(r'^guardarDatosPersonales$', guardarDatosPersonales, name='updateP'),            
     url(r'^upload$', upload_file, name='upload'),
+    url(r'^search', search),#buscador
     url(r'^login/$',
         'django.contrib.auth.views.login',
         {
