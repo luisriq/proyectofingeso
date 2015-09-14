@@ -1,0 +1,80 @@
+{% extends "app/layout.html" %}
+
+{% block sidebar %}
+    {% if tipoUsuario == 1  %}
+        {% include "app/sidebarartistapartial.html" %}
+    {% elif tipoUsuario == 2 %}
+        {% include "app/sidebarnormalpartial.html" %}
+    {% endif%}
+{% endblock %}
+
+{% block content %}
+<div class="container" style="width:100%;padding:0;">
+    <div class="row" style="    margin-left: 0;margin-right: 0;">
+    {% for i in "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" %}
+      <div class="col l4 m6 s12"> 
+        <div class="card color-principal">
+            <div class="card-image ">
+              <div style="height:0px;margin-bottom:70%">
+                {% load staticfiles %}
+                 <img class="activator" src="{% static 'app/images/evento_rock.jpg' %}" >
+              </div>
+                  <span class="card-title activator " style="text-shadow:0px 0px 3px #000; margin-bottom:-70%"><b>Evento2</b></span>
+                </div>
+                <div class="card-reveal">
+                  <span class="card-title grey-text text-darken-4">Evento<i class="material-icons right">close</i></span>
+                  <p>Evento de rock{# aqui el rishar tiene que ponerle el estilo#}</p>
+                  <p><a href="#">Ver pagina del evento</a></p>
+                </div>
+              </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="filter-bar hide-on-small-only" >
+    
+    <div class="container">
+        <div class="row">
+        <ul class="grey-text text-darken-3">
+            <li class="valign-wrapper" ><h5>Filtros</h5></li>
+            <li class="divider grey"></li>
+
+            <li>
+              <input placeholder="Fecha" type="date" class="datepicker">
+            </li>
+            <li >
+              <label for="test5">Rango de fecha [1-15]</label>
+              <p class="range-field">
+              <input type="range" id="test5" min="1" max="15" value="1" />
+              <style type="text/css"></style>
+              </p>
+            </li>
+            <li>
+              <input name="opt" type="radio" id="filled-in-box"/>
+              <label for="filled-in-box">Opcion 1</label>
+              &nbsp;
+              <input name="opt" type="radio" id="filled-in-box2"/>
+              <label for="filled-in-box2">Opcion 2</label>
+            </li>
+            <li>
+              <div class="input-field col s12">
+                <select>
+                  <option value="" disabled selected>Selecciona Genero</option>
+                  <option value="1">Genero 1</option>
+                  <option value="2">Genero 2</option>
+                  <option value="3">Genero 3</option>
+                </select>
+              </div>
+            </li>
+            <li><h5 class="btn" style="width:100%"><i class="material-icons">youtube_searched_for</i></h5></li>
+        </ul>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% load staticfiles %}
+	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
+
+{% endblock %}
