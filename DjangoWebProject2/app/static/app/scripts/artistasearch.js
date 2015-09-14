@@ -13,13 +13,23 @@ $( document ).ready(function(){
                 },
                 success : function(data) {
                     var users = [];
-
+					var collectionContainer=this_.parent().parent().find('result-list');
+					collectionContainer.html('');
                     for(var x in data)
                     {
-                        console.log(data[x]);
+                        collectionContainer.append(liGen(data[x].fields['nombre'],data[x].fields['imagenPerfil']));
                     }
-                    //cache[request.term] = users;
                 }
             });
 	});
 });
+function imgGen(url){
+	var pre='<div class="circle avatar-img-30 "><img src="';
+	var pos='"></div>';
+	return pre+url+pos;
+}
+function liGen(nombre,url){
+	var tagO='<li class="collection-item valign-wrapper" >';
+	var tagC='</li>';
+	return tagO+imgGen(url)+nombre+tagC;
+}
