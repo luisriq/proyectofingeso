@@ -14,6 +14,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
 import uuid
+import sys, os
 
 from django.views.generic.edit import CreateView
 
@@ -195,6 +196,11 @@ class perfilBandaNp(View):
             else:
                 integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
                 seguidores = len(banda.seguidores.all())
+                try:
+                    solicitado = len(Solicitud.objects.filter(banda=banda, artista=usuario))==1
+                except:
+                    solicitado = False
+                print "solicitado",solicitado
                 return render(
                     request,
                     'app/perfilBandaNp.html',
@@ -206,6 +212,7 @@ class perfilBandaNp(View):
                         'tipoUsuario':tipoUsuario,
                         'datosBarra':datosBarra(request),
                         'integrantes':integrantes,
+                        'solicitado':solicitado,
                         'seguidores':seguidores
                     })
                 )
@@ -671,10 +678,23 @@ def guardarDatosArtista(request):
                     user.save()
                 else:
                     return HttpResponse("ERROR")
-            
+            elif target == "solicitar": 
+                print "idbanda:",dato
+                a = Artista.objects.filter(user = request.user)[0]
+                b = Banda.objects.filter(id=dato)[0]
+                print "b", b.nombre,"a",a.nombre
+                
+                if(len(Solicitud.objects.filter(artista = a, banda = b, direccion = True))==0):
+                    s = Solicitud(artista = a, banda = b, direccion = True)
+                    s.save()
+                else:
+                    return HttpResponse("ERROR")
             print "YEEEES %s"%dato
             print "Target %s"%target
-    except :
+    except Exception as e:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 

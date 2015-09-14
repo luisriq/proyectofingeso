@@ -12,7 +12,7 @@ $( document ).ready(function(){
 		hide.removeClass("hide").addClass("no-hide");
 	});
 	//Realizar cambio algi asi como un submit
-	$(".btn.editar.submit").click(function(){
+	$(".editar.submit").click(function(){
 		var formulario = $(this).parent("form");
 		var olddato = $(this).parent().find('input[name=olddato]');
 		console.log(olddato.val());

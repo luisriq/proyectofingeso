@@ -173,7 +173,8 @@ class Comentario(models.Model):
 class Solicitud(models.Model):
 	banda = models.ForeignKey(Banda, related_name = 'invita', null=True)
 	artista = models.ForeignKey(Artista, related_name='invitado', null=True)
-	direccion = models.CharField(max_length=3)
-	guid = models.CharField(max_length=36)
+	# direccion, True=pedir, False=invitar
+	direccion = models.BooleanField()
+	guid = models.CharField(max_length=36, null=True)
 	def __unicode__(self):
-		return self.banda.nombre + " " + self.direccion + self.artisata.nombre
+		return self.banda.nombre + " " + self.artista.nombre
