@@ -471,7 +471,6 @@ def search(request):
     q = request.POST['q']     
     artistas = Artista.objects.filter(nombre__contains=q)
     print q
-    print artistas
 
     artista_fields = (
         'nombre',
