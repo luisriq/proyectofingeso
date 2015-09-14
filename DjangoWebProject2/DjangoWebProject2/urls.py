@@ -35,6 +35,7 @@ urlpatterns = patterns('',
     url(r'^crearBanda', crearBanda.as_view(), name='crearBanda'),
     url(r'^busqueda$', busqueda.as_view(), name='busqueda'),
     url(r'^guardarDatosArtista$', guardarDatosArtista, name='updatePA'),
+    url(r'^guardarDatosBanda$', guardarDatosBanda, name='updateB'),    
     url(r'^upload$', upload_file, name='upload'),
     url(r'^login/$',
         'django.contrib.auth.views.login',
@@ -51,7 +52,7 @@ urlpatterns = patterns('',
     url(r'^logout$',
         'django.contrib.auth.views.logout',
         {
-            'next_page': '/',
+            'next_page': '/login/',
         },
         name='logout'),
 
@@ -60,6 +61,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^(?P<loquesea>\w{1,300})$', error404.as_view(), name='error'),
+    #url(r'^(?P<loquesea>\w{1,300})$', error404.as_view(), name='error'),
     
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

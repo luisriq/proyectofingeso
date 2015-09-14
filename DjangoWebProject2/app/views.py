@@ -13,7 +13,7 @@ from forms import *
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 import json
-
+import uuid
 
 from django.views.generic.edit import CreateView
 
@@ -26,22 +26,22 @@ class VistaSignUp(View):
             # process the data in form.cleaned_data as required
             # ...
             # redirect to a new URL:
-            _user = User.objects.create_user(username=form.cleaned_data['email'],
+            _user = User.objects.create_user(username=form.cleaned_data['email'].lower(),
                              password=form.cleaned_data['password2'],
                              first_name=form.cleaned_data['name'])
             fecha = 0
             if not form.cleaned_data['tipo']:
                 usuario = Normal(user = _user, nombre = form.cleaned_data['name'],
-                    correo = form.cleaned_data['email'])
+                    correo = form.cleaned_data['email'].lower())
                 fecha = usuario.fechaIngreso
                 usuario.save()
             else:
                 usuario = Artista(user = _user, nombre = form.cleaned_data['name'],
-                    correo = form.cleaned_data['email'])
+                    correo = form.cleaned_data['email'].lower())
                 fecha = usuario.fechaIngreso
             	usuario.save()
-            user = authenticate(username=form.cleaned_data['email'], password=form.cleaned_data['password2'])
-            print "user : ", form.cleaned_data['email'], "pass : ", form.cleaned_data['password2'], "login : ", user
+            user = authenticate(username=form.cleaned_data['email'].lower(), password=form.cleaned_data['password2'])
+            print "user : ", form.cleaned_data['email'].lower(), "pass : ", form.cleaned_data['password2'], "login : ", user
             login(request, user)
             
             if form.cleaned_data['tipo']:
@@ -116,7 +116,7 @@ class Home(View):
                 )
         except:
             print "no logeado"
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
             tipo = ""
             
 
@@ -142,7 +142,7 @@ class perfilNormal(View):
     def get(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login") 
+            return HttpResponseRedirect("/login/") 
         normal = request.user
         try:
             normal = Normal.objects.filter(user = normal)[0]
@@ -186,7 +186,7 @@ class perfilBandaNp(View):
         material =  Material.objects.filter(banda = banda)
         
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login") 
+            return HttpResponseRedirect("/login/") 
         elif tipoUsuario == 1:
             usuario = Artista.objects.filter(user = request.user)[0]
             pertenece = IntegrantesBanda.objects.filter(integrante = usuario, banda = banda)
@@ -242,7 +242,7 @@ class perfilNormalNp(View):
         tipoUsuarioUrl = verificacion(normal)
         verLogVsUrl = verificarLogVsUrl(request, normalid)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login") 
+            return HttpResponseRedirect("/login/") 
         
         elif verLogVsUrl and tipoUsuario == 1:
             return HttpResponseRedirect("/perfilArtistaNp/%s" % normalid)
@@ -286,7 +286,7 @@ class perfilBanda(View):
     def get(self, request, bandaid):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
         discos =  Disco.objects.filter(banda = banda)
@@ -348,7 +348,7 @@ class perfilArtista(View):
     def get(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
         usuario = request.user
         try:
             artista = Artista.objects.filter(user = usuario)[0]
@@ -357,7 +357,7 @@ class perfilArtista(View):
         integranteEn = IntegrantesBanda.objects.filter(integrante = artista)
         instrumentos = [ib for ib in Toca.objects.filter(artista = artista)]
         seguidores = len(artista.seguidores.all())
-        formimagen = UploadFileForm()
+        #formimagen =  ImageUploadForm()
         allInstruments = Instrumento.objects.all()
         
             
@@ -375,7 +375,7 @@ class perfilArtista(View):
                 'instrumentos':instrumentos,
                 'seguidores':seguidores,
                 'artista':artista,
-                'formImagen':formimagen,
+                #'formImagen':formimagen,
             })
         )
 #------------------------------------------------------
@@ -392,7 +392,7 @@ class perfilArtistaNp(View):
         tipoUsuarioUrl = verificacion(usuario)
         verLogVsUrl = verificarLogVsUrl(request, userid)
         if tipoUsuario == 0:
-            return HttpResponseRedirect("/login")           
+            return HttpResponseRedirect("/login/")           
         
         elif verLogVsUrl and tipoUsuario == 1:
             return HttpResponseRedirect("/perfilArtista")
@@ -438,7 +438,7 @@ class crearBanda(View):
     def post(self, request):
         tipoUsuario = verificacion(request)
         if tipoUsuario != 1:
-            return HttpResponseRedirect("/login")
+            return HttpResponseRedirect("/login/")
          
         # create a form instance and populate it with data from the request:
         form = CrearBandaForm(request.POST)
@@ -542,9 +542,11 @@ def verificacion(request):
                 normal = Normal.objects.filter(user = request.user)[0]
                 tipo = 2
             except:
-                admin = Administrador.objects.filter(user = request.user)[0]
-                
-                tipo = 3
+                try:
+                    admin = Administrador.objects.filter(user = request.user)[0]
+                    tipo = 3
+                except:
+                    tipo = 0
     else:
         tipo = 0
     return tipo
@@ -653,33 +655,81 @@ def guardarDatosArtista(request):
                 t.nivel = dato
                 t.save()
                 print "nivel cambiado"
+            elif target == "delToca": 
+                print request.POST.get('idToca')
+                t = Toca.objects.filter( id =  request.POST.get('idToca'))
+                if len(t)==0:
+                    print t
+                    return HttpResponse("ERROR")
+                t[0].delete()
+                print "instrumento eliminado"
+            elif target == "passwordUpdate": 
+                print dato
+                user = User.objects.get(username=request.user.username)
+                if(user.check_password(request.POST.get('olddato'))):
+                    user.set_password(dato)
+                    user.save()
+                else:
+                    return HttpResponse("ERROR")
+            
             print "YEEEES %s"%dato
             print "Target %s"%target
     except :
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 
+def guardarDatosBanda(request):
+    try:
+        if request.method == 'POST':
+           
+            print "Loged %s"%request.user.id
+            bandId = request.POST.get('bid')            
+            dato = request.POST.get('dato')
+            target = request.POST.get('target')
+            print IntegrantesBanda.objects.filter(
+                banda=Banda.objects.filter(id = bandId)[0],
+                integrante=Artista.objects.filter(id=request.user.id)[0])
+                
+            print 
+            if target == "nombre":
+                b = Banda.objects.filter(id = bandId)[0]
+                b.nombre = dato
+                b.save()
+            elif target == "biografia":
+                b = Banda.objects.filter(id = bandId)[0]
+                b.biografia = dato
+                b.save()
+                print "saved"
+            elif target == "cuentaTwitter":
+                b = Banda.objects.filter(id = bandId)[0]
+                b.cuentaTwitter = dato
+                b.save()
+                print "cuentaTwitter saved"
+    except :
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+    
 def upload_file(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
         
-        if form.is_valid():
-            print "valid"
-            handle_uploaded_file(request.FILES['file_'])
+        try:
+            print request.FILES['image']
+            path = handle_uploaded_file(request.FILES['image'])
             u = Usuario.objects.filter(user = request.user)[0]
-            u.imagenPerfil = 'pic_folder/%s'%request.FILES['file_']
+            u.imagenPerfil = 'pic_folder/%s'%request.FILES['image']
+            u.imagenPerfil = path  
             u.save()
-            return HttpResponseRedirect('/upload')
-        else:
-            
-            return HttpResponse(form)
-    else:
-        
-        form = UploadFileForm()
-    return HttpResponse("OK")
+            return HttpResponse(path)
+        except:
+            print "error en el request.FILES['image']"
+            return HttpResponse("Error al subir archivo")
+    return HttpResponse("procesado")
 
 def handle_uploaded_file(f):
-    with open('pic_folder/%s'%f, 'wb+') as destination:
+    guid = uuid.uuid4()
+    path = 'pic_folder/%s_%s'%(str(guid),f)
+    with open('pic_folder/%s_%s'%(str(guid),f), 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+    return path
 

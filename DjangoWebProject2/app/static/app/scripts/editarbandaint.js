@@ -14,14 +14,7 @@ $( document ).ready(function(){
 	//Realizar cambio algi asi como un submit
 	$(".btn.editar.submit").click(function(){
 		var formulario = $(this).parent("form");
-		var olddato = $(this).parent().find('input[name=olddato]');
-		console.log(olddato.val());
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
-		var datoValue = dato.val();
-		if(typeof olddato === 'undefined'){
-  			datoValue = dato.val().trim().capitalizeFirstLetter();
- 		};
-		
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
 		console.log(dato);
 		if(dato.val()==null){
@@ -36,10 +29,10 @@ $( document ).ready(function(){
 		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
 			console.log("que mierda")
 			$.ajax({
-				url : "/guardarDatosArtista", // the endpoint
+				url : "/guardarDatosBanda", // the endpoint
 				type : "POST", // http method
-				data : { olddato: olddato.val(),
-						 dato : datoValue,
+				data : { bid:$('.bid').val(),
+						dato : dato.val().trim().capitalizeFirstLetter(),
 						target : formulario.attr('data-target'),
 					"X-CSRFToken" : token.val() }, // data sent with the post request
 				// handle a successful response
@@ -47,17 +40,11 @@ $( document ).ready(function(){
 					console.log(response); // log the returned json to the console
 					if(response=="OK"){
 						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
-						if(formulario.attr('data-target')=="nombre"){
-							$("#nombre-navbar").text(dato.val().capitalizeFirstLetter());
-						}
-						else if(formulario.attr('data-target')=="cuentaTwitter"){
+						if(formulario.attr('data-target')=="cuentaTwitter"){
 							$('.twitter-container').html('');
 							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
 							twttr.widgets.load()
-							console.log("holi");
 						}
-						else if(formulario.attr('data-target')=="instrumento")
-							location.reload();
 						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
 						formulario.find(".dato").html(txtconbr.capitalizeFirstLetter());
 						var no_hide = formulario.find(".no-hide");
@@ -77,59 +64,6 @@ $( document ).ready(function(){
 		}
 		else
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
-	});
-	
-	$('.addInstrumento').click(function(){
-		$('#modal1').openModal();
-	});
-	$('input[type=range]').change(function(){
-		var img = $(this).parent().parent().find(".card-image").find('img');
-		var path = $(this).attr("data-img-url");
-		var token = $(this).attr("data-token");
-		var value=$(this).val()
-		//cambiar en la bd
-		$.ajax({
-			url : "/guardarDatosArtista", // the endpoint
-			type : "POST", // http method
-			data : { dato : $(this).val(),
-					idToca: $(this).attr("data-id"),
-					target : 'iNivel',
-				"X-CSRFToken" : token }, // data sent with the post request
-			// handle a successful response
-			success : function(response) {
-				console.log(response); // log the returned json to the console
-				if(response=="OK"){
-					console.log("servidor responde OK")
-					switch (value){
-						case "1":
-							img.attr("src",path+"1.jpg");
-							break; 
-						case "2":
-							img.attr("src",path+"2.jpg");
-							break; 
-						case "3":
-							img.attr("src",path+"3.jpg");
-							break; 
-						case "4":
-							img.attr("src",path+"4.jpg");
-							break; 
-						case "5":
-							img.attr("src",path+".gif");
-							break; 
-					}
-				}
-				else{
-					Materialize.toast(' <span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el nivel del instrumento', 4000);
-					console.log("error en el servidor");
-				}
-			},
-			// handle a non-successful response
-			error : function(xhr,errmsg,err) {
-				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el nivel del instrumento ', 4000);
-				console.log("error en la comunicación");
-			}
-		});
-		console.log("jakdjfsba")
 	});
 	//hay que hacer que sea mas elegante... meh
 	$('.ajax-file-selection').click(function(){
@@ -171,33 +105,6 @@ $( document ).ready(function(){
 		}
 	})
 	//fin de cambio archivo
-	$('.del-instrumento').click(function(){
-		var this_= $(this);
-		var token = $(this).attr("data-token");
-		$.ajax({
-			url : "/guardarDatosArtista", // the endpoint
-			type : "POST", // http method
-			data : { dato : $(this).val(),
-					idToca: $(this).attr("data-id"),
-					target : 'delToca',
-				"X-CSRFToken" : token }, // data sent with the post request
-			// handle a successful response
-			success : function(response) {
-				if(response=="OK"){
-					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Ya no tocas ese instumento', 4000);
-					this_.parent().remove();
-				}
-				else if(response="ERROR")
-					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al eliminar el instrumento', 4000);
-			},
-			// handle a non-successful response
-			error : function(xhr,errmsg,err) {
-				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al eliminar el instrumento', 4000);
-				console.log("error en la comunicación");
-			}
-		});
-	});
-	
 	
 	twitLoad();
 	for(var i=1;i<20;i++)

@@ -23,7 +23,7 @@ class CrearBandaForm(forms.Form):
     meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septembrie", "Octubre", "Noviembre", "Diciembre"]
     choice_m = []
     for i in range(0,12):
-        choice_m.append((i, meses[i]))
+        choice_m.append((i+1, meses[i]))
         
     
     genero = forms.ChoiceField(choices = choice_g, widget=forms.Select({
@@ -80,5 +80,6 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'id':'contras',
                                    'class': 'form-control validate'}))
                                    
-class UploadFileForm(forms.Form):
-    file_ = forms.FileField(widget = forms.ClearableFileInput({'class':'file-path validate'}))
+#class UploadFileForm(forms.Form):
+#    file_ = forms.FileField(widget = focrms.ClearableFileInput({'class':'file-path validate'}))
+
