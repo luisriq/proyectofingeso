@@ -138,6 +138,7 @@ class Noticia(models.Model):
 		
 class Material(models.Model):
 	nombre = models.CharField(max_length=200)
+	color = models.CharField(max_length=200, default = 'red')
 	enlace = models.CharField(max_length=200)
 	descripcion = models.CharField(max_length=200)
 	tipo = models.CharField(max_length=200)
