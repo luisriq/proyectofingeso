@@ -354,3 +354,6 @@ a.color-principal:hover{
   width:inherit;
   margin-top:-13px;
 }
+.side-nav li:hover, .side-nav li.active {
+    background-color: transparent !important;
+}
