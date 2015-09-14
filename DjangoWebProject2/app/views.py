@@ -488,7 +488,7 @@ class busqueda(View):
         
         if request.is_ajax():
                    artistas = Artista.objects.filter(nombre__startswith= request.GET['nombre'] ).values('id', 'nombre', 'imagenPerfil')
-                   #return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
+                   return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
         else:
                    return HttpResponse("['nombre':0]");
         
