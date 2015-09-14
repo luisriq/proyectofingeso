@@ -22,11 +22,20 @@ $( document ).ready(function(){
 				url : "/guardarDatosPersonales", // the endpoint
 				type : "POST", 
 				data : { target : formulario.attr('data-target'),
-					"X-CSRFToken" : token.val(),
 					dato : dato.val(),
+					"X-CSRFToken" : token.val()
 					}, 
 				success : function(resp){
-					console.log("holi");
+					if(resp=="OK")
+						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Email cambiado correctamente', 4000);
+					else{
+						r=resp.split(',');
+						console.log(r[0])
+						if(r[0]=="w")
+							Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>'+r[1], 4000);
+						if(r[0]=="e")
+							Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>'+r[1], 4000);						
+					}
 				},
 				error : function(xhr,errmsg,err) {
 					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el email', 4000);
@@ -43,20 +52,31 @@ $( document ).ready(function(){
 		console.log(pass.val()+'='+rpass.val())
 		 
 		if(pass.val()==rpass.val()&&pass.val()!=''){
-			
-			if(false)
+			if(true)
 				$.ajax({
 					url : "/guardarDatosPersonales", // the endpoint
 					type : "POST", 
 					data : { target : formulario.attr('data-target'),
-						"X-CSRFToken" : token.val(),
-						dato : dato.val(),
+						olddato:oldpass.val(),
+						dato : pass.val(),
+						"X-CSRFToken" : token.val()
 						}, 
 					success : function(resp){
-						console.log("holi");
+						if(resp=="OK")
+						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Contraseña cambiada correctamente', 4000);
+						else{
+							r=resp.split(',');
+							console.log(r[0])
+							if(r[0]=="w")
+								Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>'+r[1], 4000);
+							else if(r[0]=="e")
+								Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>'+r[1], 4000);
+							else
+								console.log(resp);					
+						}
 					},
 					error : function(xhr,errmsg,err) {
-						Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el email', 4000);
+						Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar la contraseña', 4000);
 						console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 					}
 				});
