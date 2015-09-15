@@ -1,6 +1,6 @@
 $( document ).ready(function(){
-	$('form').not(".file-form").on('submit', function(event){
-		console.log("entra y la wea")
+	$('form').not(".file-form, #addMaterial").on('submit', function(event){
+		
 		event.preventDefault();
     });
 	$(".btn.editar.toggle").click(function(){
@@ -12,59 +12,82 @@ $( document ).ready(function(){
 		hide.removeClass("hide").addClass("no-hide");
 	});
 	//Realizar cambio algi asi como un submit
-	$(".btn.editar.submit").click(function(){
-		var formulario = $(this).parent("form");
-		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
-		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
-		console.log(dato);
-		if(dato.val()==null){
-			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
-			return null
-		}else if(dato.val().trim()==''){
-			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
-			return null
+	$('form#addMaterial').on('submit', function(event){
+		event.preventDefault();
+		var icon=$(this).find('input[name=icon]');
+		var color=$(this).find('input[name=color]');
+		var enlace=$(this).find('input[name=enlace]');
+		var desc=$(this).find('input[name=desc]');
+		var nombre=$(this).find('input[name=nombre]');
+		var bid=$('.container.sfull').attr('id-banda');
+		var token=$(this).find('input[name=csrfmiddlewaretoken]');
+		var correcto=true;
+		if(icon.val().trim()==''){
+			correcto=false;
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar un icono', 4000);			
 		}
 		
-		console.log("func:"+largoPalabra(dato.val(), formulario.attr("largomaximo")));
-		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
-			console.log("que mierda")
-			$.ajax({
-				url : "/guardarDatosBanda", // the endpoint
-				type : "POST", // http method
-				data : { bid:$('.bid').val(),
-						dato : dato.val().trim().capitalizeFirstLetter(),
-						target : formulario.attr('data-target'),
-					"X-CSRFToken" : token.val() }, // data sent with the post request
-				// handle a successful response
-				success : function(response) {
-					console.log(response); // log the returned json to the console
-					if(response=="OK"){
-						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
-						if(formulario.attr('data-target')=="cuentaTwitter"){
-							$('.twitter-container').html('');
-							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
-							twttr.widgets.load()
-						}
-						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
-						formulario.find(".dato").html(txtconbr.capitalizeFirstLetter());
-						var no_hide = formulario.find(".no-hide");
-						var hide = formulario.find(".hide");
-						no_hide.removeClass("no-hide").addClass("hide");
-						hide.removeClass("hide").addClass("no-hide");
-					}
-					else
-						Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
-				},
-				// handle a non-successful response
-				error : function(xhr,errmsg,err) {
-					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
-					console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-				}
-			});
+		if(color.val().trim()==''){
+			correcto=false;
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar un color', 4000);			
 		}
-		else
-			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Las palabras no pueden superar '+formulario.attr("largomaximo")+' caracteres', 4000);
-	});
+		if(enlace.val().trim()==''){
+			correcto=false;
+			enlace.addClass('invalid')
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes ingresar un enlace', 4000);			
+		}
+		if(nombre.val().trim()==''){
+			correcto=false;
+			nombre.addClass('invalid')
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes ingresar un Nombre', 4000);			
+		}
+		if(desc.val().trim()==''){
+			correcto=false;
+			desc.addClass('invalid')
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes escribir una descripcion', 4000);			
+		}
+		if(enlace.val().indexOf("http") == -1){
+			console.warn("formato no corresponde a enlace procediendo a corregir...");
+			enlace.val('http://'+enlace.val());
+		}
+			
+		if(correcto)
+			$.ajax({
+				url: $(this).attr('action'),
+				type: 'POST',
+				data: {
+					bid:bid,
+					tipo:icon.val(),
+					nombre:nombre.val().capitalizeFirstLetter(),
+					color:color.val(),
+					enlace:enlace.val(),
+					descripcion:desc.val().capitalizeFirstLetter(),
+					"X-CSRFToken" : token.val()
+				},
+				success: function (data) {
+					var id = data.split(',');
+					if(id[0]=="k"){
+						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Material agregado', 4000);
+						var m = materialgen(id[1],icon.val(),nombre.val(),color.val(),enlace.val(),desc.val());
+						console.log(m);
+						$(m).insertBefore( ".add-material" );
+						$('.no-hay-material').remove();
+						$('#modalMaterial').closeModal();
+					}
+					else{
+						var resp=data.split(',');
+						if(resp[0]=='w')
+							Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>'+resp[1], 4000);		
+						else if(resp[0]=='e')
+							Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>'+resp[1], 4000);		
+					}
+					
+				},
+				error: function (data) {
+					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error de conección', 4000);
+				},
+			});
+    });
 	//hay que hacer que sea mas elegante... meh
 	$('.ajax-file-selection').click(function(){
 		input = $('.file-form').find('input[type=file]');
@@ -120,7 +143,46 @@ $( document ).ready(function(){
 					
 			}
 		}, i*500);//arrgla problemas de visualizacion en ipad
+	 $('.cabezaSelect').click(function(e) {
+			var cabezaSelect=$(this);
+           $('.selector').show();
+			$('.selector li').click(function(e) {
+              var clase=$(this).find('i').text();
+				$(cabezaSelect).html('<i class=\"material-icons\">'+clase+'</i>')
+				$('.inIcon').val(clase);
+				$('.selector').hide();
+           });
+		   
+        });
+       //color selector 
+      $('.color-selector .trigger').click(function(){
+          var piker =   $(this).prevAll('.piker');
+          if(piker.hasClass('hide'))
+            piker.removeClass('hide');
+          else
+            piker.addClass('hide');
+      });
+      $('.color-selector .piker .color').click(function(){
+          var color=$(this).attr('data-option');
+          var trigger = $(this).parent('.piker').nextAll('.trigger');
+          trigger.attr('class','trigger white-text inline')
+          trigger.addClass(color);
+          var input = $(this).parent('.piker').prevAll('input');
+          input.val(color);
+          $(this).parent('.piker').addClass('hide');
+      });
 }); 
+function materialgen(id,tipo,nombre,color,enlace,descripcion){
+	var litagO='<li id="mat'+id+'" class="collection-item manito">';
+	var remtag='<span class="right white red-text text-darken-2 valign-wrapper tooltipped" data-position="right" data-tooltip="quitar material" style="height:46px" onclick="removeMaterial('+id+')"><i class="material-icons">remove_circle</i></span>'
+	var atagO='<a class="valign-wrapper tooltipped" href="'+enlace+'" data-tooltip="ir al enlace" target="_blank">';
+	var icon ='<div class="inline" style="margin:0"><i class="material-icons '+color+' white-text " style="padding:8px;">'+tipo+'</i></div>';
+	var letras ='<div class="inline">'+nombre.capitalizeFirstLetter()+'<br><span class="truncate grey-text stext">'+descripcion.capitalizeFirstLetter()+'</span></div>'
+    var atagC = '</a>';
+    var litagC = '</li>';
+	return litagO+remtag+atagO+icon+letras+atagC+litagC;
+}
+
 function largoPalabra(texto, maximo){
 	var palabras = texto.split(" ");
 	for (p in palabras)
@@ -164,6 +226,43 @@ function readURL(input) {
 
         reader.readAsDataURL(input.files[0]);
     }
+}
+function removeMaterial(mId,confirmado){
+	if(confirmado){
+		$('.rem-confirm').remove();
+		bid= $('.container.sfull').attr('id-banda');
+		console.log(bid);
+		
+		$.ajax({
+			url: "/guardarDatosBanda",
+			type: 'POST',
+			data: {
+				bid:bid,
+				target:'material-delete',
+				dato:mId,
+				"X-CSRFToken" : $('input[name=csrfmiddlewaretoken]').val()
+			},
+			success: function (data) {
+				if(data=='OK'){
+					$('#mat'+mId).remove()
+					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Material removido con exito', 4000);				
+				}else
+					respuestaInstatisfactoria(data);
+			},
+			error: function (data) {
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al quitar el material', 4000);
+			},
+		});
+	}else{
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas quitar el material?<a style="margin-left:10px;" href="#" onclick="removeMaterial('+mId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
+	}
+}
+function respuestaInstatisfactoria(data){
+	var resp=data.split(',');
+	if(resp[0]=='w')
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>'+resp[1], 4000);		
+	else if(resp[0]=='e')
+		Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>'+resp[1], 4000);
 }
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);

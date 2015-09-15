@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
 
-<div class="container sfull" id-banda="{{ idBanda }}">
+<div class="container sfull" id-banda="{{ banda.id }}">
 <div class="row" >
     
     <div class="col s12">
@@ -67,6 +67,7 @@
                                 </div>
                             </div>
                             {%endif%}
+                            {%if solicitantes|length > 0  %}
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Solicitantes</h5>
@@ -92,6 +93,7 @@
                                       </ul>
                                 </div>
                             </div>
+                            {%endif%}
                         </div>
                     </div>
                     <div class="col l6 s12 ">
@@ -122,28 +124,28 @@
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Material</h5> 
-                                    <ul class="collection">
+                                    <ul class="collection materiales">
                                     {%if material|length > 0%}
                                     {% for m in material %}
-                                        <li class="collection-item manito">
-
+                                        <li id="mat{{m.id}}" class=" collection-item manito">
+                                            <span class="right white red-text text-darken-2 valign-wrapper tooltipped" data-position="right" data-tooltip="quitar material" style="height:46px" onclick="removeMaterial({{m.id}})"><i class="material-icons">remove_circle</i></span>
                                             <a class="valign-wrapper tooltipped" href="{{m.enlace}}" data-tooltip="ir al enlace" target="_blank">
-                                                <div class="inline" style="margin:0"><i class="material-icons red white-text " style="padding:8px;">{{m.tipo}}</i></div>
+                                                <div class="inline" style="margin:0"><i class="material-icons {{m.color}} white-text " style="padding:8px;">{{m.tipo}}</i></div>
                                                 <div class="inline">{{m.nombre|title}}<br><span class="truncate grey-text stext">{{m.descripcion}}</span></div>
-                                                {#<span class="secondary-content">{algo pondré}</span>#}
-                                            </a>
 
+                                            </a>
+                                            
                                         </li>
                                     {% endfor %}
                                     {%else%}
-                                        <li class="collection-item valign-wrapper no-select pointer">
+                                        <li class="collection-item valign-wrapper no-hay-material no-select pointer">
                                                 <div class="inline" style="margin:0"><i class="material-icons grey lighten-1 white-text " style="padding:8px;">link</i></div>
                                                 <div class="inline grey-text text-darken-2">No hay Material<br><span class="truncate grey-text stext">La banda aún no adjunta material</span></div>
                                                 {#<span class="secondary-content">{algo pondré}</span>#}
                                             
                                         </li>
                                     {%endif%}
-                                        <li class="collection-item valign-wrapper manito hover-grey no-select modal-trigger" href="#modalMaterial">
+                                        <li class="add-material collection-item valign-wrapper manito hover-grey no-select modal-trigger" href="#modalMaterial">
                                                 <div class="inline" style="margin:0"><i class="material-icons blue darken-2 white-text " style="padding:8px;">&#xE2C6;</i></div>
                                                 <div class="inline grey-text text-darken-3">Agregar material<br><span class="truncate grey-text stext text-darken-1">Adjunta material para que todos puedan verla</span></div>
                                         </li>
@@ -167,42 +169,99 @@
 <div id="modalMaterial" class="modal ">
     <div class="modal-content">
         <h4>Agregar material</h4>
-        <label>Icono</label>
-        <ul class="select inline">
-            <li class="cabezaSelect"></li>
-        </ul>
-        <input class="inIcon" name="icon"  type="hidden" /> 
-        <div class="selector" >
-            <div>
-                <ul>
-                    <li><i class="material-icons">explore</i></li>
-                    <li><i class="material-icons">announcement</i></li>
-                    <li><i class="material-icons">book</i></li>
-                    <li><i class="material-icons">description</i> </li>
-                </ul>
-            </div>
-        </div>
-        <div class="color-selector inline">
-            <input type="hidden" name="color">
-            <div class="piker z-depth-1">
-                <a class="color red" data-option="red" ></a>
-                <a class="color blue darken-2" data-option="blue darken-2" ></a>
-                <a class="color green darken-2" data-option="green darken-2" ></a>
-                <a class="color orange darken-2" data-option="orange darken-2" ></a>
-                <a class="color yellow darken-3" data-option="yellow darken-3" ></a>
-                <a class="color pink darken-4" data-option="pink darken-4" ></a>
-                <a class="color purple darken-4" data-option="purple darken-4" ></a>
-                <a class="color cyan accent-4" data-option="cyan accent-4" ></a>
-                <a class="color brown darken-4" data-option="brown darken-4" ></a>
-            </div>
-            <div class="trigger white-text grey inline"><i class="material-icons">palette</i></div>
-            <label>color</label>
-        </div>
         
+        <div class="divider"></div>
+        <form id="addMaterial" method="POST" action="/agregarMaterial" data-target="nombre">
+            {% csrf_token %}
+            <h5 class="grey-text">Opciones del cuadro</h5>
+            <div>
+                
+                <label>Icono</label>
+                <ul class="select inline">
+                    <li class="cabezaSelect"><i class="material-icons">remove</i></li>
+                </ul>
+                <input class="inIcon" name="icon"  type="hidden" /> 
+                <div class="selector" >
+                    <div>
+                        <ul>
+                            <li><i class="material-icons">explore</i></li>
+                            <li><i class="material-icons">play_arrow</i></li>
+                            <li><i class="material-icons">announcement</i></li>
+                            <li><i class="material-icons">book</i></li>
+                            <li><i class="material-icons">description</i> </li>
+                            <li><i class="material-icons">favorite</i> </li>
+                            <li><i class="material-icons">input</i> </li>
+                            <li><i class="material-icons">info</i> </li>
+                            <li><i class="material-icons">label</i> </li>
+                            <li><i class="material-icons">language</i> </li>
+                            <li><i class="material-icons">room</i> </li>
+                            <li><i class="material-icons">receipt</i> </li>
+                            <li><i class="material-icons">shop</i> </li>
+                            <li><i class="material-icons">visibility</i> </li>
+                            <li><i class="material-icons">work</i> </li>
+                            <li><i class="material-icons">equalizer</i> </li>
+                            <li><i class="material-icons">library_music</i> </li>
+                            <li><i class="material-icons">mic</i> </li>
+                            <li><i class="material-icons">movie</i> </li>
+                            <li><i class="material-icons">new_releases</i> </li>
+                            <li><i class="material-icons">radio</i> </li>
+                            <li><i class="material-icons">volume_up</i> </li>
+                            <li><i class="material-icons">web</i> </li>
+                            <li><i class="material-icons">drafts</i> </li>
+                            <li><i class="material-icons">link</i> </li>
+                            <li><i class="material-icons">devices</i> </li>
+                            <li><i class="material-icons">usb</i> </li>
+                            <li><i class="material-icons">widgets</i> </li>
+                            <li><i class="material-icons">attach_file</i> </li>
+                            <li><i class="material-icons">insert_drive_file</i> </li>
+                            <li><i class="material-icons">cloud_circle</i> </li>
+                            <li><i class="material-icons">gamepad</i> </li>
+                            <li><i class="material-icons">camera_alt</i> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="color-selector inline">
+                    <input type="hidden" name="color">
+                    <div class="piker z-depth-1 hide">
+                        <a class="color red" data-option="red" ></a>
+                        <a class="color blue darken-2" data-option="blue darken-2" ></a>
+                        <a class="color green darken-2" data-option="green darken-2" ></a>
+                        <a class="color orange darken-2" data-option="orange darken-2" ></a>
+                        <a class="color yellow darken-3" data-option="yellow darken-3" ></a>
+                        <a class="color pink darken-4" data-option="pink darken-4" ></a>
+                        <a class="color purple darken-4" data-option="purple darken-4" ></a>
+                        <a class="color cyan accent-4" data-option="cyan accent-4" ></a>
+                        <a class="color brown darken-4" data-option="brown darken-4" ></a>
+                    </div>
+                    <label>color</label>
+                    <ul class="trigger white-text inline">
+                        <li><i class="material-icons">palette</i></li>
+                    </ul>
+                    
+                </div>
+                <div class="input-field col l6 s12" style="max-width:450px" >
+                    <input class="validate" type="text" id="nombre" name='nombre' maxlength="30" required>
+                    <label for="descripcion">Nombre</label>
+                </div>
+            </div>
+            <div class="container" style="margin-left:-30px"><div class="row">
+                <div class="input-field  col l6 s12" >
+                    <i class="material-icons prefix">link</i>
+                    <input class="validate" type="text" id="enlace" style="max-width:450px" name='enlace' required>
+                    <label for="enlace">Enlace</label>
+                </div>
+                
+                <div class="input-field col l6 s12" >
+                    <i class="material-icons prefix">format_quote</i>
+                    <input class="validate" type="text" id="descripcion" style="max-width:450px" name='desc' maxlength="60" required>
+                    <label for="descripcion">Descripción</label>
+                </div>
+            </div></div>
+        </form>
     </div>
     <div class="modal-footer">
-      <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modalMaterial').closeModal();"  >Aceptar</a>
-      <a class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="$('#modalMaterial').closeModal();"  >Cancelar</a>
+      <a class=" modal-action waves-effect waves-green btn-flat" onclick="$('#addMaterial').submit();"  >Aceptar</a>
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat" >Cancelar</a>
     </div>
   </div>
   <div id="modalDisco" class="modal modal-fixed-footer">
@@ -223,59 +282,8 @@
 <script type="text/javascript">$('.modal-trigger').leanModal();</script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $('#modalMaterial').openModal();
-        $('.cabezaSelect').click(function(e) {
-			var cabezaSelect=$(this);
-           $('.selector').show();
-			$('.selector li').click(function(e) {
-              var clase=$(this).find('i').text();
-				$(cabezaSelect).html('<i class=\"material-icons\">'+clase+'</i>')
-				$('.inIcon').val(clase);
-				$('.selector').hide();
-           });
-		   
-        });
-        
-         $('select').material_select();
-        //funcion para activar las estrellas
-        $('.grade').mouseover(function(){
-            var grade = $('.grade').index($(this));
-            $('.grade').each(function (k,el){
-                if(k<=grade){
-                    if($(el).hasClass('grey-text')){
-                        $(el).removeClass('grey-text')
-                        $(el).addClass('orange-text')
-                    }
-                }else{
-                    if($(el).hasClass('orange-text')){
-                        $(el).removeClass('orange-text')
-                        $(el).addClass('grey-text')
-                    }
-                }
-            });
-        });
-        $('.grade').mouseout(function(){
-            var grade= $('.grade-container').attr('data-grade');
-            $('.grade').each(function (k,el){
-                if(k<grade){
-                    if($(el).hasClass('grey-text')){
-                        $(el).removeClass('grey-text')
-                        $(el).addClass('orange-text')
-                    }
-                }else{
-                    if($(el).hasClass('orange-text')){
-                        $(el).removeClass('orange-text')
-                        $(el).addClass('grey-text')
-                    }
-                }
-            });
-        });
-        $('.grade').click(function(){
-            var grade = $('.grade').index(this)+1;
-             $('.grade-container').attr('data-grade',grade);
-        });
-            
-    });
+      //fin color selector
+    $('select').material_select();
     //{# solo para no lider #}
     $('.disco').click(function(){
        console.log("disco id:"+$(this).attr('data-dId'));
@@ -286,7 +294,8 @@
             modal.html(data)
        }).fail(function() {
             console.error( "error" );
-       })
+       });
+       });
     });
 </script>
     <script type="text/javascript">
@@ -296,5 +305,6 @@
         });
     });
     </script>
+    <script src="{% static 'app/scripts/editarbandaint.js' %}"></script>
     <script src="{% static 'app/scripts/solicitudes.js' %}"></script>
 {% endblock %}

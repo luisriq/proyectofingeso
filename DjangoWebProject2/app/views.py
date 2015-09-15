@@ -796,25 +796,55 @@ def guardarDatosBanda(request):
             bandId = request.POST.get('bid')            
             dato = request.POST.get('dato')
             target = request.POST.get('target')
-            print IntegrantesBanda.objects.filter(
-                banda=Banda.objects.filter(id = bandId)[0],
-                integrante=Artista.objects.filter(id=request.user.id)[0])
-                
-            print 
-            if target == "nombre":
-                b = Banda.objects.filter(id = bandId)[0]
-                b.nombre = dato
-                b.save()
-            elif target == "biografia":
-                b = Banda.objects.filter(id = bandId)[0]
-                b.biografia = dato
-                b.save()
-                print "saved"
-            elif target == "cuentaTwitter":
-                b = Banda.objects.filter(id = bandId)[0]
-                b.cuentaTwitter = dato
-                b.save()
-                print "cuentaTwitter saved"
+            banda=Banda.objects.filter(id = bandId)[0]
+            integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = Artista.objects.filter(user=request.user)[0])
+            if(len(integrante)==1):
+                if target == "nombre":
+                    b = Banda.objects.filter(id = bandId)[0]
+                    b.nombre = dato
+                    b.save()
+                elif target == "biografia":
+                    b = Banda.objects.filter(id = bandId)[0]
+                    b.biografia = dato
+                    b.save()
+                    print "saved"
+                elif target == "cuentaTwitter":
+                    b = Banda.objects.filter(id = bandId)[0]
+                    b.cuentaTwitter = dato
+                    b.save()
+                    print "cuentaTwitter saved"
+                elif target=='material-delete':
+                    m = Material.objects.filter(id = dato,banda=banda)
+                    if(len(m)>0):
+                        m.delete()
+                        return HttpResponse("OK")
+                    else:
+                        return HttpResponse("e,No tienes permiso o el material ya no existe")
+                    
+            else:
+                return HttpResponse("e,No tienes permiso para esta operaci&oacute;n")
+       
+    except :
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+def agregarMaterial(request):
+    try:
+        if request.method == 'POST':
+            print "Loged as %s"%request.user.id
+            bandId = request.POST.get('bid')
+            tipo = request.POST.get('tipo')
+            nombre = request.POST.get('nombre')
+            color = request.POST.get('color')
+            enlace = request.POST.get('enlace')
+            descripcion = request.POST.get('descripcion')
+            banda =Banda.objects.filter(id = bandId)[0]
+            integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = Artista.objects.filter(user=request.user)[0])
+            if(len(integrante)==1):
+                m = Material(nombre = nombre,color=color,enlace=enlace,descripcion=descripcion,tipo=tipo,privado=True,banda=banda)
+                m.save()
+                return HttpResponse("k,%d"%m.id)
+            else:
+                return HttpResponse("e,El usuario no tiene permisos para agregar material en esta banda")
     except :
         return HttpResponse("ERROR")
     return HttpResponse("OK")
