@@ -422,3 +422,28 @@ a.color-principal:hover{
 .cabezaSelect:hover{
 	background-color:#EEE;
 }
+.color-selector{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.color-selector .trigger{
+  padding:3px;
+  width: 35px;
+}
+.color-selector .piker {
+  position:absolute;
+  background: #ccc;
+  box-sizing: content-box;
+  border: 3px solid #ccc;
+  line-height: 1;
+  display: inline-block;
+  width: 98px;
+  height: 98px;
+}
+.color-selector .piker .color{
+  display: inline-block;
+  min-width: 30px;
+  min-height: 30px;
+}

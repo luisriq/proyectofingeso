@@ -121,55 +121,6 @@
                            
                             <div class="row">
                                 <div class="col s12 left-align">
-<<<<<<< Updated upstream
-
-                                    <ul class="select">
-                                        <li class="cabezaSelect">Icono</li>
-                                    </ul>
-                                    <input class="inIcon" name="icon" style="display:none;" type="text" /> 
-                                    <div class="selector" >
-                                        <div>
-                                            <ul>
-                                                <li value="1"><i class="material-icons">explore</i></li>
-                                                <li value="2"><i class="material-icons">announcement</i></li>
-                                                <li value="3"><i class="material-icons">book</i></li>
-                                                <li value="3"><i class="material-icons">description</i> </li>
-                                                <li value="3"><i class="material-icons">favorite</i> </li>
-                                                <li value="3"><i class="material-icons">input</i> </li>
-                                                <li value="3"><i class="material-icons">info</i> </li>
-                                                <li value="3"><i class="material-icons">label</i> </li>
-                                                <li value="3"><i class="material-icons">language</i> </li>
-                                                <li value="3"><i class="material-icons">room</i> </li>
-                                                <li value="3"><i class="material-icons">receipt</i> </li>
-                                                <li value="3"><i class="material-icons">shop</i> </li>
-                                                <li value="3"><i class="material-icons">visibility</i> </li>
-                                                <li value="3"><i class="material-icons">work</i> </li>
-                                                <li value="3"><i class="material-icons">equalizer</i> </li>
-                                                <li value="3"><i class="material-icons">library_music</i> </li>
-                                                <li value="3"><i class="material-icons">mic</i> </li>
-                                                <li value="3"><i class="material-icons">movie</i> </li>
-                                                <li value="3"><i class="material-icons">new_releases</i> </li>
-                                                <li value="3"><i class="material-icons">radio</i> </li>
-                                                <li value="3"><i class="material-icons">volume_up</i> </li>
-                                                <li value="3"><i class="material-icons">web</i> </li>
-                                                <li value="3"><i class="material-icons">drafts</i> </li>
-                                                <li value="3"><i class="material-icons">link</i> </li>
-                                                <li value="3"><i class="material-icons">devices</i> </li>
-                                                <li value="3"><i class="material-icons">usb</i> </li>
-                                                <li value="3"><i class="material-icons">widgets</i> </li>
-                                                <li value="3"><i class="material-icons">attach_file</i> </li>
-                                                <li value="3"><i class="material-icons">insert_drive_file</i> </li>
-                                                <li value="3"><i class="material-icons">cloud_circle</i> </li>
-                                                <li value="3"><i class="material-icons">gamepad</i> </li>
-                                                <li value="3"><i class="material-icons">camera_alt</i> </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <label>Materialize Select</label>
-
-=======
-                                    
->>>>>>> Stashed changes
                                     <h5>Material</h5> 
                                     <ul class="collection">
                                     {%if material|length > 0%}
@@ -215,11 +166,12 @@
 <!-- Modal Structure -->
 <div id="modalMaterial" class="modal ">
     <div class="modal-content">
-        <h4>Reportar Mala conducta</h4>
-        <ul class="select">
+        <h4>Agregar material</h4>
+        <label>Icono</label>
+        <ul class="select inline">
             <li class="cabezaSelect"></li>
         </ul>
-        <input class="inIcon" name="icon" style="display:none;" type="text" /> 
+        <input class="inIcon" name="icon"  type="hidden" /> 
         <div class="selector" >
             <div>
                 <ul>
@@ -229,6 +181,22 @@
                     <li><i class="material-icons">description</i> </li>
                 </ul>
             </div>
+        </div>
+        <div class="color-selector inline">
+            <input type="hidden" name="color">
+            <div class="piker z-depth-1">
+                <a class="color red" data-option="red" ></a>
+                <a class="color blue darken-2" data-option="blue darken-2" ></a>
+                <a class="color green darken-2" data-option="green darken-2" ></a>
+                <a class="color orange darken-2" data-option="orange darken-2" ></a>
+                <a class="color yellow darken-3" data-option="yellow darken-3" ></a>
+                <a class="color pink darken-4" data-option="pink darken-4" ></a>
+                <a class="color purple darken-4" data-option="purple darken-4" ></a>
+                <a class="color cyan accent-4" data-option="cyan accent-4" ></a>
+                <a class="color brown darken-4" data-option="brown darken-4" ></a>
+            </div>
+            <div class="trigger white-text grey inline"><i class="material-icons">palette</i></div>
+            <label>color</label>
         </div>
         
     </div>
