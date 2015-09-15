@@ -459,3 +459,6 @@ a.color-principal:hover{
   min-width: 30px;
   min-height: 30px;
 }
+#modalDisco.modal{
+  max-height: 450px;
+}
