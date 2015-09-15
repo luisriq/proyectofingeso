@@ -334,6 +334,7 @@ class perfilBanda(View):
                     'discos':discos,
                     'material':material,
                     'artista':artista,
+                    'esLider':pertenece[0].esLider,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
                     'integrantes':integrantes,
@@ -800,9 +801,14 @@ def guardarDatosBanda(request):
             integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = Artista.objects.filter(user=request.user)[0])
             if(len(integrante)==1):
                 if target == "nombre":
-                    b = Banda.objects.filter(id = bandId)[0]
-                    b.nombre = dato
-                    b.save()
+                    if integrante[0].esLider:
+                        if banda.nombre==dato:
+                            return HttpResponse("w,El nombre ingresado era el mismo")
+                        else:
+                            banda.nombre = dato
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar el nombre")
                 elif target == "biografia":
                     b = Banda.objects.filter(id = bandId)[0]
                     b.biografia = dato

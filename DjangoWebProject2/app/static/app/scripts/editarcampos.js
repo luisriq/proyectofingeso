@@ -14,17 +14,10 @@ $( document ).ready(function(){
 	//Realizar cambio algi asi como un submit
 	$(".editar.submit").click(function(){
 		var formulario = $(this).closest("form");
-		var olddato = $(this).parent().find('input[name=olddato]');
-		console.log(formulario.find('input[name=olddato]').val());
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log(dato.val());
 		var datoValue = dato.val();
-		if(typeof olddato === 'undefined'){
-  			datoValue = dato.val().trim().capitalizeFirstLetter();
- 		};
-		
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
-
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
 			return null

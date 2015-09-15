@@ -24,7 +24,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s12 "><h5 >{{ banda.nombre }}<h6>{{ banda.genero.nombre }}</h6></h5></div>
+                    <div class="col s12 ">
+                        {%if esLider%}
+                        <h5 class="campo-editable center-align"> 
+                            <form method="POST" data-target="nombre" largomaximo="20" class="inline" style="width:450px">
+                                {% csrf_token %}
+                                <span class="no-hide dato">{{banda.nombre}}</span> 
+                                <input class="w60p hide"  type="text" name="dato" value="{{banda.nombre}}" />
+                                <a class="btn no-hide editar toggle color-principal hover-shadow">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a> 
+                                <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
+                                    <i class="material-icons">&#xE5CA;</i>
+                                </a>
+                            </form>
+                        {%else%}
+                        <h5>{{banda.nombre}}
+                        {%endif%}
+                        </h5>
+                        <h6>{{ banda.genero.nombre }}</h6>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col l6 s12 ">
@@ -306,5 +325,5 @@
     });
     </script>
     <script src="{% static 'app/scripts/editarbandaint.js' %}"></script>
-    <script src="{% static 'app/scripts/solicitudes.js' %}"></script>
+    {#<script src="{% static 'app/scripts/solicitudes.js' %}"></script>#}
 {% endblock %}
