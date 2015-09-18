@@ -121,8 +121,8 @@ class Home(View):
                 )
         except:
             print "no logeado"
-            return HttpResponseRedirect("/login/")
-            tipo = ""
+        return HttpResponseRedirect("/login/")
+        tipo = ""
             
 
 def contact(request):
@@ -709,6 +709,7 @@ def guardarDatosArtista(request):
         if request.method == 'POST':
             
             print "Loged %s"%request.user.id
+            print "Target %s"%request.POST.get('target')
             dato = request.POST.get('dato')
             target = request.POST.get('target')
             response_data = {}
@@ -759,26 +760,6 @@ def guardarDatosArtista(request):
                     user.save()
                 else:
                     return HttpResponse("ERROR")
-            elif target == "solicitar": 
-                print "idbanda:",dato
-                a = Artista.objects.filter(user = request.user)[0]
-                b = Banda.objects.filter(id=dato)[0]
-                print "b", b.nombre,"a",a.nombre
-                
-                if(len(Solicitud.objects.filter(artista = a, banda = b, direccion = True))==0):
-                    s = Solicitud(artista = a, banda = b, direccion = True)
-                    s.save()
-                else:
-                    return HttpResponse("ERROR")
-            elif target == "aceptarSolicitud": 
-                print "id",dato
-                s = Solicitud.objects.filter(id=dato)[0]
-                accion = request.POST.get('olddato')
-                if(accion == "aceptar"):
-                    integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion="S", fechaIngreso=datetime.now())
-                    integr.save()
-                    print "AcEPTAR"
-                s.delete()
             print "YEEEES %s"%dato
             print "Target %s"%target
     except Exception as e:
@@ -792,8 +773,10 @@ def guardarDatosArtista(request):
 def guardarDatosBanda(request):
     try:
         if request.method == 'POST':
-           
+            for key, value in request.POST.iteritems():
+                print "%s:%s"%(key,value)
             print "Loged %s"%request.user.id
+            print "Target %s"%request.POST.get('target')
             bandId = request.POST.get('bid')            
             dato = request.POST.get('dato')
             target = request.POST.get('target')
@@ -826,11 +809,37 @@ def guardarDatosBanda(request):
                         return HttpResponse("OK")
                     else:
                         return HttpResponse("e,No tienes permiso o el material ya no existe")
+                elif target == "aceptarSolicitud": 
+                    if integrante[0].esLider:
+                        print "id",dato
+                        s = Solicitud.objects.filter(id=dato)[0]
+                        accion = request.POST.get('accion')
+                        print "accion %s"%accion
+                        if(accion == "aceptar"):
+                            integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion="S", fechaIngreso=datetime.now())
+                            integr.save()
+                            print "AcEPTAR"
+                        s.delete()
+                    else:
+                        return HttpResponse("e,No tienes permiso para aceptar solicitudes")
+            elif target == "solicitar": 
+                    print "idbanda:",dato
+                    a = Artista.objects.filter(user = request.user)[0]
                     
+                    print "b", banda.nombre,"a",a.nombre
+                    if(len(Solicitud.objects.filter(artista = a, banda = banda, direccion = True))==0):
+                        s = Solicitud(artista = a, banda = banda, direccion = True)
+                        s.save()
+                    else:
+                        return HttpResponse("ERROR")
             else:
                 return HttpResponse("e,No tienes permiso para esta operaci&oacute;n")
        
     except :
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(traceback.format_exc())
         return HttpResponse("ERROR")
     return HttpResponse("OK")
 def agregarMaterial(request):

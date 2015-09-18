@@ -95,7 +95,6 @@
                                         <li class="collection-item valign-wrapper" >
                                           <form method="POST" data-target="aceptarSolicitud" >
                                             {% csrf_token %}
-
                                             <a class="valign-wrapper" href="/perfilArtistaNp/{{solicitud.artista.id}}">
                                             <div class="circle avatar-perfil small" style="background: url({{solicitud.artista.imagenPerfil.url}}); " ></div>
                                             <div class="" style="margin-left:20px;"><span >{{solicitud.artista.nombre}}</span>
@@ -103,8 +102,10 @@
                                             <br>
                                             <input name ="dato" hidden="true" value="{{ solicitud.id }}"></input>
                                             <input id="accion" name ="olddato" hidden="true" value="aceptar"></input>
-                                            <button class="submit editar btn green" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></button>
-                                            <button class="submit editar btn red" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></button>
+                                            {%if esLider%}
+                                                <button class="btn green solicitud" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></button>
+                                                <button class="btn red solicitud" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></button>
+                                            {%endif%}
                                             </div>
                                         </form>
                                         </li>
@@ -325,5 +326,5 @@
     });
     </script>
     <script src="{% static 'app/scripts/editarbandaint.js' %}"></script>
-    {#<script src="{% static 'app/scripts/solicitudes.js' %}"></script>#}
+    <script src="{% static 'app/scripts/solicitudes.js' %}"></script>
 {% endblock %}
