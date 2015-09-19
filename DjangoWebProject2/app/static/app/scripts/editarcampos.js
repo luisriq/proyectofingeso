@@ -34,8 +34,7 @@ $( document ).ready(function(){
 			$.ajax({
 				url : "/guardarDatosArtista", // the endpoint
 				type : "POST", // http method
-				data : { olddato: olddato.val(),
-						 dato : datoValue,
+				data : { dato : datoValue,
 						target : formulario.attr('data-target'),
 					"X-CSRFToken" : token.val() }, // data sent with the post request
 				// handle a successful response

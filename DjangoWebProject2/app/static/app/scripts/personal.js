@@ -26,9 +26,11 @@ $( document ).ready(function(){
 					"X-CSRFToken" : token.val()
 					}, 
 				success : function(resp){
-					if(resp=="OK")
+					if(resp=="OK"){
 						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Email cambiado correctamente', 4000);
-					else{
+						formulario.find("span.hide").text(formulario.find('#email').val());
+
+					}else{
 						r=resp.split(',');
 						console.log(r[0])
 						if(r[0]=="w")
@@ -36,6 +38,10 @@ $( document ).ready(function(){
 						if(r[0]=="e")
 							Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>'+r[1], 4000);						
 					}
+						var no_hide = formulario.find(".no-hide");
+						var hide = formulario.find(".hide");
+						no_hide.removeClass("no-hide").addClass("hide");
+						hide.removeClass("hide").addClass("no-hide");
 				},
 				error : function(xhr,errmsg,err) {
 					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar el email', 4000);
@@ -74,6 +80,12 @@ $( document ).ready(function(){
 							else
 								console.log(resp);					
 						}
+						var no_hide = formulario.find(".no-hide");
+						formulario.find('input.validate').val('');
+						var hide = formulario.find(".hide");
+						no_hide.removeClass("no-hide").addClass("hide");
+						hide.removeClass("hide").addClass("no-hide");
+						
 					},
 					error : function(xhr,errmsg,err) {
 						Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar la contraseña', 4000);

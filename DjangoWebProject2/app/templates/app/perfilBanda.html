@@ -19,7 +19,7 @@
             <div class="container center-align">
                 <div class="row">
                     <div class="col s12 ">
-                        <div class="inline blue z-depth-1"><img src="{{banda.imagenPerfil.url}}" alt="" 
+                        <div id = "imagenPerfil" class="inline blue z-depth-1"><img src="{{banda.imagenPerfil.url}}" alt="" 
                 style="width:100px;height:100px;border:solid 1px #444;margin-top:-50px;"></div>
                     </div>
                 </div>
@@ -300,8 +300,15 @@
 {% load staticfiles %}
 
 <script type="text/javascript">$('.modal-trigger').leanModal();</script>
+
 <script type="text/javascript">
     $(document).ready(function(){
+        // Para hacer scroll cada vez que cargo un perfil
+        var container = $('body'),
+        scrollTo = $('#imagenPerfil');
+        container.animate({
+    scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 100
+});
       //fin color selector
     $('select').material_select();
     //{# solo para no lider #}
@@ -316,6 +323,7 @@
             console.error( "error" );
        });
        });
+    
     });
 </script>
     <script type="text/javascript">
