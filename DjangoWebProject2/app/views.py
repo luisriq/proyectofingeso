@@ -903,15 +903,23 @@ def guardarDatosPersonales(request):
     return HttpResponse("OK")
     #---------
 def upload_file(request):
+    target = request.POST.get('target')
     if request.method == 'POST':
-        
         try:
-            print request.FILES['image']
             path = handle_uploaded_file(request.FILES['image'])
-            u = Usuario.objects.filter(user = request.user)[0]
-            u.imagenPerfil = 'pic_folder/%s'%request.FILES['image']
-            u.imagenPerfil = path  
-            u.save()
+            if(target == 'banda'):
+                banda = Banda.objects.filter(id=request.POST.get('bid'))[0]
+                banda.imagenPerfil = path
+                banda.save()
+            elif(target == "bandaPortada"):
+                banda = Banda.objects.filter(id=request.POST.get('bid'))[0]
+                banda.imagenPortada = path
+                banda.save()
+            else:
+                print request.FILES['image']
+                u = Usuario.objects.filter(user = request.user)[0]
+                u.imagenPerfil = path  
+                u.save()
             return HttpResponse(path)
         except:
             print "error en el request.FILES['image']"

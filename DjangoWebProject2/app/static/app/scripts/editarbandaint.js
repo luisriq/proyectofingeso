@@ -9,6 +9,8 @@ $( document ).ready(function(){
 		var hide = form.find(".hide");
 		no_hide.removeClass("no-hide").addClass("hide");
 		hide.removeClass("hide").addClass("no-hide");
+		form.find("input").val(form.find("span.dato").text());
+		form.find("textarea").val(form.find("span.dato").text());
 	});
 	//Realizar cambio algi asi como un submit
 	$(".editar.submit").click(function(){
@@ -145,20 +147,28 @@ $( document ).ready(function(){
     });
 	//hay que hacer que sea mas elegante... meh
 	$('.ajax-file-selection').click(function(){
-		input = $('.file-form').find('input[type=file]');
+		input = $(this).parent().find('input[type=file]');
 		input.trigger('click'); 
 	});
 	$('.file-form input[type=file]').change(function(){
-		readURL(this);
-		$('.fileChange').toggle();
+		readURL(this, $(this).parent().attr("preview"));
+		 $(this).parent().parent().find('.fileChange').toggle();
 	});
 	$('.fileChange.cancel').click(function(){
-		$('#preview').attr('src', $('#preview').attr('data-src'));
-		$('.fileChange').toggle();
+		tar = $(this).parent().find('form').attr("preview");
+		if(tar == "portada"){
+			$("#"+tar).attr('style', "background:url("+$("#"+tar).attr('data-src')+");");
+		}else{
+			$("#"+tar).attr('src', $('#'+tar).attr('data-src'));
+		}
+		$(this).parent().find('.fileChange').toggle();
 	});
 	$('.ajax-file').click(function(){
-		form = $('.file-form');
+		var form = $(this).parent().find('.file-form');
 		var formData = new FormData(form[0]);
+		console.log(form.attr('target'));
+		formData.append('target',form.attr('target'));
+		formData.append('bid', $('.container.sfull').attr('id-banda'));
 		if(form.find('input[type=file]').val()!=''){
 			$.ajax({
 				url: form.attr('action'),
@@ -168,14 +178,13 @@ $( document ).ready(function(){
 				contentType: false,
 				processData: false,
 				success: function (returndata) {
-					$('.myavatar img').attr('src',"/media/"+returndata);
 					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Imagen de perfíl cambiada con exito', 4000);
-					$('.fileChange').toggle();
+					form.parent().find('.fileChange').toggle();
 				},
 				error: function (returndata) {
 					$('#preview').attr('src', $('#preview').attr('data-src'));
 					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar Imagen de perfíl', 4000);
-					$('.fileChange').toggle();
+					form.parent().find('.fileChange').toggle();
 				},
 			});
 		}else{
@@ -271,12 +280,16 @@ function twitLoad(){
 	
 }
 
-function readURL(input) {
+function readURL(input, tar) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-			$('#preview').attr('src', e.target.result);
+			if(tar == "portada"){
+				$("#"+tar).attr('style', "background:url("+e.target.result+");");
+			}else{
+				$("#"+tar).attr('src', e.target.result);
+			}
         }
 
         reader.readAsDataURL(input.files[0]);

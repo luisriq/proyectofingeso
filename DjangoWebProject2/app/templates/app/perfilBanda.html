@@ -14,13 +14,32 @@
     
     <div class="col s12">
         <div class="card white">
-            <div class="foto-portada" style="background:url({{banda.imagenPortada.url}});" >
+            <div>
+            <div class="foto-portada" id="portada" data-src="{{banda.imagenPortada.url}}" style="background:url({{banda.imagenPortada.url}});" >
+                </div>
+                <button class="btn fileChange ajax-file green" style="display:none"><i class="material-icons">&#xE5CA;</i></button>
+                <button class="btn fileChange cancel red" style="display:none"><i class="material-icons">&#xE14C;</i></button>
+                <button class="btn fileChange ajax-file-selection color-principal" ><i class="material-icons">&#xE254;</i></button>
+                <form class="file-form" preview="portada" method="POST" enctype="multipart/form-data" action="/upload"  target="bandaPortada">
+                    {% csrf_token %}
+                    <input name="image" type="file" accept="image/*" style="height:0;width:0;overflow:hidden;">
+                </form>
             </div>
+            
             <div class="container center-align">
                 <div class="row">
                     <div class="col s12 ">
-                        <div id = "imagenPerfil" class="inline blue z-depth-1"><img src="{{banda.imagenPerfil.url}}" alt="" 
+                        <div id = "imagenPerfil" class="inline blue z-depth-1"><img id="preview" src="{{banda.imagenPerfil.url}}" data-src="{{banda.imagenPerfil.url}}" alt="" 
                 style="width:100px;height:100px;border:solid 1px #444;margin-top:-50px;"></div>
+                    <div style="margin-top:-30px">
+                <button class="btn fileChange ajax-file green" style="display:none"><i class="material-icons">&#xE5CA;</i></button>
+                <button class="btn fileChange cancel red" style="display:none"><i class="material-icons">&#xE14C;</i></button>
+                <button class="btn fileChange ajax-file-selection color-principal" ><i class="material-icons">&#xE254;</i></button>
+                <form class="file-form" preview="preview" method="POST" enctype="multipart/form-data" action="/upload"  target="banda">
+                    {% csrf_token %}
+                    <input name="image" type="file" accept="image/*" style="height:0;width:0;overflow:hidden;">
+                </form>
+            </div>
                     </div>
                 </div>
                 <div class="row">
@@ -37,6 +56,9 @@
                                 <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
                                     <i class="material-icons">&#xE5CA;</i>
                                 </a>
+                                <a class="btn hide editar red hover-shadow tooltipped toggle" data-tooltip="Cancelar cambios">
+                                    <i class="material-icons">&#xE14C;</i>
+                                </a>
                             </form>
                         {%else%}
                         <h5>{{banda.nombre}}
@@ -48,8 +70,33 @@
                 <div class="row">
                     <div class="col l6 s12 ">
                         <div class="container sfull">
-                            <div class="row">   
-                                <div class="col s12 left-align card-panel grey lighten-4" style="padding:15px 10px"><span >{{banda.biografia}}</span></div>
+                            <div class="row"> 
+                                
+                                <div class="card-panel color-principal lighten-3">
+                                    <div class="campo-editable">
+                                        <form method="POST" data-target="biografia" largomaximo = "25">
+                                            {% csrf_token %}
+                                            {%if esLider%}
+                                            <a class="btn no-hide editar toggle color-principal hover-shadow right">
+                                                <i class="material-icons">&#xE254;</i>
+                                            </a> 
+                                            {%endif%}
+                                            <span class="no-hide dato">{{banda.biografia|linebreaksbr}}</span> 
+                                            <div class="input-field hide" style="width:calc(100% - 30px);">
+                                                <textarea name="dato" class="materialize-textarea cyan lighten-4" style="padding:0 15px;">{{banda.biografia}}</textarea>
+                                            </div>
+
+                                            <a class="btn hide editar submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios">
+                                                <i class="material-icons">&#xE5CA;</i>
+                                            </a>
+                                            <a class="btn hide editar toggle red hover-shadow tooltipped right cancelar" data-tooltip="Cancelar cambios">
+                                                <i class="material-icons">&#xE14C;</i>
+                                            </a>
+                                            <hr style="border:none;width:auto;height:0px;clear:both;"/>
+                                        </form>
+                                    </div>
+                                </div>  
+
                             </div>
                             <div class="row">
                                 <div class="col offset-s2 s8 card-panel color-principal" style="padding:15px"><b> {{ seguidores }} Seguidor{%if seguidores != 1%}es{% endif%}</b></div>

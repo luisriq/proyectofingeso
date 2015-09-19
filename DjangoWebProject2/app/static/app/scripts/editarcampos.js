@@ -10,6 +10,8 @@ $( document ).ready(function(){
 		console.log(no_hide);
 		no_hide.removeClass("no-hide").addClass("hide");
 		hide.removeClass("hide").addClass("no-hide");
+		form.find("input").val(form.find("span.dato").text());
+		form.find("textarea").val(form.find("span.dato").text());
 	});
 	//Realizar cambio algi asi como un submit
 	$(".editar.submit").click(function(){
