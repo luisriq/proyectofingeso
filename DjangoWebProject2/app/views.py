@@ -722,7 +722,7 @@ def guardarDatosNormal(request):
             dato = request.POST.get('dato')
             target = request.POST.get('target')
             if target == "nombre":
-                u = Usuario.objects.filter(user = request.user)[0]
+                u = Normal.objects.filter(user = request.user)[0]
                 if u.nombre == dato:
                     return HttpResponse("w,El nombre ingresado era el mismo")
                 else:
@@ -730,6 +730,13 @@ def guardarDatosNormal(request):
                     request.user.first_name = dato
                     u.nombre = dato
                     request.user.save()
+                    u.save()
+            elif target == "descripcion":
+                u = Normal.objects.filter(user = request.user)[0]
+                if u.descripcion == dato:
+                    return HttpResponse("w,La descripcion no ha cambiado")
+                else:
+                    u.descripcion = dato
                     u.save()
     except:
         exc_type, exc_obj, exc_tb = sys.exc_info()

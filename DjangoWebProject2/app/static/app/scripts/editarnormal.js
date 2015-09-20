@@ -18,6 +18,9 @@ $( document ).ready(function(){
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		
 		var datoValue = dato.val();
+		if (formulario.attr('data-target') == "nombre" || formulario.attr('data-target') == "descripcion"){
+			datoValue = datoValue.capitalizeFirstLetter();
+		}
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un genero', 4000);
