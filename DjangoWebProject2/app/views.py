@@ -312,7 +312,7 @@ class perfilBanda(View):
         discos =  Disco.objects.filter(banda = banda)
         material =  Material.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
-        
+        generos = Genero.objects.all()
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
@@ -322,8 +322,6 @@ class perfilBanda(View):
                 solicitantes = None
             
             title = 'perfil de la banda' + banda.nombre
-            
-
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -334,6 +332,7 @@ class perfilBanda(View):
                     'discos':discos,
                     'material':material,
                     'artista':artista,
+                    'generos':generos,
                     'esLider':pertenece[0].esLider,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
@@ -798,6 +797,16 @@ def guardarDatosBanda(request):
                             return HttpResponse("w,El texto ingresado era el mismo")
                         else:
                             banda.biografia = dato
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
+                elif target == "genero":
+                    if integrante[0].esLider:
+                        genero = Genero.objects.filter(id = dato)[0]
+                        if banda.genero==genero:
+                            return HttpResponse("w,El genero ingresado era el mismo")
+                        else:
+                            banda.genero = genero
                             banda.save()
                     else:
                         return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
