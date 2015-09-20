@@ -11,16 +11,32 @@
 
 
 {% block content %}
-<div class="body-content " ><!--corrimiento necesario para que se vea donde debe verse, solo en mid+ -->
 <div class="container">
         <div class="row">
             <div class="col l8 s12 columna-complemento-calendario grey lighten-4 card-panel" style="margin-top:30px">
                 <div class="container">
                     <div class="row"><!-- empieza el cuerpo -->
+                    
                         <div class="col l12 s12 center-align ">
                             <div class="circle avatar-perfil"><img src="{{usuario.imagenPerfil.url}}" alt="" style="height:150px;">
                             </div>
-                            <h4>{{usuario.nombre}}</h4>
+                            <h5 class="campo-editable center-align"> 
+                            <form method="POST" data-target="nombre" largomaximo="20" class="inline">
+                                {% csrf_token %}
+                                <span class="no-hide dato">{{usuario.nombre|title}}</span> 
+                                <input class="w60p hide"  type="text" name="dato" value="{{usuario.nombre}}" />
+                                <a class="btn no-hide editar toggle color-principal hover-shadow">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a> 
+                                <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
+                                    <i class="material-icons">&#xE5CA;</i>
+                                </a>
+                                <a class="btn hide editar red hover-shadow tooltipped toggle" data-tooltip="Cancelar cambios">
+                                    <i class="material-icons">&#xE14C;</i>
+                                </a>
+                            </form>
+                            </h5>
+                    
                         </div>
                         <div class="container">
                             <div class="row">
@@ -140,14 +156,21 @@
             </div>
         </div>
     </div>
-    
-</div>
 {% endblock %}
 
 {% block scripts %}
 
 {% load staticfiles %}
 	<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $(document).ajaxSend(function (event, jqxhr, settings) {
+            jqxhr.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+        });
+    });
+    </script>
 	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
 	<script src="{% static 'app/scripts/script.js' %}"></script>
+    <script src="{% static 'app/scripts/editarnormal.js' %}"></script>
+    
 {% endblock %}

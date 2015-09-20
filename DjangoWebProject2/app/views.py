@@ -703,7 +703,31 @@ def datosBarra(request): #TODO: Solo tira 3 bandas
     elif tipoUsuario == 2:
         return "ooh"
 
+#---------------------------
+def guardarDatosNormal(request):
+    try:
+        if request.method == 'POST':
+            dato = request.POST.get('dato')
+            target = request.POST.get('target')
+            if target == "nombre":
+                u = Usuario.objects.filter(user = request.user)[0]
+                if u.nombre == dato:
+                    return HttpResponse("w,El nombre ingresado era el mismo")
+                else:
+                    u.nombre = dato
+                    request.user.first_name = dato
+                    u.nombre = dato
+                    request.user.save()
+                    u.save()
+    except:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(traceback.format_exc())
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
 
+#---------------------------
 def guardarDatosArtista(request):
     try:
         if request.method == 'POST':
@@ -712,7 +736,6 @@ def guardarDatosArtista(request):
             print "Target %s"%request.POST.get('target')
             dato = request.POST.get('dato')
             target = request.POST.get('target')
-            response_data = {}
             if target == "nombre":
                 u = Usuario.objects.filter(user = request.user)[0]
                 u.nombre = dato
@@ -842,6 +865,8 @@ def guardarDatosBanda(request):
         print(traceback.format_exc())
         return HttpResponse("ERROR")
     return HttpResponse("OK")
+    
+#----------------------------
 def agregarMaterial(request):
     try:
         if request.method == 'POST':
