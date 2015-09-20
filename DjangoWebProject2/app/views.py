@@ -357,6 +357,19 @@ class infoDisco(View):
                 'canciones':canciones
             })
         )
+
+#------------------------
+class addDisco(View):
+    def get(self, request, bId):
+        
+        return render(
+            request,
+            'app/add_disco.html',
+            context_instance = RequestContext(request,
+            {
+                
+            })
+        )
         
 #-------------------------
 class error404(View):

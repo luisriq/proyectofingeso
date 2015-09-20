@@ -1,0 +1,18 @@
+<h5 class="white-text">{{disco.banda}}</h5>
+<h5 class="white-text" style="margin-left:20px">{{disco.nombre|title}} <span class="grey-text " style="font-size:15px">{{disco.lanzamiento.year}}</span></h5>
+<ul class="collection">
+{%for c in canciones%}
+	<li class="collection-item ">
+		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons blue darken-3 white-text" style="padding:8px;">&#xE405;</i></div>
+		{{c.nombre|title}}<br><span class="stext grey-text">{{c.autor}}</span>
+		<span class="secondary-content">{{c.duracion}}</span>
+	</li>
+{%endfor%}
+{%if canciones|length < 1 %}
+	<li class="collection-item grey lighten-2 grey-text text-darken-2">
+		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons grey darken-3 white-text" style="padding:8px;">info</i></div>
+		Este disco aún no tiene canciones<br><span class="stext grey-text">La banda</span>
+		<span class="secondary-content">-</span>
+	</li>
+{%endif%}
+</ul>
