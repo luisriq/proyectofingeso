@@ -1,17 +1,29 @@
 $( document ).ready(function(){
+	
+	
+	$(".toggle").click(function(){
+		var form=$(this).parent("form");
+		var no_hide = form.find(".no-hide");
+		var hide = form.find(".hide");
+		console.log(no_hide);
+		no_hide.removeClass("no-hide").addClass("hide");
+		hide.removeClass("hide").addClass("no-hide");
+		form.find("input").val(form.find("span.dato").text());
+		form.find("textarea").val(form.find("span.dato").text());
+	});
+	
 	$(".solicitud").click(function(){
 		var formulario = $(this).closest("form");
 		var olddato = $(this).parent().find('input[name=olddato]');
-		console.log(formulario.find('input[name=olddato]').val());
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
-		console.log(dato.val());
+		console.log("Data: "+dato.val());
 		var datoValue = dato.val();
 		if(typeof olddato === 'undefined'){
   			datoValue = dato.val().trim().capitalizeFirstLetter();
  		};
 		
 		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
-
+			
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
 			return null
@@ -19,6 +31,7 @@ $( document ).ready(function(){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
 			return null
 		}
+		
 		$.ajax({
 			url : "/guardarDatosBanda", // the endpoint
 			type : "POST", // http method
@@ -35,6 +48,14 @@ $( document ).ready(function(){
 					if(formulario.attr('data-target')=="solicitar"){
 						//TODO: Cambiar html 
 						$('#botonSolicitar').replaceWith('<a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text disabled" style="padding:10px">Solicitado</a>');
+						Materialize.toast('Solicitud enviada, espere respuesta.', 4000);
+						var no_hide = formulario.find(".no-hide");
+						var hide = formulario.find(".hide");
+						console.log(no_hide);
+						no_hide.removeClass("no-hide").addClass("hide");
+						hide.removeClass("hide").addClass("no-hide");
+						formulario.find("input").val(formulario.find("span.dato").text());
+						formulario.find("textarea").val(formulario.find("span.dato").text());
 					}
 					else if(formulario.attr('data-target')=="aceptarSolicitud"){
 						console.log("MEEEE");
@@ -81,3 +102,14 @@ $( document ).ready(function(){
 			}
 		}, i*500);//arrgla problemas de visualizacion en ipad
 }); 
+function largoPalabra(texto, maximo){
+	var palabras = texto.split(" ");
+	for (p in palabras)
+		p=p.replace("\n", "");
+	var g=true;
+	$(palabras).each(function (index,el){
+		if(el.length > parseInt(maximo))
+			g=false;
+	});
+	return g;
+}

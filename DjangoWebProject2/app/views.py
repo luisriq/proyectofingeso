@@ -856,7 +856,7 @@ def guardarDatosBanda(request):
                         accion = request.POST.get('accion')
                         print "accion %s"%accion
                         if(accion == "aceptar"):
-                            integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion="S", fechaIngreso=datetime.now())
+                            integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion=s.ocupacion, fechaIngreso=datetime.now())
                             integr.save()
                             print "AcEPTAR"
                         s.delete()
@@ -868,7 +868,7 @@ def guardarDatosBanda(request):
                     
                     print "b", banda.nombre,"a",a.nombre
                     if(len(Solicitud.objects.filter(artista = a, banda = banda, direccion = True))==0):
-                        s = Solicitud(artista = a, banda = banda, direccion = True)
+                        s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = True)
                         s.save()
                     else:
                         return HttpResponse("ERROR")
