@@ -63,14 +63,15 @@ $( document ).ready(function(){
 						if(olddato.val()=='aceptar'){
 							hrefItem = formulario.find('.valign-wrapper').attr('href');
 							imagen = formulario.find('.circle').attr('style');
-							nombre = formulario.find('span').text()
+							nombre = $(formulario.find('span')[0]).text()
+							ocupacion = $(formulario.find('span')[1]).text()
 							console.log(hrefItem+"\n"+imagen);
 							// TODO: Cambiarlo  reusando y reemplazando con el primer integrante
 							$('#integrante').append('<li class="collection-item valign-wrapper">'+
 											'<a class="valign-wrapper" href="'+hrefItem+'">'+
 												'<div class="circle avatar-perfil small" style="'+imagen+'" ></div>'+
 												'<div class="" style="margin-left:20px;"><span >'+nombre+'</span>'+
-												'<br><span class="grey-text ">S</span></div>'+
+												'<br><span class="grey-text ">'+ocupacion+'</span></div>'+
 											'</a>'+
 										'</li>');
 						}

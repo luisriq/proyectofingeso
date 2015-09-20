@@ -178,15 +178,15 @@
                                             <a class="valign-wrapper" href="/perfilArtistaNp/{{solicitud.artista.id}}">
                                             <div class="circle avatar-perfil small" style="background: url({{solicitud.artista.imagenPerfil.url}}); " ></div>
                                             <div class="" style="margin-left:20px;"><span >{{solicitud.artista.nombre}}</span>
+                                            <br><span class="grey-text ">{{solicitud.ocupacion}}</span>
+                                            </div>
                                             </a>
-                                            <br>
                                             <input name ="dato" hidden="true" value="{{ solicitud.id }}"></input>
                                             <input id="accion" name ="olddato" hidden="true" value="aceptar"></input>
                                             {%if esLider%}
                                                 <button class="btn green solicitud" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></button>
                                                 <button class="btn red solicitud" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></button>
                                             {%endif%}
-                                            </div>
                                         </form>
                                         </li>
                                         {% endfor %}
