@@ -1,7 +1,7 @@
 $( document ).ready(function(){
 	
 	
-	$(".toggle").click(function(){
+	$(".togglesol").click(function(){
 		var form=$(this).parent("form");
 		var no_hide = form.find(".no-hide");
 		var hide = form.find(".hide");
