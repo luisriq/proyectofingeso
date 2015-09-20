@@ -18,7 +18,6 @@ $( document ).ready(function(){
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
 		
 		var datoValue = dato.val();
-		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un genero', 4000);
 			return null
@@ -32,8 +31,8 @@ $( document ).ready(function(){
 				type : "POST", // http method
 				data : { bid:$('.container.sfull').attr('id-banda'),
 						dato : datoValue,
-						target : formulario.attr('data-target'),
-						"X-CSRFToken" : token.val() }, // data sent with the post request
+						target : formulario.attr('data-target')
+						}, // data sent with the post request
 				// handle a successful response
 				success : function(response) {
 					console.log(response); // log the returned json to the console
@@ -47,14 +46,18 @@ $( document ).ready(function(){
 							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');
 							twttr.widgets.load()
 							console.log("holi");
-						}else if(formulario.attr('data-target')=="instrumento")
-							location.reload();
+						} 
 						var txtconbr=dato.val().replace(/(?:\r\n|\r|\n)/g, '<br />').trim();
 						formulario.find(".dato").html(txtconbr.capitalizeFirstLetter());
 						var no_hide = formulario.find(".no-hide");
 						var hide = formulario.find(".hide");
+						if(formulario.attr('data-target')=="genero"){
+							var opttxt = dato.children("option").filter(":selected").text();
+							formulario.find(".dato").html(opttxt);
+						}
 						no_hide.removeClass("no-hide").addClass("hide");
 						hide.removeClass("hide").addClass("no-hide");
+						
 					}
 					else
 						respuestaInstatisfactoria(response);

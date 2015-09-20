@@ -312,7 +312,7 @@ class perfilBanda(View):
         discos =  Disco.objects.filter(banda = banda)
         material =  Material.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
-        
+        generos = Genero.objects.all()
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
@@ -322,8 +322,6 @@ class perfilBanda(View):
                 solicitantes = None
             
             title = 'perfil de la banda' + banda.nombre
-            
-
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -334,6 +332,7 @@ class perfilBanda(View):
                     'discos':discos,
                     'material':material,
                     'artista':artista,
+                    'generos':generos,
                     'esLider':pertenece[0].esLider,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
@@ -816,15 +815,33 @@ def guardarDatosBanda(request):
                     else:
                         return HttpResponse("e,No tienes permiso para cambiar el nombre")
                 elif target == "biografia":
-                    b = Banda.objects.filter(id = bandId)[0]
-                    b.biografia = dato
-                    b.save()
-                    print "saved"
+                    if integrante[0].esLider:
+                        if banda.biografia==dato:
+                            return HttpResponse("w,El texto ingresado era el mismo")
+                        else:
+                            banda.biografia = dato
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
+                elif target == "genero":
+                    if integrante[0].esLider:
+                        genero = Genero.objects.filter(id = dato)[0]
+                        if banda.genero==genero:
+                            return HttpResponse("w,El genero ingresado era el mismo")
+                        else:
+                            banda.genero = genero
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
                 elif target == "cuentaTwitter":
-                    b = Banda.objects.filter(id = bandId)[0]
-                    b.cuentaTwitter = dato
-                    b.save()
-                    print "cuentaTwitter saved"
+                    if integrante[0].esLider:
+                        if banda.cuentaTwitter==dato:
+                            return HttpResponse("w,El texto ingresado era el mismo")
+                        else:
+                            banda.cuentaTwitter = dato
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
                 elif target=='material-delete':
                     m = Material.objects.filter(id = dato,banda=banda)
                     if(len(m)>0):
@@ -846,7 +863,7 @@ def guardarDatosBanda(request):
                     else:
                         return HttpResponse("e,No tienes permiso para aceptar solicitudes")
             elif target == "solicitar": 
-                    print "idbanda:",dato
+                    print "idbanda:",dato    
                     a = Artista.objects.filter(user = request.user)[0]
                     
                     print "b", banda.nombre,"a",a.nombre
