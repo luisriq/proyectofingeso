@@ -317,7 +317,6 @@ class perfilBanda(View):
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
             solicitantes = Solicitud.objects.filter(banda = banda, direccion=True)
-            print solicitantes
             if(len(solicitantes)==0):
                 solicitantes = None
             
