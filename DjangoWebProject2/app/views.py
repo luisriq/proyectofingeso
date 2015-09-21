@@ -321,7 +321,7 @@ class perfilBanda(View):
             if(len(solicitantes)==0):
                 solicitantes = None
             
-            title = 'perfil de la banda' + banda.nombre
+            title = 'perfil de la banda ' + banda.nombre
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -361,13 +361,14 @@ class infoDisco(View):
 #------------------------
 class addDisco(View):
     def get(self, request, bId):
-        
+        banda = Banda.objects.filter(id = bId)[0]
         return render(
             request,
             'app/add_disco.html',
             context_instance = RequestContext(request,
             {
-                
+                'banda':banda,
+                'year':datetime.now().year
             })
         )
         
