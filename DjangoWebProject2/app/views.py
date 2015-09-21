@@ -358,6 +358,20 @@ class infoDisco(View):
                 'canciones':canciones
             })
         )
+#------------------------
+class infoDiscoE(View):
+    def get(self, request, dId):
+        disco =  Disco.objects.filter(id = dId)[0]
+        canciones =   Cancion.objects.filter(disco = disco)
+        return render(
+            request,
+            'app/discoE.html',
+            context_instance = RequestContext(request,
+            {
+                'disco':disco,
+                'canciones':canciones
+            })
+        )
 
 #------------------------
 class addDisco(View):
@@ -372,6 +386,8 @@ class addDisco(View):
                 'year':datetime.now().year
             })
         )
+        
+
         
 #-------------------------
 class error404(View):
@@ -584,8 +600,7 @@ class crearBanda(View):
             })
         )
 
-#------------------------------
- 
+
  #------------------------------------------------------       
 class busqueda(View):
     def get(self, request):
@@ -882,10 +897,25 @@ def guardarDatosBanda(request):
                 elif target=='material-delete':
                     m = Material.objects.filter(id = dato,banda=banda)
                     if(len(m)>0):
-                        m.delete()
+                        m[0].delete()
                         return HttpResponse("OK")
                     else:
                         return HttpResponse("e,No tienes permiso o el material ya no existe")
+                elif target=='disco-delete':
+                    d = Disco.objects.filter(id = dato,banda=banda)
+                    if(len(d)>0):
+                        d[0].delete()
+                        return HttpResponse("OK")
+                    else:
+                        return HttpResponse("e,No tienes permiso o el disco ya no existe")
+                elif target=='cancion-delete':
+                    c = Cancion.objects.filter(id = dato)
+                    print dato
+                    if(len(c)>0):
+                        c[0].delete()
+                        return HttpResponse("k, Eliminado con exito")
+                    else:
+                        return HttpResponse("e,No tienes permiso o la canci&oacute;n ya no existe")
                 elif target == "aceptarSolicitud": 
                     if integrante[0].esLider:
                         print "id",dato
@@ -968,7 +998,66 @@ def tieneLider(Banda):
             return 1
     return 2
 
-
+    #--------
+def crearDisco(request):
+    try:
+        if request.method == 'POST':
+            print "Loged as %s"%request.user.id
+            bandId = request.POST.get('bid')
+            nombre = request.POST.get('nombre')
+            lanzamiento = request.POST.get('lanzamiento')
+            cancion = request.POST.get('cancion')
+            canciones=''
+            if cancion != ']':
+                canciones = json.loads(cancion)
+            if nombre!='' and lanzamiento != '':
+                banda = Banda.objects.filter(id = bandId)[0]
+                d = Disco(nombre=nombre,lanzamiento=lanzamiento+"-01-01",banda=banda)
+                d.save()
+                for c in canciones :
+                    C=Cancion(nombre=c['nombre'],autor=c['autor'],duracion=c['duracion']+" m",disco=d)
+                    C.save()
+                return HttpResponse("k,%d"%d.id)
+            else:
+                return HttpResponse("e,Los campos no deben estar vac&iacute;os")
+    except :
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(traceback.format_exc())
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+def crearCancion(request):
+    try:
+        if request.method == 'POST':
+            print "Loged as %s"%request.user.id
+            bandId = request.POST.get('bid')
+            banda = Banda.objects.filter(id = bandId)[0]
+            did = request.POST.get('did')
+            disco = Disco.objects.filter(id=did)[0]
+            cancion = request.POST.get('cancion')
+            canciones=''
+            print cancion
+            if cancion != ']':
+                canciones = json.loads(cancion)
+                for c in canciones :
+                    C=Cancion(nombre=c['nombre'],autor=c['autor'],duracion=c['duracion']+" m",disco=disco)
+                    C.save()
+                if len(c)==1:
+                    return HttpResponse("k,Cancion agregada con exito")
+                else:
+                    return HttpResponse("k,Canciones agregadas con exito")
+            else:
+                return HttpResponse("e,Los campos no deben estar vac&iacute;os")
+           
+    except :
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(traceback.format_exc())
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
+    
 def guardarDatosPersonales(request):
     try:
         if request.method == 'POST':

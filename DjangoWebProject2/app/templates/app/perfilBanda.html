@@ -142,8 +142,6 @@
                             </div>
                             <div class="row">
                                 <form method="POST" data-target="retirarse" >
-                                <input name ="dato" hidden="true" value="{{ banda.id }}"></input>
-                                {% csrf_token %}
                                 <a class="col hover-shadow s5 card-panel color-principal white-text editar submit" style="padding:10px">Salirse de la banda</a>
                                 </form>
                             </div>  
@@ -156,10 +154,12 @@
                                     <h5>Discografia</h5>
                                     <ul class="collection">
                                         {% for disco in discos %}
-                                        <li class="collection-item disco valign-wrapper manito"  data-dId="{{disco.id}}">
+                                        <li id="dis{{disco.id}}" class="collection-item disco valign-wrapper manito"  data-dId="{{disco.id}}">
+                                            <input name ="dato" hidden="true" value="{{ banda.id }}"></input>  
                                             <i class="material-icons orange darken-3 white-text" style="padding:3px;font-size:40px">&#xE019;</i>
                                             <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">{{disco.nombre}}</span>
                                             <span class="secondary-content stext cyan-text text-darken-4">{{disco.lanzamiento.year}}</span>
+                                            <span class="right white red-text text-darken-2 valign-wrapper tooltipped" data-position="right" data-tooltip="quitar Disco" style="height:46px" onclick="removeDisco({{disco.id}})"><i class="material-icons">remove_circle</i></span> 
                                         </li>
                                         {% endfor %}
                                         <li class="collection-item add-disco hover-grey valign-wrapper manito ">
@@ -461,7 +461,7 @@
        console.log("disco id:"+$(this).attr('data-dId'));
        $('#modalDisco').openModal();
        var modal = $('#modalDisco .modal-content')
-       $.get("/infoDisco/"+$(this).attr('data-dId'),function(data){
+       $.get("/infoDiscoE/"+$(this).attr('data-dId'),function(data){
             modal.html("")
             modal.html(data)
        }).fail(function() {
