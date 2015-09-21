@@ -331,6 +331,39 @@ function removeMaterial(mId,confirmado){
 		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas quitar el material?<a style="margin-left:10px;" href="#" onclick="removeMaterial('+mId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
 	}
 }
+
+
+function dejarBanda(uId,confirmado){
+	
+	if(confirmado){
+		$('.rem-confirm').remove();
+		bid= $('.container.sfull').attr('id-banda');
+		console.log(bid);
+		$.ajax({
+			url: "/guardarDatosBanda",
+			type: 'POST',
+			data: {
+				bid:bid,
+				target:'retirarse',
+				dato:uId,
+			},
+			success: function (data) {
+				if(data=='OK'){
+					window.location="/perfilArtista";
+				}else
+					respuestaInstatisfactoria(data);
+			},
+			error: function (data) {
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Erro al intentar dejar la banda', 4000);
+			},
+		});
+	}else{
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas abandonar esta banda?<a style="margin-left:10px;" href="#" onclick="dejarBanda('+uId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
+	}
+}
+
+
+
 function removeDisco(dId,confirmado){
 	
 	$('#modalDisco').closeModal();
