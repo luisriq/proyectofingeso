@@ -35,7 +35,6 @@ $( document ).ready(function(){
 						}, // data sent with the post request
 				// handle a successful response
 				success : function(response) {
-					console.log(formulario.attr('data-target'));
 					console.log(response); // log the returned json to the console
 					if(response=="OK"){
 						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
@@ -43,7 +42,6 @@ $( document ).ready(function(){
 							$("#nombre-navbar").text(dato.val().capitalizeFirstLetter());
 						}
 						else if(formulario.attr('data-target')=="retirarse"){
-							console.log(formulario.attr('data-target'));
 							window.location="/perfilArtista";
 						}
 						else if(formulario.attr('data-target')=="cuentaTwitter"){
