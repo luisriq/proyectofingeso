@@ -33,14 +33,9 @@ $( document ).ready(function(){
 
 function click(el){
 		var formulario = $(el).closest("form");
-		var olddato = $(el).parent().find('input[name=olddato]');
 		var dato = $(formulario).find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log("Data: "+dato.val());
 		var datoValue = dato.val();
-		if(typeof olddato === 'undefined'){
-  			datoValue = dato.val().trim().capitalizeFirstLetter();
- 		};
-		
 		var token = $(el).parent().find('input[name=csrfmiddlewaretoken]');
 			
 		if(dato.val()==null){
@@ -62,8 +57,8 @@ function click(el){
 		$.ajax({
 			url : "/guardarDatosBanda", // the endpoint
 			type : "POST", // http method
-			data : { accion:$('#accion').attr('value'),
-						bid:$('.container.sfull').attr('id-banda'),
+			data : { accion:$('#accion').val(),
+						bid:$(formulario).attr('data-banda'),
 						dato : datoValue,
 						artista : formulario.attr("data-artista"),
 					target : formulario.attr('data-target'),
@@ -89,22 +84,32 @@ function click(el){
 					}
 					else if(formulario.attr('data-target')=="aceptarSolicitud"){
 						console.log("MEEEE");
-						formulario.hide();
-						if(olddato.val()=='aceptar'){
-							hrefItem = formulario.find('.valign-wrapper').attr('href');
-							imagen = formulario.find('.circle').attr('style');
-							nombre = $(formulario.find('span')[0]).text()
-							ocupacion = $(formulario.find('span')[1]).text()
-							console.log(hrefItem+"\n"+imagen);
+						
+						if($('#accion').val()=='aceptar'){
+							var bid = formulario.find('.datos input[name=bid]').val();
+							var img = formulario.find('.datos input[name=img]').val();
+							var nombre = formulario.find('.datos input[name=nombre]').val();
+							var ocupacion = formulario.find('.datos input[name=ocupacion]').val();
 							// TODO: Cambiarlo  reusando y reemplazando con el primer integrante
-							$('#integrante').append('<li class="collection-item valign-wrapper">'+
-											'<a class="valign-wrapper" href="'+hrefItem+'">'+
-												'<div class="circle avatar-perfil small" style="'+imagen+'" ></div>'+
-												'<div class="" style="margin-left:20px;"><span >'+nombre+'</span>'+
-												'<br><span class="grey-text ">'+ocupacion+'</span></div>'+
-											'</a>'+
-										'</li>');
+							$('.bandas').append('<a href="/perfilBandaNp/'+bid+'" class="collection-item" style="padding:0px 15px">'+
+													'<div class="container" style="width:100%;padding:0">'+
+														'<div class="row valign-wrapper" style="margin-bottom:0;">'+
+															'<div class="col s2">'+
+																'<div class="circle avatar-img">'+
+																	'<img src="'+img+'" style="height:50px;">'+
+																'</div>'+
+															'</div>'+
+															'<div class="col offset-1 s5 grey-text text-darken-2 truncate" style="margin-left:10px">'+
+															nombre+
+															'</div>'+
+															'<div class="col s4 grey-text text-darken-2 truncate">'+
+															ocupacion+
+															'</div>'+
+														'</div>'+
+													'</div>'+
+												'</a>');
 						}
+						formulario.parent().remove();
 					}
 					else if(formulario.attr('data-target')=="solicitarBanda"){
 						$('#modalArtista').closeModal();

@@ -82,6 +82,7 @@ class Home(View):
                 tipo = "Artista :"
                 artista = Artista.objects.filter(user = request.user)
                 urlAvatar = artista[0].imagenPerfil.url
+                solicitantes = Solicitud.objects.filter(artista = artista)
                 integranteEn = [ib for ib in IntegrantesBanda.objects.filter(integrante = artista)]
                 return render( 
                     request,
@@ -94,6 +95,7 @@ class Home(View):
                         
                         'year':datetime.now().year,
                         'urlAvatar':urlAvatar,
+                        'solicitantes':solicitantes,
                         'datosBarra':datosBarra(request),
                         'bandas':integranteEn
                     })
@@ -847,6 +849,7 @@ def guardarDatosBanda(request):
             bandId = request.POST.get('bid')            
             dato = request.POST.get('dato')
             target = request.POST.get('target')
+            print "bid", bandId
             banda=Banda.objects.filter(id = bandId)[0]
             integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = Artista.objects.filter(user=request.user)[0])
             if target == "solicitarBanda": 
@@ -926,9 +929,11 @@ def guardarDatosBanda(request):
                     else:
                         return HttpResponse("e,No tienes permiso o la canci&oacute;n ya no existe")
                 elif target == "aceptarSolicitud": 
-                    if integrante[0].esLider:
-                        print "id",dato
+                    
+                   
+                    if integrante[0].esLider :
                         s = Solicitud.objects.filter(id=dato)[0]
+                        print "id",dato
                         accion = request.POST.get('accion')
                         print "accion %s"%accion
                         if(accion == "aceptar"):
@@ -948,6 +953,16 @@ def guardarDatosBanda(request):
                         s.save()
                     else:
                         return HttpResponse("ERROR")
+            elif  Solicitud.objects.filter(id=dato)[0].artista.user.id==request.user.id:
+                s = Solicitud.objects.filter(id=dato)[0]
+                print "id",dato
+                accion = request.POST.get('accion')
+                print "accion %s"%accion
+                if(accion == "aceptar"):
+                    integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion=s.ocupacion, fechaIngreso=datetime.now())
+                    integr.save()
+                    print "AcEPTAR"
+                s.delete()    
             else:
                 return HttpResponse("e,No tienes permiso para esta operaci&oacute;n")
        
