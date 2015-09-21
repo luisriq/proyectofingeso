@@ -141,7 +141,13 @@
                                     <i class="material-icons manito inline grade grey-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
                                 </div>
                             </div>
-
+                            <div class="row">
+                                <form method="POST" data-target="retirarse" >
+                                <input name ="dato" hidden="true" value="{{ banda.id }}"></input>
+                                {% csrf_token %}
+                                <a class="col hover-shadow s5 card-panel color-principal white-text editar submit" style="padding:10px">Salirse de la banda</a>
+                                </form>
+                            </div>  
                             
 
                             {# hay que quitar esta wea de if al pasarlo pa la wea de la otra wea #}
