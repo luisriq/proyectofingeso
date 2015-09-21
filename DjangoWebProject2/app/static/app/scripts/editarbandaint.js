@@ -331,6 +331,36 @@ function removeMaterial(mId,confirmado){
 		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas quitar el material?<a style="margin-left:10px;" href="#" onclick="removeMaterial('+mId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
 	}
 }
+function removeDisco(dId,confirmado){
+	
+	$('#modalDisco').closeModal();
+	if(confirmado){
+		$('.rem-confirm').remove();
+		bid= $('.container.sfull').attr('id-banda');
+		console.log(bid);
+		$.ajax({
+			url: "/guardarDatosBanda",
+			type: 'POST',
+			data: {
+				bid:bid,
+				target:'disco-delete',
+				dato:dId,
+			},
+			success: function (data) {
+				if(data=='OK'){
+					$('#dis'+dId).remove()
+					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Material removido con exito', 4000);				
+				}else
+					respuestaInstatisfactoria(data);
+			},
+			error: function (data) {
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al quitar el material', 4000);
+			},
+		});
+	}else{
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas quitar el material?<a style="margin-left:10px;" href="#" onclick="removeDisco('+dId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
+	}
+}
 function respuestaInstatisfactoria(data){
 	var resp=data.split(',');
 	if(resp[0]=='w')

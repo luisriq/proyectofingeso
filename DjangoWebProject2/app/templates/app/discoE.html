@@ -1,35 +1,28 @@
-
-<h5 class="white-text" >Agregar Disco <span class="grey-text " style="font-size:15px">{{banda.nombre|title}}</span></h5>
-<ul class="collection">
-	<li class="collection-item grey lighten-4 grey-text text-darken-2">
-		<h5>Datos del disco</h5>
-		<form id="add_disco" >
-			<input type="hidden" name="bid" value="{{banda.id}}">
-			<div class="input-field col s6 w60p">
-          		<input id="name" name="nombre" type="text" class="validate">
-          		<label for="name">Nombre del Disco</label>
-        	</div>
-			<div class="input-field col s6 w60p">
-          		<input id="year" name="lanzamiento" type="number"  class="validate datepicker" value="{{year}}" min="1960" max="{{year}}">
-          		<label for="year" class="active">Lanzamiento</label>
-        	</div>
-		</form>
+<h5 class="white-text">{{disco.banda}}</h5>
+<h5 class="white-text" style="margin-left:20px">{{disco.nombre|title}} <span class="grey-text " style="font-size:15px">{{disco.lanzamiento.year}}</span></h5>
+<ul class="collection" style="margin-bottom:50px;">
+{%for c in canciones%}
+	<li class="collection-item ">
+		
+		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons blue darken-3 white-text" style="padding:8px;">&#xE405;</i></div>
+		{{c.nombre|title}}<br><span class="stext grey-text">{{c.autor}}</span>
+		<span class="right white red-text text-darken-2 valign-wrapper" style="height:10px" onclick="removeCancion({{c.id}})"><i class="material-icons">remove_circle</i></span>
+		<span class="secondary-content">{{c.duracion}}</span>
 	</li>
+{%endfor%}
 	<li class="collection-item grey lighten-4 grey-text hover-grey no-select manito text-darken-2 addTrigger">
 		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons grey darken-3 white-text" style="padding:8px;">&#xE147;</i></div>
 		Añadir Canción<br><span class="stext grey-text"> &nbsp; </span>
-		{#<span class="secondary-content">-</span>#}
 	</li>
-	<li class="collection-item green darken-1 white-text center-align no-select manito text-darken-2" onclick="disco_send();">
+	<li class="collection-item green darken-1 white-text center-align no-select manito text-darken-2 hide tougle" onclick="disco_send();">
 		<h5>Añadir Canción</h5>	
 	</li>
 </ul>
-
 <script type="text/javascript">
 var counter=0;
 $('.addTrigger').click(function(){
 	$(this).before(songGen());
-	
+	$('.hide.tougle').removeClass('hide');
 });
 function songGen(){
 	var t1 = '<li class="collection-item song grey lighten-4 grey-text text-darken-2">'+
@@ -51,8 +44,6 @@ function songGen(){
 	return t1;
 }
 function disco_send(){
-	var nombre = $('#add_disco  input[name=nombre]').val();
-	var lanzamiento = $('#add_disco  input[name=lanzamiento]').val();
 	var cancionN = $('.song input[name=nombre]');
 	var cancionA = $('.song input[name=autor]');
 	var cancionD = $('.song input[name=duracion]');
@@ -63,35 +54,21 @@ function disco_send(){
 	 canciones = canciones.substring(0, canciones.length-1)+']';
 	console.log(canciones);
 	$.ajax({
-		url : "/crearDisco", // the endpoint
+		url : "/crearCancion", // the endpoint
 		type : "POST", // http method
 		
 		data : {bid : $('.container.sfull').attr('id-banda'),
-				nombre : nombre,
-				lanzamiento : lanzamiento,
+				did : '{{disco.id}}',
 				'cancion':canciones, }, // data sent with the post request
 		// handle a successful response
 		success : function(response) {
 			console.log(response); // log the returned json to the console
 			var id = response.split(',');
 			if(id[0]=="k"){
-				Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Disco agregado', 4000);
-				var d = discoGen(id[1],nombre,lanzamiento);
-				console.log(d);
-				$(d).insertAfter( ".disco:last" );
+				Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Canci&oacute;n agregada', 4000);
+				
 				//$('.no-hay-material').remove();
 				$('#modalDisco').closeModal();
-				$('.disco:last').click(function(){
-					console.log("disco id:"+$(this).attr('data-dId'));
-					$('#modalDisco').openModal();
-					var modal = $('#modalDisco .modal-content')
-					$.get("/infoDisco/"+$(this).attr('data-dId'),function(data){
-							modal.html("")
-							modal.html(data)
-					}).fail(function() {
-							console.error( "error" );
-					})
-				});
 			}
 			else
 				respuestaInstatisfactoria(response);
@@ -102,14 +79,33 @@ function disco_send(){
 		}
 	});
 }
-function discoGen(did,nombre,lanzamiento){
-	var l1 = '<li id="dis'+did+'" class="collection-item disco valign-wrapper manito"  data-dId="'+did+'">';
-	var l2 = '<i class="material-icons orange darken-3 white-text" style="padding:3px;font-size:40px">&#xE019;</i>';
-	var l3 = '<span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">'+nombre+'</span>';
-	var l4 = '<span class="secondary-content stext cyan-text text-darken-4">'+lanzamiento+'</span>';
-	var l4_5 = '<span class="right white red-text text-darken-2 valign-wrapper tooltipped" data-position="right" data-tooltip="quitar Disco" style="height:46px" onclick="removeDisco('+did+')"><i class="material-icons">remove_circle</i></span> ';
-	var l5 = '</li>';
-	return l1+l2+l3+l4+l4_5+l5;
+function removeCancion(cId,confirmado){
+	if(confirmado){
+		
+		$('.rem-confirm').remove();
+		bid= $('.container.sfull').attr('id-banda');
+		$.ajax({
+			url: "/guardarDatosBanda",
+			type: 'POST',
+			data: {
+				bid:bid,
+				target:'cancion-delete',
+				dato:cId,
+			},
+			success: function (data) {
+				var id = data.split(',');
+				if(id[0]=="k"){
+					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>'+id[1], 4000);
+					$('#modalDisco').closeModal();		
+				}else
+					respuestaInstatisfactoria(data);
+			},
+			error: function (data) {
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al quitar el material', 4000);
+			},
+		});
+	}else{
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas quitar el material?<a style="margin-left:10px;" href="#" onclick="removeCancion('+cId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
+	}
 }
-
 </script>
