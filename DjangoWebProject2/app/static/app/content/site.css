@@ -359,11 +359,11 @@ a.color-principal:hover{
 }
 .hover-grey:hover{
   
-  background: #eee;
+  background: #eee !important;
 }
 .hover-grey:active{
   
-  background: #ddd;
+  background: #ddd !important;
 }
 .no-select{
   -webkit-user-select: none;

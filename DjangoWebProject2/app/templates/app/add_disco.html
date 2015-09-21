@@ -1,18 +1,53 @@
-<h5 class="white-text">{{disco.banda}}</h5>
-<h5 class="white-text" style="margin-left:20px">{{disco.nombre|title}} <span class="grey-text " style="font-size:15px">{{disco.lanzamiento.year}}</span></h5>
+
+<h5 class="white-text" >Agregar Disco <span class="grey-text " style="font-size:15px">{{banda.nombre|title}}</span></h5>
 <ul class="collection">
-{%for c in canciones%}
-	<li class="collection-item ">
-		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons blue darken-3 white-text" style="padding:8px;">&#xE405;</i></div>
-		{{c.nombre|title}}<br><span class="stext grey-text">{{c.autor}}</span>
-		<span class="secondary-content">{{c.duracion}}</span>
+	<li class="collection-item grey lighten-4 grey-text text-darken-2">
+		<h5>Datos del disco</h5>
+		<form >
+			<input type="hidden" value="{{banda.id}}">
+			<div class="input-field col s6 w60p">
+          		<input id="name" type="text" class="validate">
+          		<label for="name">Nombre del Disco</label>
+        	</div>
+			<div class="input-field col s6 w60p">
+          		<input id="year" type="number"  class="validate datepicker" value="{{year}}" min="1960" max="{{year}}">
+          		<label for="year" class="active">Lanzamiento</label>
+        	</div>
+			
+		</form>
 	</li>
-{%endfor%}
-{%if canciones|length < 1 %}
-	<li class="collection-item grey lighten-2 grey-text text-darken-2">
-		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons grey darken-3 white-text" style="padding:8px;">info</i></div>
-		Este disco aún no tiene canciones<br><span class="stext grey-text">La banda</span>
-		<span class="secondary-content">-</span>
+	<li class="collection-item grey lighten-4 grey-text hover-grey no-select manito text-darken-2 addTrigger">
+		<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons grey darken-3 white-text" style="padding:8px;">&#xE147;</i></div>
+		Añadir Canción<br><span class="stext grey-text"> &nbsp; </span>
+		{#<span class="secondary-content">-</span>#}
 	</li>
-{%endif%}
+	
+	
 </ul>
+
+<script type="text/javascript">
+var counter=0;
+$('.addTrigger').click(function(){
+	$(this).before(songGen());
+});
+function songGen(){
+	var t1 = '<li class="collection-item grey lighten-4 grey-text text-darken-2">'+
+	'<div class="valign-wrapper left" style="margin-right:20px;" ><i class="material-icons blue darken-3 white-text" style="padding:8px;">&#xE405;</i></div>'+
+    '<div class="input-field col s6 w60p inline" style="margin-top:10px">'+
+	'<input id="nameSong'+(++counter)+'" type="text" class="validate">'+
+	'<label for="nameSong'+(++counter)+'">Nombre de Canción</label>'+
+	'</div>'+
+	'<br>'+
+	'<div class="input-field col s6 w60p inline" style="margin-top:10px;">'+
+	'<input id="nameSong'+(++counter)+'" type="text" class="validate" style="font-size:12px;height:2.5em;">'+
+	'<label for="nameSong'+(++counter)+'">Autor</label>'+
+	'</div>'+
+	'<div class="input-field secondary-content col s6 inline" style="margin-top:10px; width:80px;">'+
+	'<input id="duracion'+(++counter)+'" type="time" class="validate" value="00:00" style="font-size:12px;height:2.5em;">'+
+	'<label for="duracion'+(++counter)+'" style="transform:translateY(-140%);font-size: 0.8rem;">Duración</label>'+
+	'</div>'+
+	'</li>';
+	return t1;
+}
+
+</script>

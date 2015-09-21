@@ -41,6 +41,9 @@ $( document ).ready(function(){
 						if(formulario.attr('data-target')=="nombre"){
 							$("#nombre-navbar").text(dato.val().capitalizeFirstLetter());
 						}
+						else if(formulario.attr('data-target')=="retirarse"){
+							window.location="/perfilArtista";
+						}
 						else if(formulario.attr('data-target')=="cuentaTwitter"){
 							$('.twitter-container').html('');
 							$('.twitter-container').html('<a class="twitter-timeline" style="width:100%" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="'+dato.val()+'"></a>');

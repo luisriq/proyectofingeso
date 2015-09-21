@@ -19,6 +19,7 @@ import sys, os
 import traceback
 from django.core import serializers
 import re
+from random import randint
 
 from django.views.generic.edit import CreateView
 
@@ -321,7 +322,7 @@ class perfilBanda(View):
             if(len(solicitantes)==0):
                 solicitantes = None
             
-            title = 'perfil de la banda' + banda.nombre
+            title = 'perfil de la banda ' + banda.nombre
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -361,13 +362,14 @@ class infoDisco(View):
 #------------------------
 class addDisco(View):
     def get(self, request, bId):
-        
+        banda = Banda.objects.filter(id = bId)[0]
         return render(
             request,
             'app/add_disco.html',
             context_instance = RequestContext(request,
             {
-                
+                'banda':banda,
+                'year':datetime.now().year
             })
         )
         
@@ -834,6 +836,11 @@ def guardarDatosBanda(request):
                             banda.save()
                     else:
                         return HttpResponse("e,No tienes permiso para cambiar el nombre")
+                elif target == "retirarse":
+                    artista = Artista.objects.filter(user = request.user)[0]
+                    integrante = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)[0]
+                    integrante.delete()
+                    liderBanda(banda)
                 elif target == "biografia":
                     if integrante[0].esLider:
                         if banda.biografia==dato:
@@ -929,7 +936,29 @@ def agregarMaterial(request):
         print(traceback.format_exc())
         return HttpResponse("ERROR")
     return HttpResponse("OK")
-    #--------
+#--------
+    
+def liderBanda(Banda):
+    lider = tieneLider(Banda)
+    if lider == 0:
+        Banda.delete()
+    elif lider == 2:
+        integrantes = IntegrantesBanda.objects.filter(banda = Banda)
+        lider = integrantes[randint(0, len(integrantes)-1)]
+        lider.esLider = True
+        lider.save()
+        
+    
+def tieneLider(Banda):
+    integrantes = IntegrantesBanda.objects.filter(banda = Banda)
+    if len(integrantes) == 0:
+        return 0
+    for integrante in integrantes:
+        if integrante.esLider:
+            return 1
+    return 2
+
+
 def guardarDatosPersonales(request):
     try:
         if request.method == 'POST':
