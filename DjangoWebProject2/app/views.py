@@ -312,7 +312,7 @@ class perfilBanda(View):
         discos =  Disco.objects.filter(banda = banda)
         material =  Material.objects.filter(banda = banda)
         pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
-        
+        generos = Genero.objects.all()
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
@@ -321,9 +321,7 @@ class perfilBanda(View):
             if(len(solicitantes)==0):
                 solicitantes = None
             
-            title = 'perfil de la banda' + banda.nombre
-            
-
+            title = 'perfil de la banda ' + banda.nombre
             assert isinstance(request, HttpRequest)
             return render(
                 request,
@@ -334,6 +332,7 @@ class perfilBanda(View):
                     'discos':discos,
                     'material':material,
                     'artista':artista,
+                    'generos':generos,
                     'esLider':pertenece[0].esLider,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
@@ -356,6 +355,20 @@ class infoDisco(View):
             {
                 'disco':disco,
                 'canciones':canciones
+            })
+        )
+
+#------------------------
+class addDisco(View):
+    def get(self, request, bId):
+        banda = Banda.objects.filter(id = bId)[0]
+        return render(
+            request,
+            'app/add_disco.html',
+            context_instance = RequestContext(request,
+            {
+                'banda':banda,
+                'year':datetime.now().year
             })
         )
         
@@ -703,7 +716,38 @@ def datosBarra(request): #TODO: Solo tira 3 bandas
     elif tipoUsuario == 2:
         return "ooh"
 
+#---------------------------
+def guardarDatosNormal(request):
+    try:
+        if request.method == 'POST':
+            dato = request.POST.get('dato')
+            target = request.POST.get('target')
+            if target == "nombre":
+                u = Normal.objects.filter(user = request.user)[0]
+                if u.nombre == dato:
+                    return HttpResponse("w,El nombre ingresado era el mismo")
+                else:
+                    u.nombre = dato
+                    request.user.first_name = dato
+                    u.nombre = dato
+                    request.user.save()
+                    u.save()
+            elif target == "descripcion":
+                u = Normal.objects.filter(user = request.user)[0]
+                if u.descripcion == dato:
+                    return HttpResponse("w,La descripcion no ha cambiado")
+                else:
+                    u.descripcion = dato
+                    u.save()
+    except:
+        exc_type, exc_obj, exc_tb = sys.exc_info()
+        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+        print(exc_type, fname, exc_tb.tb_lineno)
+        print(traceback.format_exc())
+        return HttpResponse("ERROR")
+    return HttpResponse("OK")
 
+#---------------------------
 def guardarDatosArtista(request):
     try:
         if request.method == 'POST':
@@ -712,7 +756,6 @@ def guardarDatosArtista(request):
             print "Target %s"%request.POST.get('target')
             dato = request.POST.get('dato')
             target = request.POST.get('target')
-            response_data = {}
             if target == "nombre":
                 u = Usuario.objects.filter(user = request.user)[0]
                 u.nombre = dato
@@ -793,15 +836,33 @@ def guardarDatosBanda(request):
                     else:
                         return HttpResponse("e,No tienes permiso para cambiar el nombre")
                 elif target == "biografia":
-                    b = Banda.objects.filter(id = bandId)[0]
-                    b.biografia = dato
-                    b.save()
-                    print "saved"
+                    if integrante[0].esLider:
+                        if banda.biografia==dato:
+                            return HttpResponse("w,El texto ingresado era el mismo")
+                        else:
+                            banda.biografia = dato
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
+                elif target == "genero":
+                    if integrante[0].esLider:
+                        genero = Genero.objects.filter(id = dato)[0]
+                        if banda.genero==genero:
+                            return HttpResponse("w,El genero ingresado era el mismo")
+                        else:
+                            banda.genero = genero
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
                 elif target == "cuentaTwitter":
-                    b = Banda.objects.filter(id = bandId)[0]
-                    b.cuentaTwitter = dato
-                    b.save()
-                    print "cuentaTwitter saved"
+                    if integrante[0].esLider:
+                        if banda.cuentaTwitter==dato:
+                            return HttpResponse("w,El texto ingresado era el mismo")
+                        else:
+                            banda.cuentaTwitter = dato
+                            banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar la biograf&iacute;a")
                 elif target=='material-delete':
                     m = Material.objects.filter(id = dato,banda=banda)
                     if(len(m)>0):
@@ -816,19 +877,19 @@ def guardarDatosBanda(request):
                         accion = request.POST.get('accion')
                         print "accion %s"%accion
                         if(accion == "aceptar"):
-                            integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion="S", fechaIngreso=datetime.now())
+                            integr = IntegrantesBanda(integrante = s.artista, banda = s.banda, esLider=False, ocupacion=s.ocupacion, fechaIngreso=datetime.now())
                             integr.save()
                             print "AcEPTAR"
                         s.delete()
                     else:
                         return HttpResponse("e,No tienes permiso para aceptar solicitudes")
             elif target == "solicitar": 
-                    print "idbanda:",dato
+                    print "idbanda:",dato    
                     a = Artista.objects.filter(user = request.user)[0]
                     
                     print "b", banda.nombre,"a",a.nombre
                     if(len(Solicitud.objects.filter(artista = a, banda = banda, direccion = True))==0):
-                        s = Solicitud(artista = a, banda = banda, direccion = True)
+                        s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = True)
                         s.save()
                     else:
                         return HttpResponse("ERROR")
@@ -842,6 +903,8 @@ def guardarDatosBanda(request):
         print(traceback.format_exc())
         return HttpResponse("ERROR")
     return HttpResponse("OK")
+    
+#----------------------------
 def agregarMaterial(request):
     try:
         if request.method == 'POST':

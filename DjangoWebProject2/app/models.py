@@ -177,5 +177,7 @@ class Solicitud(models.Model):
 	# direccion, True=pedir, False=invitar
 	direccion = models.BooleanField()
 	guid = models.CharField(max_length=36, null=True)
+	ocupacion = models.CharField(max_length=200, null=True)
+	
 	def __unicode__(self):
 		return self.banda.nombre + " " + self.artista.nombre

@@ -23,7 +23,6 @@
                 <button class="btn fileChange ajax-file-selection color-principal" ><i class="material-icons">&#xE254;</i></button>
                 {%endif%}
                 <form class="file-form" preview="portada" method="POST" enctype="multipart/form-data" action="/upload"  target="bandaPortada">
-                    {% csrf_token %}
                     <input name="image" type="file" accept="image/*" style="height:0;width:0;overflow:hidden;">
                 </form>
             </div>
@@ -32,7 +31,7 @@
                 <div class="row">
                     <div class="col s12 ">
                         <div id = "imagenPerfil" class="inline blue z-depth-1"><img id="preview" src="{{banda.imagenPerfil.url}}" data-src="{{banda.imagenPerfil.url}}" alt="" 
-                style="width:100px;height:100px;border:solid 1px #444;margin-top:-50px;"></div>
+                style="width:100px;height:100px;border:solid 1px #444;margin-top:-150px;"></div>
                     <div style="margin-top:-30px">
                 <button class="btn fileChange ajax-file green" style="display:none"><i class="material-icons">&#xE5CA;</i></button>
                 <button class="btn fileChange cancel red" style="display:none"><i class="material-icons">&#xE14C;</i></button>
@@ -40,7 +39,7 @@
                 <button class="btn fileChange ajax-file-selection color-principal" ><i class="material-icons">&#xE254;</i></button>
                 {%endif%}
                 <form class="file-form" preview="preview" method="POST" enctype="multipart/form-data" action="/upload"  target="banda">
-                    {% csrf_token %}
+                    
                     <input name="image" type="file" accept="image/*" style="height:0;width:0;overflow:hidden;">
                 </form>
             </div>
@@ -50,8 +49,8 @@
                     <div class="col s12 ">
                         {%if esLider%}
                         <h5 class="campo-editable center-align"> 
-                            <form method="POST" data-target="nombre" largomaximo="20" class="inline" style="width:450px">
-                                {% csrf_token %}
+                            <form method="POST" data-target="nombre" largomaximo="20" class="inline" >
+                                
                                 <span class="no-hide dato">{{banda.nombre}}</span> 
                                 <input class="w60p hide"  type="text" name="dato" value="{{banda.nombre}}" />
                                 <a class="btn no-hide editar toggle color-principal hover-shadow">
@@ -60,7 +59,7 @@
                                 <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
                                     <i class="material-icons">&#xE5CA;</i>
                                 </a>
-                                <a class="btn hide editar red hover-shadow tooltipped toggle" data-tooltip="Cancelar cambios">
+                                <a class="btn hide editar red hover-shadow tooltipped toggle" data-tooltip="Cancelar cambios" >
                                     <i class="material-icons">&#xE14C;</i>
                                 </a>
                             </form>
@@ -68,7 +67,32 @@
                         <h5>{{banda.nombre}}
                         {%endif%}
                         </h5>
-                        <h6>{{ banda.genero.nombre }}</h6>
+                        {%if esLider%}
+                        <h6 class="campo-editable center-align"> 
+                            <form method="POST" data-target="genero" largomaximo="20" class="inline" >
+                                <span class="no-hide dato">{{banda.genero.nombre}}</span> 
+                                {#<input class="w60p hide"  type="text" name="dato" value="{{banda.genero.nombre}}" />#}
+                                <div class="input-field col s12">
+                                    <select class="w60p inline browser-default hide  " name="dato" id="dato" >
+                                        {% for g in generos %}
+                                        <option value="{{g.id}}" {%if banda.genero == g %}selected{%endif%}  >{{g.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <a class="btn no-hide editar toggle color-principal hover-shadow">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a> 
+                                <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
+                                    <i class="material-icons">&#xE5CA;</i>
+                                </a>
+                                <a class="btn hide editar red hover-shadow tooltipped toggle" data-tooltip="Cancelar cambios" >
+                                    <i class="material-icons">&#xE14C;</i>
+                                </a>
+                            </form>
+                        {%else%}
+                        <h6>{{ banda.genero.nombre }}
+                        {%endif%}
+                        </h6>
                     </div>
                 </div>
                 <div class="row">
@@ -79,7 +103,7 @@
                                 <div class="card-panel color-principal lighten-3">
                                     <div class="campo-editable">
                                         <form method="POST" data-target="biografia" largomaximo = "25">
-                                            {% csrf_token %}
+                                            
                                             {%if esLider%}
                                             <a class="btn no-hide editar toggle color-principal hover-shadow right">
                                                 <i class="material-icons">&#xE254;</i>
@@ -89,13 +113,13 @@
                                             <div class="input-field hide" style="width:calc(100% - 30px);">
                                                 <textarea name="dato" class="materialize-textarea cyan lighten-4" style="padding:0 15px;">{{banda.biografia}}</textarea>
                                             </div>
-
-                                            <a class="btn hide editar submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios">
-                                                <i class="material-icons">&#xE5CA;</i>
-                                            </a>
                                             <a class="btn hide editar toggle red hover-shadow tooltipped right cancelar" data-tooltip="Cancelar cambios">
                                                 <i class="material-icons">&#xE14C;</i>
                                             </a>
+                                            <a class="btn hide editar submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios"  style="margin-right:5px;">
+                                                <i class="material-icons">&#xE5CA;</i>
+                                            </a>
+                                            
                                             <hr style="border:none;width:auto;height:0px;clear:both;"/>
                                         </form>
                                     </div>
@@ -120,7 +144,7 @@
                             
 
                             {# hay que quitar esta wea de if al pasarlo pa la wea de la otra wea #}
-                            {%if discos|length > 0  %}
+                            
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Discografia</h5>
@@ -132,11 +156,15 @@
                                             <span class="secondary-content stext cyan-text text-darken-4">{{disco.lanzamiento.year}}</span>
                                         </li>
                                         {% endfor %}
+                                        <li class="collection-item add-disco hover-grey valign-wrapper manito ">
+                                            <i class="material-icons blue darken-3 white-text" style="padding:3px;font-size:40px">&#xE147;</i>
+                                            <span class="truncate" style="margin-left:20px;width:calc(100% - 50px);">Agregar Disco</span>
+                                            {#<span class="secondary-content stext cyan-text text-darken-4">{disco.lanzamiento.year}</span>#}
+                                        </li>
 
                                       </ul>
                                 </div>
                             </div>
-                            {%endif%}
                             {%if solicitantes|length > 0  %}
                             <div class="row">
                                 <div class="col s12 left-align">
@@ -145,19 +173,19 @@
                                         {% for solicitud in solicitantes %}
                                         <li class="collection-item valign-wrapper" >
                                           <form method="POST" data-target="aceptarSolicitud" >
-                                            {% csrf_token %}
+                                            
                                             <a class="valign-wrapper" href="/perfilArtistaNp/{{solicitud.artista.id}}">
                                             <div class="circle avatar-perfil small" style="background: url({{solicitud.artista.imagenPerfil.url}}); " ></div>
                                             <div class="" style="margin-left:20px;"><span >{{solicitud.artista.nombre}}</span>
+                                            <br><span class="grey-text ">{{solicitud.ocupacion}}</span>
+                                            </div>
                                             </a>
-                                            <br>
                                             <input name ="dato" hidden="true" value="{{ solicitud.id }}"></input>
                                             <input id="accion" name ="olddato" hidden="true" value="aceptar"></input>
                                             {%if esLider%}
                                                 <button class="btn green solicitud" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></button>
                                                 <button class="btn red solicitud" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></button>
                                             {%endif%}
-                                            </div>
                                         </form>
                                         </li>
                                         {% endfor %}
@@ -170,7 +198,31 @@
                     <div class="col l6 s12 ">
                         <div class="container">
                             <div class="row">
-                                <div class="col s12 ">
+                                <div class="twiter card-panel white-text campo-editable" style="background:#5faad8;text-shadow: 0 1px 2px rgba(0,0,0,.2);font-size: 18px;">
+                                    <form method="POST" data-target="cuentaTwitter" largomaximo="40">
+                                        
+                                        <span>Cuenta de twitter : </span>
+                                        {%if banda.cuentaTwitter %}
+                                            <span class="no-hide dato">{{banda.cuentaTwitter}}</span>
+                                            <br class="hide"/>
+                                            <input class=" hide  light-blue lighten-4 grey-text text-darken-4" style="width:calc(60% - 40px); padding:0 10px;" type="text" name="dato" value="{{banda.cuentaTwitter}}" /> 
+                                        {%else%}
+                                            <span class="no-hide dato">Sin Cuenta</span>
+                                            <br class="hide"/>
+                                            <input class="hide  light-blue lighten-4 grey-text text-darken-4" style="width:calc(60% - 40px); padding:0 10px;" type="text" name="dato" /> 
+                                        {%endif%}
+                                        <a class="btn no-hide editar toggle color-principal hover-shadow">
+                                            <i class="material-icons">&#xE254;</i>
+                                        </a> 
+                                        <a class="btn hide editar submit green hover-shadow tooltipped" data-tooltip="Guardar cambios">
+                                            <i class="material-icons">&#xE5CA;</i>
+                                        </a>
+                                        <a class="btn hide editar toggle red hover-shadow tooltipped cancelar" data-tooltip="Cancelar cambios">
+                                            <i class="material-icons">&#xE14C;</i>
+                                        </a>
+                                    </form>
+                                </div>
+                                <div class="col s12 twitter-container">
                                     <a class="twitter-timeline" href="https://twitter.com/Crunchyroll" data-widget-id="634820916141289472" data-screen-name="{{banda.cuentaTwitter}}"></a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                                 </div>
                             </div>
@@ -203,7 +255,6 @@
                                             <a class="valign-wrapper tooltipped" href="{{m.enlace}}" data-tooltip="ir al enlace" target="_blank">
                                                 <div class="inline" style="margin:0"><i class="material-icons {{m.color}} white-text " style="padding:8px;">{{m.tipo}}</i></div>
                                                 <div class="inline">{{m.nombre|title}}<br><span class="truncate grey-text stext">{{m.descripcion}}</span></div>
-
                                             </a>
                                             
                                         </li>
@@ -243,7 +294,7 @@
         
         <div class="divider"></div>
         <form id="addMaterial" method="POST" action="/agregarMaterial" data-target="nombre">
-            {% csrf_token %}
+            
             <h5 class="grey-text">Opciones del cuadro</h5>
             <div>
                 
@@ -356,10 +407,10 @@
     $(document).ready(function(){
         // Para hacer scroll cada vez que cargo un perfil
         var container = $('body'),
-        scrollTo = $('#imagenPerfil');
-        container.animate({
-    scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 100
-});
+                scrollTo = $('#imagenPerfil');
+                container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop() - 100
+        });
       //fin color selector
     $('select').material_select();
     //{# solo para no lider #}
@@ -374,8 +425,18 @@
             console.error( "error" );
        });
        });
-    
+       $('.add-disco').click(function(){
+            $('#modalDisco').openModal();
+            var modal = $('#modalDisco .modal-content');
+            $.get("/addDisco/"+$('.container.sfull').attr('id-banda'),function(data){
+                modal.html("");
+                modal.html(data);
+            }).fail(function() {
+                console.error( "error" );
+            });
+        });
     });
+    
 </script>
     <script type="text/javascript">
     $(document).ready(function(){
