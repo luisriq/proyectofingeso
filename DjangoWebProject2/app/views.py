@@ -514,7 +514,7 @@ def search(request):
         return HttpResponseBadRequest()
     
     q = request.POST['q']
-    artistas = Artista.objects.filter(nombre__icontains=q).values('id', 'nombre', 'imagenPerfil')
+    artistas = Artista.objects.filter(nombre__icontains=q).exclude(user=request.user).values('id', 'nombre', 'imagenPerfil')
     print artistas
 
     artista_fields = (
@@ -591,7 +591,7 @@ class busqueda(View):
     def get(self, request):
         
         if request.is_ajax():
-                   artistas = Artista.objects.filter(nombre__startswith= request.GET['nombre'] ).values('id', 'nombre', 'imagenPerfil')
+                   artistas = Artista.objects.filter(nombre__startswith = request.GET['nombre'] ).exclude(user=usuario).values('id', 'nombre', 'imagenPerfil')
                    return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
         else:
                    return HttpResponse("['nombre':0]");
@@ -826,7 +826,17 @@ def guardarDatosBanda(request):
             target = request.POST.get('target')
             banda=Banda.objects.filter(id = bandId)[0]
             integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = Artista.objects.filter(user=request.user)[0])
-            if(len(integrante)==1):
+            if target == "solicitarBanda": 
+                print "idbanda:",dato    
+                a = Artista.objects.filter(id = request.POST.get('artista'))[0]
+                
+                print "b", banda.nombre,"a",a.nombre
+                if(len(Solicitud.objects.filter(artista = a, banda = banda, direccion = True))==0):
+                    s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = False)
+                    s.save()
+                else:
+                    return HttpResponse("ERROR")
+            elif(len(integrante)==1):
                 if target == "nombre":
                     if integrante[0].esLider:
                         if banda.nombre==dato:

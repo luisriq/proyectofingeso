@@ -15,7 +15,7 @@ $( document ).ready(function(){
 	$(".solicitud").click(function(){
 		var formulario = $(this).closest("form");
 		var olddato = $(this).parent().find('input[name=olddato]');
-		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
+		var dato = $(formulario).find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log("Data: "+dato.val());
 		var datoValue = dato.val();
 		if(typeof olddato === 'undefined'){
@@ -31,6 +31,8 @@ $( document ).ready(function(){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
 			return null
 		}
+		console.log("formulario"+formulario.attr("data-target"));
+		console.log("ArtistaID:"+formulario.attr("data-artista"));
 		
 		$.ajax({
 			url : "/guardarDatosBanda", // the endpoint
@@ -38,6 +40,7 @@ $( document ).ready(function(){
 			data : { accion:$('#accion').attr('value'),
 						bid:$('.container.sfull').attr('id-banda'),
 						dato : datoValue,
+						artista : formulario.attr("data-artista"),
 					target : formulario.attr('data-target'),
 				"X-CSRFToken" : token.val() }, // data sent with the post request
 			// handle a successful response

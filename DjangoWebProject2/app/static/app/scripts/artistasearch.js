@@ -3,7 +3,7 @@ $( document ).ready(function(){
 		
 		$(".result-list").removeClass("hide");
 		var this_=$(this);
-		var collectionContainer=this_.parent('div').parent('form').find('.result-list');
+		var collectionContainer=$(".result-list");
 		collectionContainer.html('')
 		if($(this).val().length>=0){
 			collectionContainer.width(this_.width());
@@ -47,6 +47,8 @@ function artistaSelect(artista){
 	console.log("imagen:" + artista.attr("data-imagen"));
 	console.log("id:" + artista.attr("data-id"));
 	$("#seleccionado").html(artista.clone());
+	$(artista).closest("form").attr("data-artista", artista.attr("data-id") )
+	console.log($(artista).closest("form"));
 }
 
 function imgGen(url){
