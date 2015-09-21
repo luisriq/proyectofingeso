@@ -913,7 +913,7 @@ def guardarDatosBanda(request):
                     print dato
                     if(len(c)>0):
                         c[0].delete()
-                        return HttpResponse("k, Eliminado con exito")
+                        return HttpResponse("k,Eliminado con exito")
                     else:
                         return HttpResponse("e,No tienes permiso o la canci&oacute;n ya no existe")
                 elif target == "aceptarSolicitud": 

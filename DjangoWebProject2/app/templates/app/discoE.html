@@ -93,7 +93,7 @@ function removeCancion(cId,confirmado){
 				dato:cId,
 			},
 			success: function (data) {
-				var id = response.split(',');
+				var id = data.split(',');
 				if(id[0]=="k"){
 					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>'+id[1], 4000);
 					$('#modalDisco').closeModal();		
