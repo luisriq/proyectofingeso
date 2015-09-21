@@ -11,10 +11,29 @@ $( document ).ready(function(){
 		form.find("input").val(form.find("span.dato").text());
 		form.find("textarea").val(form.find("span.dato").text());
 	});
+	$( "body" ).on( "click", '.solicitud', function() {
+		click($(this));
+	});
+	//hay que hacer que sea mas elegante... meh
 	
-	$(".solicitud").click(function(){
-		var formulario = $(this).closest("form");
-		var olddato = $(this).parent().find('input[name=olddato]');
+	for(var i=1;i<20;i++)
+		setTimeout(function(){
+			if($('iframe').width()>$('iframe').parent().width()){
+				var pw=$('iframe').parent().width(); 
+				$('iframe').width(pw);
+				$('iframe').parent('div').resize(function (){
+					if($('iframe').width() != $('iframe').parent().width()){
+						$('iframe').width($(this).width());
+					}
+				})
+					
+			}
+		}, i*500);//arrgla problemas de visualizacion en ipad
+}); 
+
+function click(el){
+		var formulario = $(el).closest("form");
+		var olddato = $(el).parent().find('input[name=olddato]');
 		var dato = $(formulario).find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log("Data: "+dato.val());
 		var datoValue = dato.val();
@@ -22,7 +41,7 @@ $( document ).ready(function(){
   			datoValue = dato.val().trim().capitalizeFirstLetter();
  		};
 		
-		var token = $(this).parent().find('input[name=csrfmiddlewaretoken]');
+		var token = $(el).parent().find('input[name=csrfmiddlewaretoken]');
 			
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
@@ -42,11 +61,13 @@ $( document ).ready(function(){
 						dato : datoValue,
 						artista : formulario.attr("data-artista"),
 					target : formulario.attr('data-target'),
-				"X-CSRFToken" : token.val() }, // data sent with the post request
+					
+					
+				}, // data sent with the post request
 			// handle a successful response
 			success : function(response) {
 				console.log(response); // log the returned json to the console
-				if(response=="OK"){
+				if(response.indexOf("OK") > -1){
 					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
 					if(formulario.attr('data-target')=="solicitar"){
 						//TODO: Cambiar html 
@@ -79,6 +100,38 @@ $( document ).ready(function(){
 										'</li>');
 						}
 					}
+					else if(formulario.attr('data-target')=="solicitarBanda"){
+						$('#modalArtista').closeModal();
+						if ($('#solicitarBanda').length == 0){
+							console.log("LALILULELO");
+							$('#containerGeneral').append(
+							'<div class="row">'+
+                                '<div class="col s12 left-align">'+
+                                    '<h5>Solicitantes</h5>'+
+                                    '<ul id="solicitarBanda" class="collection">'+
+									'</ul>'+
+                               ' </div>'+
+                            '</div>');
+						}
+						
+						id = response.split(",")[1];
+						$('#solicitarBanda').append(
+							'<li class="collection-item valign-wrapper" >'+
+                                          '<form method="POST" data-target="aceptarSolicitud" >'+
+                                            
+                                            '<a class="valign-wrapper" href="/perfilArtistaNp/'+formulario.attr("data-artista")+'">'+
+                                            '<div class="circle avatar-perfil small" style="background: url('+"/media/"+formulario.attr("data-imagen")+'); " ></div>'+
+                                            '<div class="" style="margin-left:20px;"><span >'+formulario.attr("data-nombre")+'</span>'+
+                                            '<br><span class="grey-text ">'+dato.val()+'</span>'+
+                                            '</div>'+
+                                            '</a>'+
+                                            '<input name ="dato" hidden="true" value="'+id+'"></input>'+
+                                            '<input id="accion" name ="olddato" hidden="true" value="rechazar"></input>'+
+                                            '<a class="btn red solicitud" onclick="document.getElementById(&quot;accion&quot;).setAttribute(&quot;value&quot;, &quot;rechazar&quot;);"   ><i class="material-icons">&#xE14C;</i></a>'+
+                                        '</form>'+
+                                        '</li>'
+						);
+					}
 				}
 				else
 					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
@@ -89,23 +142,9 @@ $( document ).ready(function(){
 				console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
 			}
 		});
-	});
-	//hay que hacer que sea mas elegante... meh
-	
-	for(var i=1;i<20;i++)
-		setTimeout(function(){
-			if($('iframe').width()>$('iframe').parent().width()){
-				var pw=$('iframe').parent().width(); 
-				$('iframe').width(pw);
-				$('iframe').parent('div').resize(function (){
-					if($('iframe').width() != $('iframe').parent().width()){
-						$('iframe').width($(this).width());
-					}
-				})
-					
-			}
-		}, i*500);//arrgla problemas de visualizacion en ipad
-}); 
+
+}
+
 function largoPalabra(texto, maximo){
 	var palabras = texto.split(" ");
 	for (p in palabras)
@@ -116,4 +155,20 @@ function largoPalabra(texto, maximo){
 			g=false;
 	});
 	return g;
+}
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

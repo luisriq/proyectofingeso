@@ -97,7 +97,7 @@
                 </div>
                 <div class="row">
                     <div class="col l6 s12 ">
-                        <div class="container sfull">
+                        <div class="container sfull" id="containerGeneral">
                             <div class="row"> 
                                 
                                 <div class="card-panel color-principal lighten-3">
@@ -175,7 +175,7 @@
                             <div class="row">
                                 <div class="col s12 left-align">
                                     <h5>Solicitantes</h5>
-                                    <ul class="collection">
+                                    <ul id="solicitarBanda" class="collection">
                                         {% for solicitud in solicitantes %}
                                         <li class="collection-item valign-wrapper" >
                                           <form method="POST" data-target="aceptarSolicitud" >
@@ -189,8 +189,10 @@
                                             <input name ="dato" hidden="true" value="{{ solicitud.id }}"></input>
                                             <input id="accion" name ="olddato" hidden="true" value="aceptar"></input>
                                             {%if esLider%}
-                                                <button class="btn green solicitud" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></button>
-                                                <button class="btn red solicitud" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></button>
+                                                {%if solicitud.direccion%}
+                                                    <a class="btn green solicitud" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></a>
+                                                {%endif%}
+                                                <a class="btn red solicitud" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></a>
                                             {%endif%}
                                         </form>
                                         </li>

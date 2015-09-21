@@ -317,7 +317,7 @@ class perfilBanda(View):
         if len(pertenece) == 1:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
-            solicitantes = Solicitud.objects.filter(banda = banda, direccion=True)
+            solicitantes = Solicitud.objects.filter(banda = banda)
             print solicitantes
             if(len(solicitantes)==0):
                 solicitantes = None
@@ -514,7 +514,15 @@ def search(request):
         return HttpResponseBadRequest()
     
     q = request.POST['q']
-    artistas = Artista.objects.filter(nombre__icontains=q).exclude(user=request.user).values('id', 'nombre', 'imagenPerfil')
+    banda = Banda.objects.filter(id=request.POST.get('bid'))
+    
+    artistas = Artista.objects.filter(nombre__icontains=q).exclude(user=request.user)
+    integrantes = [i.integrante for i in IntegrantesBanda.objects.filter(banda = banda)]
+    
+    for a in integrantes:
+        artistas = artistas.exclude(id = a.id)
+    
+    artistas = artistas.values('id', 'nombre', 'imagenPerfil')
     print artistas
 
     artista_fields = (
@@ -831,9 +839,10 @@ def guardarDatosBanda(request):
                 a = Artista.objects.filter(id = request.POST.get('artista'))[0]
                 
                 print "b", banda.nombre,"a",a.nombre
-                if(len(Solicitud.objects.filter(artista = a, banda = banda, direccion = True))==0):
+                if(len(Solicitud.objects.filter(artista = a, banda = banda))==0):
                     s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = False)
                     s.save()
+                    return HttpResponse("OK,%d"%s.id)
                 else:
                     return HttpResponse("ERROR")
             elif(len(integrante)==1):
@@ -904,7 +913,7 @@ def guardarDatosBanda(request):
                     a = Artista.objects.filter(user = request.user)[0]
                     
                     print "b", banda.nombre,"a",a.nombre
-                    if(len(Solicitud.objects.filter(artista = a, banda = banda, direccion = True))==0):
+                    if(len(Solicitud.objects.filter(artista = a, banda = banda))==0):
                         s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = True)
                         s.save()
                     else:

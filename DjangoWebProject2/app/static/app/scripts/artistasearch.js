@@ -12,7 +12,8 @@ $( document ).ready(function(){
                 method : 'POST',
                 url : '/search',
                 data : {
-                    q : this_.val(),
+					bid:$('.container.sfull').attr('id-banda'),
+					q : this_.val(),
                     csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
                 },
                 success : function(data) {
@@ -47,7 +48,9 @@ function artistaSelect(artista){
 	console.log("imagen:" + artista.attr("data-imagen"));
 	console.log("id:" + artista.attr("data-id"));
 	$("#seleccionado").html(artista.clone());
-	$(artista).closest("form").attr("data-artista", artista.attr("data-id") )
+	$(artista).closest("form").attr("data-artista", artista.attr("data-id") );
+	$(artista).closest("form").attr("data-imagen", artista.attr("data-imagen") );
+	$(artista).closest("form").attr("data-nombre", artista.attr("data-nombre") );
 	console.log($(artista).closest("form"));
 }
 
