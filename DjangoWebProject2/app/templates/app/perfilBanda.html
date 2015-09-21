@@ -229,8 +229,11 @@
                             </div>
                             <div class="row">
                                 <div class="col s12 left-align">
-                                    <h5>Integrantes</h5>
+                                    <div class = "valign-wrapper">
+                                        <h5>Integrantes</h5>
+                                          <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modalArtista" ><i class="material-icons">add</i></a>
 
+                                        </div>
                                     <div id="integrante" class="collection">
                                         {% for integrante in integrantes %}
                                         <li class="collection-item valign-wrapper">
@@ -285,6 +288,44 @@
     </div>
     
 </div>
+</div>
+<!-- Modal Artista   --> 
+
+<div id="modalArtista" class="modal " style=" height: 100%;">
+    <div class="modal-content">
+        <h4>Agregar usuario</h4>
+            <div class="divider color-principal" style="margin-bottom:30px"></div>
+                    <div class="col s12 l9  campo-editable">
+                        <form method="POST" data-target="seach" largomaximo="25" autocomplete="off">
+                            {% csrf_token %}
+                            <div id="seleccionado"></div>
+
+                                <div class="input-field col-md-10">
+                                <i class="material-icons prefix">&#xE8B6;</i>{#search icon#}
+                                <input name="search" id="seach" type="text" class="validate">
+                                <label for="seach" class="active">Buscar</label>
+                                 
+                                </div>
+                               <div class="collection result-list" style="cursor:pointer;overflow-y: scroll;width: 50px; height: 50%; overflow-x:hidden; 
+z-index: 1000;
+position: absolute; ">
+                                </div>
+                                <div class="input-field col-md-10">
+                                <input name="ocupacion" id="ocupacion" type="text" class="validate">
+                                <label for="ocupacion" class="active">Ocupacion</label>
+                                </div>                            
+                        </form>
+            </div>
+
+
+        
+   
+        
+     </div>
+      <div class="modal-footer">
+      <a class=" modal-action waves-effect waves-green btn-flat" onclick="$('#addMaterial').submit();"  >Aceptar</a>
+      <a class=" modal-action modal-close waves-effect waves-green btn-flat" >Cancelar</a>
+    </div>
 </div>
 
 
@@ -448,4 +489,5 @@
     </script>
     <script src="{% static 'app/scripts/editarbandaint.js' %}"></script>
     <script src="{% static 'app/scripts/solicitudes.js' %}"></script>
+	<script src="{% static 'app/scripts/artistasearch.js' %}"></script>
 {% endblock %}
