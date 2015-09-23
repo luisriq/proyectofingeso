@@ -362,7 +362,37 @@ function dejarBanda(uId,confirmado){
 	}
 }
 
-
+function expulsar(uId,confirmado){
+	
+	if(confirmado){
+		$('.rem-confirm').remove();
+		bid= $('.container.sfull').attr('id-banda');
+		console.log(bid);
+		$.ajax({
+			url: "/guardarDatosBanda",
+			type: 'POST',
+			data: {
+				bid:bid,
+				target:'retirarse',
+				dato:uId,
+			},
+			success: function (data) {
+				if(data=='OK'){
+					//window.location="/perfilArtista";
+					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Artista expulsado', 4000);
+					//remover el usuario de la cosa de los usarios
+					$('#int'+uId).remove();
+				}else
+					respuestaInstatisfactoria(data);
+			},
+			error: function (data) {
+				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Erro al intentar dejar la banda', 4000);
+			},
+		});
+	}else{
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>¿Estás seguro que deseas expulsar al usuario?<a style="margin-left:10px;" href="#" onclick="expulsar('+uId+',true);"><b>SI</b></a>', 10000,"rem-confirm");
+	}
+}
 
 function removeDisco(dId,confirmado){
 	

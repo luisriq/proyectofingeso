@@ -139,11 +139,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a class="col hover-shadow s5 card-panel red white-text" onclick="dejarBanda({{request.user.id}})" style="padding:10px">Dejar la banda</a>
+                                <a class="col hover-shadow s5 card-panel red white-text" onclick="dejarBanda({{artista.id}})" style="padding:10px">Dejar la banda</a>
                             </div>  
                             
 
-                            {# hay que quitar esta wea de if al pasarlo pa la wea de la otra wea #}
+                            
                             
                             <div class="row">
                                 <div class="col s12 left-align">
@@ -245,12 +245,15 @@
                                         </div>
                                     <div id="integrante" class="collection">
                                         {% for integrante in integrantes %}
-                                        <li class="collection-item valign-wrapper">
-                                            <a class="valign-wrapper" href="/perfilArtistaNp/{{integrante.integrante.id}}">
+                                        <li id="int{{integrante.integrante.id}}" class="collection-item valign-wrapper">
+                                            <a class="valign-wrapper" href="/perfilArtistaNp/{{integrante.integrante.id}}" style="width:calc(100% - 40px)">
                                                 <div class="circle avatar-perfil small" style="background: url({{integrante.integrante.imagenPerfil.url}}); " ></div>
                                                 <div class="" style="margin-left:20px;"><span >{{integrante.integrante.nombre}}</span>
                                                 <br><span class="grey-text ">{%if integrante.esLider  %}<i class="material-icons yellow-text text-darken-3" style="font-size: 15px">&#xE838;</i>{% endif %}{{integrante.ocupacion}}</span></div>    
                                             </a>
+                                        {%if esLider and not integrante.esLider %}
+                                            <a class="btn red tooltipped" data-tooltip="Expulsar" data-position="right" onclick="expulsar({{integrante.integrante.id}})" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>
+                                        {%endif%}
                                         </li>
                                         {% endfor %}
                                         {%if esLider%}

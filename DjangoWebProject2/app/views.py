@@ -894,7 +894,8 @@ def guardarDatosBanda(request):
                     else:
                         return HttpResponse("e,No tienes permiso para cambiar el nombre")
                 elif target == "retirarse":
-                    artista = Artista.objects.filter(user = request.user)[0]
+                    print Artista.objects.filter(id = dato)
+                    artista = Artista.objects.filter(id = dato)[0]
                     integrante = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)[0]
                     integrante.delete()
                     liderBanda(banda)
