@@ -29,7 +29,13 @@
                     <div id="nombre-navbar" class="truncate" >{{ user.first_name|title }}</div>
                     <div class="circle avatar-img myavatar dropdown-button"  data-beloworigin="true" data-activates='dropdown1'><img src="{{user.profile.imagenPerfil.url}}" alt="" style="height:50px;"></div>
                 </div>
-               
+               <div class="right">
+                    <div class="input-field">
+                        <input type="search" id="search-field" class="field" required maxlength="">
+                        <label for="search-field"><i class="mdi-action-search"></i></label>
+                        <i class="mdi-navigation-close close"></i>
+                    </div>
+                </div>
                 <ul id='dropdown1'  class='grey darken-3 dropdown-content' style="min-width:200px;" data-beloworigin="true">
                     <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
                     <li><a href="{% url 'config' %}">Configuraciones</a></li>
