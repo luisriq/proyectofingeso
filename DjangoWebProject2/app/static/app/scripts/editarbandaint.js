@@ -434,3 +434,26 @@ function respuestaInstatisfactoria(data){
 String.prototype.capitalizeFirstLetter = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
+function intOpciones(uid){
+	var img = $('#int'+uid).find('.img').attr('data-url'); 
+	var nom = $('#int'+uid).find('.nombre').text();
+	var ocu=  $('#int'+uid).find('.ocupacion').text();
+	var lider = $('#int'+uid).attr('data-lider')=="True";
+	if(lider){
+		ocu = ocu.slice(1);
+	}
+	var modal=$('#modalOpciones');
+	var ocupacion_h5 = modal.find('.campo-editable');
+	$(ocupacion_h5).find('.dato').text(ocu);
+	modal.find('.nombre_').text(nom);
+	modal.find('.avatar-perfil').css({'background-image':'url('+img+')'})
+	console.log(modal.find('.avatar-perfil'));
+	
+	
+	$('#modalOpciones').openModal();
+	if(lider){
+		$('.ceder.no-hide').hide();
+	}else{
+		$('.ceder.no-hide').show();
+	}
+}
