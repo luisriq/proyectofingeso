@@ -52,7 +52,7 @@
                                 <form method="POST" data-target="solicitar" >
                                 {% csrf_token %}
                                 {% if solicitado%}
-                                    <a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text disabled" style="padding:10px">Solicitado</a>
+                                    <a class="col  s5 offset-s2 card-panel color-principal lighten-3 white-text disabled" style="padding:10px">Solicitado</a>
                                 {% else %}
                                     <a id="botonSolicitar" class="togglesol no-hide col hover-shadow s5 offset-s2 card-panel color-principal white-text "  style="padding:10px" data-tooltip="Enviar solicitud">Solicitar ingreso</a>
                                     <input class="w60p hide"  type="text" name="dato" />
@@ -103,7 +103,7 @@
                                             <a class="valign-wrapper" href="/perfilArtistaNp/{{integrante.integrante.id}}">
                                                 <div class="circle avatar-perfil small" style="background: url({{integrante.integrante.imagenPerfil.url}}); " ></div>
                                                 <div class="" style="margin-left:20px;"><span >{{integrante.integrante.nombre}}</span>
-                                                <br><span class="grey-text ">{{integrante.ocupacion}}</span></div>
+                                                <br><span class="grey-text ">{%if integrante.esLider %}<i class="material-icons yellow-text text-darken-3" style="font-size: 15px">&#xE838;</i>{% endif %}{{integrante.ocupacion}}</span></div>
                                             </a>
                                         </li>
                                         {% endfor %}
