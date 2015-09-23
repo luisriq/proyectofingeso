@@ -62,9 +62,9 @@ function imgGen(url){
 function liGen(busc, nombre,url, id,onclick){
 	var tagO='<a data-nombre="'+nombre+'" data-imagen="'+url+'" data-id="'+id+'" class="collection-item valign-wrapper resultado" onclick="'+onclick+'" >';
 	var tagC='</a>';
-	console.log(nombre.contains(busc));
+	console.log(nombre.indexOf(busc));
 	var icon='';
-	if(nombre.toLowerCase().contains(busc.toLowerCase()))
+	if(nombre.toLowerCase().indexOf(busc.toLowerCase()) != -1)
 		icon='<i class="material-icons">face</i>';
 		
 	else
