@@ -31,6 +31,8 @@ $( document ).ready(function(){
 $('.solicitud').click(function(){Onclick(this)});
 var Onclick= function (este){
 		var formulario = $(este).closest("form");
+		console.log("formulario "+formulario.html())
+		console.log("formulario "+$(este).html())
 		var olddato = formulario.find('input[name=olddato]');
 		var dato = $(formulario).find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log("Data: "+dato.val());
@@ -42,7 +44,7 @@ var Onclick= function (este){
 		var token = $(este).parent().find('input[name=csrfmiddlewaretoken]');
 			
 		if(dato.val()==null){
-			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
+			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>NULL', 4000);
 			return null
 		}else if(dato.val().trim()==''){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
@@ -144,10 +146,25 @@ var Onclick= function (este){
 						$('.new-append form .inline .solicitud').click(function(){Onclick(this)});
 						$('.new-append').removeClass('new-append');
 					}
-				}
-				else
-					Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
-			},
+				}else{
+					respuestaInstatisfactoria(response);
+					 	if(response.split(',')[0]=="k"){
+							if(formulario.attr('data-target')=="seguir"){
+								$(formulario).attr("data-target", "dejardeseguir");
+								$(este).text("Dejar de seguir");
+								jol = parseInt($("#segnum").text())+1;
+								$("#segnum").text(jol+'');
+								console.log("j-"+jol);
+							}else if(formulario.attr('data-target')=="dejardeseguir"){
+								$(formulario).attr("data-target", "seguir");
+								$(este).text("Seguir");
+								jol = parseInt($("#segnum").text())-1;
+								$("#segnum").text(jol+'');
+								console.log("j+"+jol);
+							}
+						}
+					}
+				},
 			// handle a non-successful response
 			error : function(xhr,errmsg,err) {
 				Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>Error al cambiar : '+formulario.attr('data-target'), 4000);
@@ -168,7 +185,15 @@ function largoPalabra(texto, maximo){
 	});
 	return g;
 }
-
+function respuestaInstatisfactoria(data){
+	var resp=data.split(',');
+	if(resp[0]=='w')
+		Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>'+resp[1], 4000);	
+	else if(resp[0]=="k")
+		Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>'+resp[1], 4000);
+	else if(resp[0]=='e')
+		Materialize.toast('<span class="red-text"><i class="material-icons">&#xE14C;</i></span>'+resp[1], 4000);
+}
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
