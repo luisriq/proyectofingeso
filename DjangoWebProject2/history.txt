@@ -1,0 +1,94 @@
+
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Juego iniciado el 23-09-2015 18:48:12
+||||||||||||||||||||||||||||||||||||||||||||||||||||
+Juego 1
+La Banca Obtuvo :
+	A corazon , 10 pica
+Sumando: 21
+El Jugador 1 Obtuvo :
+	5 corazon , 3 trebol , 8 trebol , 8 diamante
+Sumando: 24
+Ganador : La Banca
+
+-------------------------------------------------
+Juego 2
+La Banca Obtuvo :
+	4 trebol , A pica , 2 pica
+Sumando: 17
+El Jugador 1 Obtuvo :
+	5 trebol , J diamante
+Sumando: 15
+Ganador : La Banca
+
+-------------------------------------------------
+Juego 3
+La Banca Obtuvo :
+	Q trebol , Q corazon
+Sumando: 20
+El Jugador 1 Obtuvo :
+	7 trebol , 7 pica , 6 trebol
+Sumando: 20
+Ganador : Empate 
+
+-------------------------------------------------
+Juego 4
+La Banca Obtuvo :
+	6 trebol , 9 pica , 4 corazon
+Sumando: 19
+El Jugador 1 Obtuvo :
+	A pica , Q trebol , 9 trebol
+Sumando: 20
+Ganador : El Jugador
+
+-------------------------------------------------
+Juego 5
+La Banca Obtuvo :
+	J trebol , 4 corazon , 2 corazon
+Sumando: 16
+El Jugador 1 Obtuvo :
+	10 corazon , 2 trebol , J pica
+Sumando: 22
+Ganador : La Banca
+
+-------------------------------------------------
+Juego 6
+La Banca Obtuvo :
+	7 corazon , 7 trebol , K trebol
+Sumando: 24
+El Jugador 1 Obtuvo :
+	6 diamante , 7 diamante , J pica
+Sumando: 23
+Ganador : Empate 
+
+-------------------------------------------------
+Juego 7
+La Banca Obtuvo :
+	7 corazon , 10 pica
+Sumando: 17
+El Jugador 1 Obtuvo :
+	5 trebol , Q corazon , 2 pica
+Sumando: 17
+Ganador : Empate 
+
+-------------------------------------------------
+Juego 8
+La Banca Obtuvo :
+	2 diamante , K trebol , 8 corazon
+Sumando: 20
+El Jugador 1 Obtuvo :
+	J corazon , 5 diamante , 3 diamante
+Sumando: 18
+Ganador : La Banca
+
+-------------------------------------------------
+Juego 9
+La Banca Obtuvo :
+	9 corazon , 6 pica , 6 pica
+Sumando: 21
+El Jugador 1 Obtuvo :
+	6 corazon , 8 pica , K diamante
+Sumando: 24
+Ganador : La Banca
+
+-------------------------------------------------
