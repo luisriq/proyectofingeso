@@ -11,9 +11,7 @@ $( document ).ready(function(){
 		form.find("input").val(form.find("span.dato").text());
 		form.find("textarea").val(form.find("span.dato").text());
 	});
-	$( "body" ).on( "click", '.solicitud', function() {
-		click($(this));
-	});
+	
 	//hay que hacer que sea mas elegante... meh
 	
 	for(var i=1;i<20;i++)
@@ -30,10 +28,10 @@ $( document ).ready(function(){
 			}
 		}, i*500);//arrgla problemas de visualizacion en ipad
 }); 
-
-function click(el){
-		var formulario = $(el).closest("form");
-		var olddato = $(el).parent().find('input[name=olddato]');
+$('.solicitud').click(function(){Onclick(this)});
+var Onclick= function (este){
+		var formulario = $(este).closest("form");
+		var olddato = formulario.find('input[name=olddato]');
 		var dato = $(formulario).find('input[name=dato], textarea[name=dato], select[name=dato]');
 		console.log("Data: "+dato.val());
 		var datoValue = dato.val();
@@ -41,7 +39,7 @@ function click(el){
   			datoValue = dato.val().trim().capitalizeFirstLetter();
  		};
 		
-		var token = $(el).parent().find('input[name=csrfmiddlewaretoken]');
+		var token = $(este).parent().find('input[name=csrfmiddlewaretoken]');
 			
 		if(dato.val()==null){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>Debes seleccionar al menos un instrumento', 4000);
@@ -78,7 +76,7 @@ function click(el){
 					if(formulario.attr('data-target')=="solicitar"){
 						//TODO: Cambiar html 
 						$('#botonSolicitar').replaceWith('<a class="col hover-shadow s5 offset-s2 card-panel color-principal white-text disabled" style="padding:10px">Solicitado</a>');
-						Materialize.toast('Solicitud enviada, espere respuesta.', 4000);
+						//Materialize.toast('Solicitud enviada, espere respuesta.', 4000);
 						var no_hide = formulario.find(".no-hide");
 						var hide = formulario.find(".hide");
 						console.log(no_hide);
@@ -88,22 +86,28 @@ function click(el){
 						formulario.find("textarea").val(formulario.find("span.dato").text());
 					}
 					else if(formulario.attr('data-target')=="aceptarSolicitud"){
-						console.log("MEEEE");
-						formulario.hide();
+						console.log( olddato.val());
 						if(olddato.val()=='aceptar'){
 							hrefItem = formulario.find('.valign-wrapper').attr('href');
 							imagen = formulario.find('.circle').attr('style');
 							nombre = $(formulario.find('span')[0]).text()
 							ocupacion = $(formulario.find('span')[1]).text()
-							console.log(hrefItem+"\n"+imagen);
 							// TODO: Cambiarlo  reusando y reemplazando con el primer integrante
-							$('#integrante').append('<li class="collection-item valign-wrapper">'+
+							var str = '<li class="collection-item valign-wrapper">'+
 											'<a class="valign-wrapper" href="'+hrefItem+'">'+
 												'<div class="circle avatar-perfil small" style="'+imagen+'" ></div>'+
 												'<div class="" style="margin-left:20px;"><span >'+nombre+'</span>'+
 												'<br><span class="grey-text ">'+ocupacion+'</span></div>'+
 											'</a>'+
-										'</li>');
+										'</li>';
+							console.log($('#integrante li:last'));
+							$('#integrante li:last').before(str);
+							
+						}
+						var cont = formulario.parent().parent();
+						formulario.parent().remove();
+						if(cont.find('li').length==0){
+							cont.parent().remove();
 						}
 					}
 					else if(formulario.attr('data-target')=="solicitarBanda"){
@@ -122,21 +126,23 @@ function click(el){
 						
 						id = response.split(",")[1];
 						$('#solicitarBanda').append(
-							'<li class="collection-item valign-wrapper" >'+
-                                          '<form method="POST" data-target="aceptarSolicitud" >'+
+							'<li class="collection-item valign-wrapper new-append" >'+
+                                          '<form method="POST" class="valign-wrapper" data-target="aceptarSolicitud" style="width:100%">'+
                                             
-                                            '<a class="valign-wrapper" href="/perfilArtistaNp/'+formulario.attr("data-artista")+'">'+
+                                            '<a class="valign-wrapper" href="/perfilArtistaNp/'+formulario.attr("data-artista")+'" style="width:calc(100% - 40px)">'+
                                             '<div class="circle avatar-perfil small" style="background: url('+"/media/"+formulario.attr("data-imagen")+'); " ></div>'+
                                             '<div class="" style="margin-left:20px;"><span >'+formulario.attr("data-nombre")+'</span>'+
                                             '<br><span class="grey-text ">'+dato.val()+'</span>'+
                                             '</div>'+
                                             '</a>'+
+                                            '<div class="inline"><a class="btn red solicitud" onclick="document.getElementById(&quot;accion&quot;).setAttribute(&quot;value&quot;, &quot;rechazar&quot;);" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a></div>'+											
                                             '<input name ="dato" hidden="true" value="'+id+'"></input>'+
                                             '<input id="accion" name ="olddato" hidden="true" value="rechazar"></input>'+
-                                            '<a class="btn red solicitud" onclick="document.getElementById(&quot;accion&quot;).setAttribute(&quot;value&quot;, &quot;rechazar&quot;);"   ><i class="material-icons">&#xE14C;</i></a>'+
                                         '</form>'+
                                         '</li>'
 						);
+						$('.new-append form .inline .solicitud').click(function(){Onclick(this)});
+						$('.new-append').removeClass('new-append');
 					}
 				}
 				else
@@ -149,7 +155,7 @@ function click(el){
 			}
 		});
 
-}
+};
 
 function largoPalabra(texto, maximo){
 	var palabras = texto.split(" ");

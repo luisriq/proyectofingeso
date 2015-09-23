@@ -103,7 +103,6 @@
                                 <div class="card-panel color-principal lighten-3">
                                     <div class="campo-editable">
                                         <form method="POST" data-target="biografia" largomaximo = "25">
-                                            
                                             {%if esLider%}
                                             <a class="btn no-hide editar toggle color-principal hover-shadow right">
                                                 <i class="material-icons">&#xE254;</i>
@@ -119,7 +118,6 @@
                                             <a class="btn hide editar submit green hover-shadow tooltipped right" data-tooltip="Guardar cambios"  style="margin-right:5px;">
                                                 <i class="material-icons">&#xE5CA;</i>
                                             </a>
-                                            
                                             <hr style="border:none;width:auto;height:0px;clear:both;"/>
                                         </form>
                                     </div>
@@ -141,7 +139,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a class="col hover-shadow s5 card-panel red white-text" onclick="dejarBanda({{request.user.id}})" style="padding:10px">Salirse de la banda</a>
+                                <a class="col hover-shadow s5 card-panel red white-text" onclick="dejarBanda({{request.user.id}})" style="padding:10px">Dejar la banda</a>
                             </div>  
                             
 
@@ -176,22 +174,27 @@
                                     <ul id="solicitarBanda" class="collection">
                                         {% for solicitud in solicitantes %}
                                         <li class="collection-item valign-wrapper" >
-                                          <form method="POST" data-target="aceptarSolicitud" >
-                                            
-                                            <a class="valign-wrapper" href="/perfilArtistaNp/{{solicitud.artista.id}}">
+                                          <form method="POST" class="valign-wrapper" data-target="aceptarSolicitud" style="width:100%" >
+                                            <a class="valign-wrapper" href="/perfilArtistaNp/{{solicitud.artista.id}}" style="width:calc(100% - 40px)">
                                             <div class="circle avatar-perfil small" style="background: url({{solicitud.artista.imagenPerfil.url}}); " ></div>
-                                            <div class="" style="margin-left:20px;"><span >{{solicitud.artista.nombre}}</span>
+                                            <div class="truncate" style="margin-left:20px;"><span >{{solicitud.artista.nombre}}</span>
                                             <br><span class="grey-text ">{{solicitud.ocupacion}}</span>
                                             </div>
                                             </a>
-                                            <input name ="dato" hidden="true" value="{{ solicitud.id }}"></input>
-                                            <input id="accion" name ="olddato" hidden="true" value="aceptar"></input>
+                                            <div class="inline" style="width:45px">
                                             {%if esLider%}
                                                 {%if solicitud.direccion%}
-                                                    <a class="btn green solicitud" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" ><i class="material-icons">&#xE5CA;</i></a>
-                                                {%endif%}
-                                                <a class="btn red solicitud" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')"   ><i class="material-icons">&#xE14C;</i></a>
+                                                    <a class="btn green solicitud tooltipped" data-tooltip="Aceptar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" style="padding:0 8px;margin-bottom:10px;"><i class="material-icons">&#xE5CA;</i></a>
+                                                    <a class="btn red solicitud tooltipped" data-tooltip="Rechazar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>
+                                                {%else%}
+                                                    <a class="btn red solicitud tooltipped" data-tooltip="Cancelar solicitud" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>
+                                                {%endif%}  
+                                                
                                             {%endif%}
+                                            </div>
+                                            <input name ="dato" hidden="true" value="{{ solicitud.id }}"></input>
+                                            <input id="accion" name ="olddato" hidden="true" value="aceptar"></input>
+                                            
                                         </form>
                                         </li>
                                         {% endfor %}
@@ -308,24 +311,21 @@
     <div class="modal-content">
         <h4>Agregar usuario</h4>
             <div class="divider color-principal" style="margin-bottom:30px"></div>
-                    <div class="col s12 l9  campo-editable">
-
-                            {% csrf_token %}
-                            <div id="seleccionado"></div>
-
-                                <div class="input-field col-md-10">
-                                <i class="material-icons prefix">&#xE8B6;</i>{#search icon#}
-                                <input name="search" id="seach" type="text" class="validate">
-                                <label for="seach" class="active">Buscar</label>
-                                 
-                                </div>
-                               <div class="collection result-list" style="cursor:pointer;overflow-y: scroll;width: 50px; height: 50%; overflow-x:hidden; z-index: 1000;position: absolute; ">
-                                </div>
-                                <div class="input-field col-md-10">
-                                <input name="dato" id="ocupacion" type="text" class="validate">
-                                <label for="ocupacion" class="active">Ocupacion</label>
-                                </div>                            
-
+                <div class="col s12 l9  campo-editable">
+                    {% csrf_token %}
+                    <div id="seleccionado"></div>
+                    <div class="input-field col-md-10">
+                    <i class="material-icons prefix">&#xE8B6;</i>{#search icon#}
+                    <input name="search" id="seach" type="text" class="validate">
+                    <label for="seach" class="active">Buscar</label>
+                        
+                    </div>
+                    <div class="collection result-list" style="cursor:pointer;overflow-y: scroll;width: 50px; height: 50%; overflow-x:hidden; z-index: 1000;position: absolute; ">
+                    </div>
+                    <div class="input-field col-md-10">
+                    <input name="dato" id="ocupacion" type="text" class="validate">
+                    <label for="ocupacion" class="active">Ocupacion</label>
+                    </div>
             </div>
      </div>
       <div class="modal-footer">

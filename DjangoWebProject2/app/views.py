@@ -199,10 +199,17 @@ class perfilBandaNp(View):
             return HttpResponseRedirect("/login/") 
         elif tipoUsuario == 1:
             usuario = Artista.objects.filter(user = request.user)[0]
+<<<<<<< HEAD
             #solicitud = Solicitud.objects.filter(banda = banda).filter(artista = usuario)[0]
             #esSolicitado = 0
             #if len(solicitud) == 1:
             #    esSolicitado = 1
+=======
+            solicitud = Solicitud.objects.filter(banda = banda).filter(artista = usuario)
+            esSolicitado = 0
+            if len(solicitud) == 1:
+                esSolicitado = 1
+>>>>>>> 94ed41e379d50ff6d39d21b680c761aee8fc1cfc
             pertenece = IntegrantesBanda.objects.filter(integrante = usuario, banda = banda)
             if len(pertenece) == 1:
                 return HttpResponseRedirect("/perfilBanda/%s" % bandaid)
