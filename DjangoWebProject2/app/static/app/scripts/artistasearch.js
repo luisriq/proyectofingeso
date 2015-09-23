@@ -5,7 +5,7 @@ $( document ).ready(function(){
 		var this_=$(this);
 		var collectionContainer=$(".result-list");
 		collectionContainer.html('')
-		if($(this).val().length>=0){
+		if($(this).val().length>=3){
 			collectionContainer.width(this_.width());
 			$.ajax({
                 dataType : 'json',
@@ -21,7 +21,7 @@ $( document ).ready(function(){
                     for(var x in data)
                     {
 						//console.log(data[x])
-                        collectionContainer.append(liGen(data[x].nombre,data[x].imagenPerfil, data[x].id,"artistaSelect($(this));"));
+                        collectionContainer.append(liGen(this_.val(),data[x].nombre,data[x].imagenPerfil, data[x].id,"artistaSelect($(this));"));
                     }
                 }
             });
@@ -59,8 +59,15 @@ function imgGen(url){
 	var pos='"></div>';
 	return pre+url+pos;
 }
-function liGen(nombre,url, id,onclick){
+function liGen(busc, nombre,url, id,onclick){
 	var tagO='<a data-nombre="'+nombre+'" data-imagen="'+url+'" data-id="'+id+'" class="collection-item valign-wrapper resultado" onclick="'+onclick+'" >';
 	var tagC='</a>';
-	return tagO+imgGen(url)+nombre+tagC;
+	console.log(nombre.contains(busc));
+	var icon='';
+	if(nombre.toLowerCase().contains(busc.toLowerCase()))
+		icon='<i class="material-icons">face</i>';
+		
+	else
+		icon ='<i class="material-icons">&#xE41C;</i>';
+	return tagO+imgGen(url)+icon+nombre+tagC;
 }

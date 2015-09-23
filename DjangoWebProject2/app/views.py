@@ -199,10 +199,10 @@ class perfilBandaNp(View):
             return HttpResponseRedirect("/login/") 
         elif tipoUsuario == 1:
             usuario = Artista.objects.filter(user = request.user)[0]
-            #solicitud = Solicitud.objects.filter(banda = banda).filter(artista = usuario)[0]
-            #esSolicitado = 0
-            #if len(solicitud) == 1:
-            #    esSolicitado = 1
+            solicitud = Solicitud.objects.filter(banda = banda).filter(artista = usuario)
+            esSolicitado = 0
+            if len(solicitud) == 1:
+                esSolicitado = 1
             solicitud = Solicitud.objects.filter(banda = banda).filter(artista = usuario)
             esSolicitado = 0
             if len(solicitud) == 1:
@@ -231,7 +231,7 @@ class perfilBandaNp(View):
                         'tipoUsuario':tipoUsuario,
                         'datosBarra':datosBarra(request),
                         'integrantes':integrantes,
-                        #'solicitado':solicitado,
+                        'solicitado':solicitado,
                         'seguidores':seguidores,
                         'title':title
                     })
@@ -319,42 +319,47 @@ class perfilBanda(View):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
             return HttpResponseRedirect("/login/")
+        
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
-        discos =  Disco.objects.filter(banda = banda)
-        material =  Material.objects.filter(banda = banda)
-        pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
-        generos = Genero.objects.all()
-        if len(pertenece) == 1:
-            integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
-            seguidores = len(banda.seguidores.all())
-            solicitantes = Solicitud.objects.filter(banda = banda)
-            print solicitantes
-            if(len(solicitantes)==0):
-                solicitantes = None
-            
-            title = 'perfil de la banda ' + banda.nombre
-            assert isinstance(request, HttpRequest)
-            return render(
-                request,
-                'app/perfilBanda.html',
-                context_instance = RequestContext(request,
-                {
-                    'banda':banda,
-                    'discos':discos,
-                    'material':material,
-                    'artista':artista,
-                    'generos':generos,
-                    'esLider':pertenece[0].esLider,
-                    'tipoUsuario':tipoUsuario,
-                    'datosBarra':datosBarra(request),
-                    'integrantes':integrantes,
-                    'solicitantes':solicitantes,
-                    'seguidores':seguidores,
-                    'title':title
-
-                })
-            )
+        pertenece = IntegrantesBanda.objects.filter(integrante = artista, banda = banda)
+        if len(pertenece) == 0:
+            return HttpResponseRedirect("/perfilBandaNp/%s" % bandaid)
+        else:
+            discos =  Disco.objects.filter(banda = banda)
+            material =  Material.objects.filter(banda = banda)
+            pertenece = IntegrantesBanda.objects.filter(integrante = artista).filter(banda = banda)
+            generos = Genero.objects.all()
+            if len(pertenece) == 1:
+                integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
+                seguidores = len(banda.seguidores.all())
+                solicitantes = Solicitud.objects.filter(banda = banda)
+                print solicitantes
+                if(len(solicitantes)==0):
+                    solicitantes = None
+                
+                title = 'perfil de la banda ' + banda.nombre
+                assert isinstance(request, HttpRequest)
+                return render(
+                    request,
+                    'app/perfilBanda.html',
+                    context_instance = RequestContext(request,
+                    {
+                        'banda':banda,
+                        'discos':discos,
+                        'material':material,
+                        'artista':artista,
+                        'generos':generos,
+                        'esLider':pertenece[0].esLider,
+                        'tipoUsuario':tipoUsuario,
+                        'datosBarra':datosBarra(request),
+                        'integrantes':integrantes,
+                        'solicitantes':solicitantes,
+                        'seguidores':seguidores,
+                        'title':title
+    
+                    })
+                )
 #------------------------
 class infoDisco(View):
     def get(self, request, dId):
@@ -544,13 +549,18 @@ def search(request):
     banda = Banda.objects.filter(id=request.POST.get('bid'))
     
     artistas = Artista.objects.filter(nombre__icontains=q).exclude(user=request.user)
-    integrantes = [i.integrante for i in IntegrantesBanda.objects.filter(banda = banda)]
+    instrumento = Instrumento.objects.filter(tipo__icontains=q)
     
+    artistasT = [t.artista for t in Toca.objects.filter(instrumento = instrumento)]
+    integrantes = [i.integrante for i in IntegrantesBanda.objects.filter(banda = banda)]
+    for a in artistasT:
+       print a.id
+       artistas = artistas | Artista.objects.filter(id=a.id).exclude(user=request.user)
     for a in integrantes:
         artistas = artistas.exclude(id = a.id)
     
     artistas = artistas.values('id', 'nombre', 'imagenPerfil')
-    print artistas
+    
 
     artista_fields = (
         'nombre',
@@ -626,6 +636,7 @@ class busqueda(View):
         
         if request.is_ajax():
                    artistas = Artista.objects.filter(nombre__startswith = request.GET['nombre'] ).exclude(user=usuario).values('id', 'nombre', 'imagenPerfil')
+                   
                    return HttpResponse( json.dumps( list(artistas)), content_type='application/json' ) 
         else:
                    return HttpResponse("['nombre':0]");
