@@ -47,10 +47,10 @@
                                     <i class="material-icons manito inline grade grey-text"  style="font-size:28px;margin:-3px;padding:3px;">grade</i>
                                 </div>
                             </div>
+                            
                             <div class="row">
-
                                 {% if tipoUsuario == 1%}
-                                <a class="col hover-shadow s5 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>
+                                <a href="/noImplementado/mensajesUA" class="col hover-shadow s5 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>
                                     <form method="POST" data-target="solicitar" >
                                     {% csrf_token %}
                                     {% if solicitado%}
@@ -70,12 +70,6 @@
                                     
                                     <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
                                     {#<a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>#}
-
-                                <a href="/noImplementado/mensajesUA" class="col hover-shadow s5 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>
-                                <form method="POST" data-target="solicitar" >
-                                {% csrf_token %}
-                                {% if solicitado%}
-                                    <a class="col  s5 offset-s2 card-panel color-principal lighten-3 white-text disabled" style="padding:10px">Solicitado</a>
 
                                 {% else %}
                                    {% if not siguiendo %}

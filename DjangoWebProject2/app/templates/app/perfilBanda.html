@@ -253,15 +253,10 @@
                                                 <br><span class="ocupacion grey-text ">{%if integrante.esLider  %}<i class="material-icons yellow-text text-darken-3" style="font-size: 15px">&#xE838;</i>{% endif %}{{integrante.ocupacion}}</span>
                                                 </div>    
                                             </a>
-<<<<<<< Updated upstream
                                         {%if esLider and not integrante.esLider %}
                                             
                                             <a class="btn red tooltipped" data-tooltip="Opciones" data-position="right" onclick="expulsar({{integrante.integrante.id}})" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>
                                      <a class="waves-effect waves-light btn modal-trigger" href="#modalOpciones">+</a>
-=======
-                                        {%if esLider %}
-                                            <a class="btn grey darken-1 tooltipped"  data-tooltip="Opciones" data-position="right" onclick="intOpciones({{integrante.integrante.id}})" style="padding:0 8px"><i class="material-icons">&#xE8B8;</i></a>
->>>>>>> Stashed changes
                                         {%endif%}
                                         </li>
                                         {% endfor %}
