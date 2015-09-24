@@ -477,9 +477,9 @@
             </form>       
         </h5>
 
-		<form method="POST" data-target="disableacount">
+		<form class="ceder" method="POST" data-target="ceder">
             {% csrf_token %}
-			<a class="btn no-hide ceder editar toggle yellow darken-3 hover-shadow ">Ceder Lider</a> 
+			<a class="btn no-hide editar toggle yellow darken-3 hover-shadow ">Ceder Lider</a> 
 			<div class="input-field hide" style="width:calc(100% - 30px);">
 			     <span class="grey-text text-darken-2">Para ceder el puesto de Lider necesitamos verificar tu contraseña</span>
 			     <div class="input-field">
@@ -490,7 +490,7 @@
             
 			<a class="btn hide editar submit desactivar right yellow darken-3 hover-shadow">Confirmar</a> 
             <hr class="hide" style="border:none;width:auto;height:0px;clear:both;">
-            <a class="waves-effect waves-light btn red" onclick="expulsar({{integrante.integrante.id}})">Eliminar</a>
+            <a class="waves-effec expulsar waves-light btn red" onclick="">Expulsar</a>
 		 </form>          
     </div>
     <div class="modal-footer">
