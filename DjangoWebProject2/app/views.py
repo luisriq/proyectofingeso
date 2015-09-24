@@ -515,6 +515,8 @@ class perfilArtistaNp(View):
             #usuario del perfil artista
             artista = Artista.objects.filter(id = userid)[0]
             
+            usuario = Usuario.objects.filter(user = request.user)[0]
+            
             #bandas a las que pertenece
             integranteEn = [ib for ib in IntegrantesBanda.objects.filter(integrante = artista)]
             
@@ -523,6 +525,10 @@ class perfilArtistaNp(View):
             
             #numero de seguidores
             seguidores = len(artista.seguidores.all())
+            
+            siguiendo = False
+            if len(Artista.objects.filter(id = artista.id,   seguidores = usuario)) == 1:
+                siguiendo = True
             
             title = 'perfil ' + artista.nombre
             
@@ -534,6 +540,8 @@ class perfilArtistaNp(View):
                 {
                     'year':datetime.now().year,
                     'instrumentos':instrumentos,
+                    'usuario':usuario,
+                    'siguiendo':siguiendo,
                     'seguidores':seguidores,
                     'datosBarra':datosBarra(request),
                     'artista':artista,
@@ -814,6 +822,33 @@ def guardarDatosArtista(request):
                 request.user.first_name = dato
                 request.user.save()
                 u.save()
+            elif target == 'seguir':
+                usuario = Normal.objects.filter(id = dato)[0]
+                aid = request.POST.get('artista')
+                artista = Artista.objects.filter(id = aid)[0]
+                siguiendo = False
+                if len(Artista.objects.filter(id = artista.id, seguidores = usuario)) == 1:
+                    siguiendo = True            
+                if not siguiendo:
+                    artista.seguidores.add(usuario)
+                    artista.save()
+                    return HttpResponse("k,Est&aacute;s siguiendo al Artista: %s"%artista.nombre )
+                return HttpResponse("w,Ya sigues a este artista")
+                
+            elif target == 'dejardeseguir':
+                print "dejar de seguir"
+                usuario = Normal.objects.filter(id = dato)[0]
+                aid = request.POST.get('artista')
+                artista = Artista.objects.filter(id = aid)[0]
+                siguiendo = False
+                if len(Artista.objects.filter(id = artista.id, seguidores = usuario)) == 1:
+                    siguiendo = True            
+                if siguiendo:
+                    artista.seguidores.remove(usuario)
+                    artista.save()
+                    return HttpResponse("k,Dejaste de seguir al Artista: %s"%artista.nombre )
+                return HttpResponse("w,Nunca lo seguiste")
+                
             elif target == "biografia":
                 u = Artista.objects.filter(user = request.user)[0]
                 u.biografia = dato

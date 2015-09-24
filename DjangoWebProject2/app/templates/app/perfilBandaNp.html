@@ -54,10 +54,10 @@
                                     <form method="POST" data-target="solicitar" >
                                     {% csrf_token %}
                                     {% if solicitado%}
-                                        <a class="col  s5 offset-s2 card-panel color-principal lighten-3 white-text disabled" style="padding:10px">Solicitado</a>
+                                        <a class="col s5 offset-s2 card-panel color-principal lighten-3 white-text disabled" style="padding:10px">Solicitado</a>
                                     {% else %}
                                         <a id="botonSolicitar" class="togglesol no-hide col hover-shadow s5 offset-s2 card-panel color-principal white-text "  style="padding:10px" data-tooltip="Enviar solicitud">Solicitar ingreso</a>
-                                        <input class="w60p hide"  type="text" name="dato" />
+                                        <input class="w60p hide" placeholder="Ocupaci&oacute;n" type="text" name="dato" />
                                         <br>
                                         <a class="solicitud btn hide green hover-shadow tooltipped" data-tooltip="Enviar">
                                             <i class="material-icons">&#xE5CA;</i>
@@ -68,24 +68,24 @@
                                     {%endif%}
                                     </form>
                                     
-                                    <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
+                                    <a class="col hover-shadow s5  card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
                                     {#<a class="col  s5 offset-s2 card-panel color-principal white-text" style="padding:10px">Enviar Mensaje</a>#}
 
                                 {% else %}
                                    {% if not siguiendo %}
                                      <form method='POST' data-target="seguir">
                                         <input class="w60p hide"  type="text" name="dato" value="{{usuario.id}}" />
-                                        <a class="col manito no-select  s5 offset-s2 card-panel color-principal white-text solicitud" style="padding:10px">Seguir</a>
+                                        <a class="col manito no-select  s5  card-panel color-principal white-text solicitud" style="padding:10px">Seguir</a>
                                     </form>
                                     {% else %}
                                      <form method='POST' data-target="dejardeseguir">
                                         <input class="w60p hide"  type="text" name="dato" value="{{usuario.id}}" />
                                     
-                                        <a class="col manito no-select s5 offset-s2 card-panel color-principal white-text solicitud" style="padding:10px">Dejar de seguir</a>
+                                        <a class="col manito no-select s5  card-panel color-principal white-text solicitud" style="padding:10px">Dejar de seguir</a>
                                     </form>
                                     {% endif %}
                                     
-                                    <a class="col hover-shadow s5 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
+                                    <a class="col hover-shadow s5  offset-s2 card-panel color-principal white-text modal-trigger" href="#modalReport" style="padding:10px">Reportar Mala Conducta</a>
                                 {% endif %}
                             </div>
                             
