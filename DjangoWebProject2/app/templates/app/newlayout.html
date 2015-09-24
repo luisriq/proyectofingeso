@@ -29,7 +29,7 @@
                 </div>
                <div class="col s12 l9  campo-editable">
                     <div class="input-field hide-on-small-only valign-wrapper" >
-                        <input type="search" name="search" id="search-field" class="field valign"  required maxlength="">
+                        <input type="search" name="universalsearch" id="search-field" class="field valign"  required maxlength="">
 
                         <label for="search-field" style="
     padding-top: 8px;"><i class="mdi-action-search"></i></label>
@@ -82,19 +82,7 @@
             belowOrigin: true // Displays dropdown below the button
         });
         $(".button-collapse").sideNav();
-        function artistaSelect(artista){
-            console.log(artista);
-            console.log("Nombre:" + artista.attr("data-nombre"));
-            console.log("imagen:" + artista.attr("data-imagen"));
-            console.log("id:" + artista.attr("data-id"));
-            console.log("/perfilArtistaNp/" +artista.attr("data-id") );
-            window.location = "/perfilArtistaNp/" +artista.attr("data-id");
-            $("#seleccionado").html(artista.clone());
-            $(artista).closest("form").attr("data-artista", artista.attr("data-id") );
-            $(artista).closest("form").attr("data-imagen", artista.attr("data-imagen") );
-            $(artista).closest("form").attr("data-nombre", artista.attr("data-nombre") );
-            console.log($(artista).closest("form"));
-        }
+        
     </script>
 
 {% block scripts %}{% endblock %}

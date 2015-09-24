@@ -62,7 +62,7 @@ $( document ).ready(function(){
                     for(var x in data)
                     {
 						//console.log(data[x])
-                        collectionContainer.append(liGen(this_.val(),data[x].nombre,data[x].imagenPerfil, data[x].id,"artistaSelect($(this));"));
+                        collectionContainer.append(uniGen(data[x].imagen,data[x].url, data[x].nombre,data[x].tipo));
                     }
                 }
             });
@@ -87,6 +87,27 @@ function artistaSelect(artista){
 	console.log(artista);
 	console.log("/perfilArtistaNp/"+artista.attr("data-id"));
 	
+	console.log(artista);
+	console.log("Nombre:" + artista.attr("data-nombre"));
+	console.log("imagen:" + artista.attr("data-imagen"));
+	console.log("id:" + artista.attr("data-id"));
+	console.log("/perfilArtistaNp/" +artista.attr("data-id") );
+	$("#seleccionado").html(artista.clone());
+	$(artista).closest("form").attr("data-artista", artista.attr("data-id") );
+	$(artista).closest("form").attr("data-imagen", artista.attr("data-imagen") );
+	$(artista).closest("form").attr("data-nombre", artista.attr("data-nombre") );
+	console.log($(artista).closest("form"));
+}
+
+function universalselect(todo){
+	/*console.log(artista);
+	console.log("Nombre:" + todo.attr("data-nombre"));
+	console.log("imagen:" + todo.attr("data-imagen"));
+	console.log("id:" + todo.attr("data-id"));
+	console.log("/perfilArtistaNp/" +todo.attr("data-id") );*/
+	//window.location = todo.attr("href");
+	//$("#seleccionado").html(artista.clone());
+	//console.log($(artista).closest("form"));
 }
 
 function imgGen(url){
@@ -105,4 +126,16 @@ function liGen(busc, nombre,url, id,onclick){
 	else
 		icon ='<i class="material-icons">&#xE41C;</i>';
 	return tagO+imgGen(url)+icon+nombre+tagC;
+}
+
+function uniGen(imagen, url, nombre, tipo){
+	img = '<div class="circle avatar-img-30"><img src="'+imagen+'"></div>';
+	icon = '';
+	if(tipo == "artista")
+		icon='<i class="material-icons">face</i>';
+	else
+		icon ='<i class="material-icons">&#xE41C;</i>';
+	a = '<a href="'+url+'" class="collection-item valign-wrapper resultado" >'+img+icon+nombre+'</a>';
+	console.log("AAAA "+a);
+	return a;
 }

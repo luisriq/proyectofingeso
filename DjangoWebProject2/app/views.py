@@ -582,33 +582,18 @@ def universalsearch(request):
         return HttpResponseBadRequest()
     resultados = [] # {imagen, url, nombre, tipo}
     q = request.POST['q']
-    
-    banda = Banda.objects.filter(nombre=q)
+    print "buscando%s"%q
+    banda = Banda.objects.filter(nombre__icontains=q)
     
     for b in banda:
         print b.nombre
-        resultados.append({"imagen":b.imagenPerfil, "url":"/perfilBandaNp/"+b.id, "nombre":b.nombre, "tipo":banda})
-    
-    print resultados
-    return
+        resultados.append({"imagen":b.imagenPerfil.url, "url":"/perfilBandaNp/%s"%b.id, "nombre":b.nombre, "tipo":"banda"})
     artistas = Artista.objects.filter(nombre__icontains=q).exclude(user=request.user)
-    instrumento = Instrumento.objects.filter(tipo__icontains=q)
+    for a in artistas:
+        print a.nombre
+        resultados.append({"imagen":a.imagenPerfil.url, "url":"/perfilArtistaNp/%s"%a.id, "nombre":a.nombre, "tipo":"artista"})
     
-    artistasT = [t.artista for t in Toca.objects.filter(instrumento = instrumento)]
-    integrantes = [i.integrante for i in IntegrantesBanda.objects.filter(banda = banda)]
-    for a in artistasT:
-        print a.id
-        artistas = artistas | Artista.objects.filter(id=a.id).exclude(user=request.user)
-    for a in integrantes:
-        artistas = artistas.exclude(id = a.id)
-    
-    artistas = artistas.values('id', 'nombre', 'imagenPerfil')
-    print artistas
-    
-    artista_fields = (
-        'nombre',
-    )
-    data = json.dumps( list(artistas))
+    data = json.dumps( resultados)
 
     # eso es todo por hoy ^^
     return HttpResponse(data, content_type="application/json")
