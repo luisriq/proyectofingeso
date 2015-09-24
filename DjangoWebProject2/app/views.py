@@ -566,8 +566,45 @@ def search(request):
         artistas = artistas.exclude(id = a.id)
     
     artistas = artistas.values('id', 'nombre', 'imagenPerfil')
-    
+    print artistas
 
+    artista_fields = (
+        'nombre',
+    )
+    data = json.dumps( list(artistas))
+
+    # eso es todo por hoy ^^
+    return HttpResponse(data, content_type="application/json")
+def universalsearch(request):
+    
+    # si no es una peticion ajax, devolvemos error 400
+    if not request.is_ajax() or request.method != "POST":
+        return HttpResponseBadRequest()
+    resultados = [] # {imagen, url, nombre, tipo}
+    q = request.POST['q']
+    
+    banda = Banda.objects.filter(nombre=q)
+    
+    for b in banda:
+        print b.nombre
+        resultados.append({"imagen":b.imagenPerfil, "url":"/perfilBandaNp/"+b.id, "nombre":b.nombre, "tipo":banda})
+    
+    print resultados
+    return
+    artistas = Artista.objects.filter(nombre__icontains=q).exclude(user=request.user)
+    instrumento = Instrumento.objects.filter(tipo__icontains=q)
+    
+    artistasT = [t.artista for t in Toca.objects.filter(instrumento = instrumento)]
+    integrantes = [i.integrante for i in IntegrantesBanda.objects.filter(banda = banda)]
+    for a in artistasT:
+        print a.id
+        artistas = artistas | Artista.objects.filter(id=a.id).exclude(user=request.user)
+    for a in integrantes:
+        artistas = artistas.exclude(id = a.id)
+    
+    artistas = artistas.values('id', 'nombre', 'imagenPerfil')
+    print artistas
+    
     artista_fields = (
         'nombre',
     )

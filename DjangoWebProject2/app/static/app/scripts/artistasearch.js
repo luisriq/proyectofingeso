@@ -5,7 +5,7 @@ $( document ).ready(function(){
 		var this_=$(this);
 		var collectionContainer=$(".result-list");
 		collectionContainer.html('')
-		if($(this).val().length>=3){
+		if($(this).val().length>=0){
 			collectionContainer.width(this_.width());
 			$.ajax({
                 dataType : 'json',
@@ -40,18 +40,53 @@ $( document ).ready(function(){
 
 	});
 	
+	$('input[name=universalsearch]').keyup(function(){
+		
+		$(".result-list").removeClass("hide");
+		var this_=$(this);
+		var collectionContainer=$(".result-list");
+		collectionContainer.html('')
+		if($(this).val().length>=0){
+			collectionContainer.width(this_.width());
+			$.ajax({
+                dataType : 'json',
+                method : 'POST',
+                url : '/universalsearch',
+                data : {
+					bid:$('.container.sfull').attr('id-banda'),
+					q : this_.val(),
+                    csrfmiddlewaretoken : $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success : function(data) {
+                    var users = [];
+                    for(var x in data)
+                    {
+						//console.log(data[x])
+                        collectionContainer.append(liGen(this_.val(),data[x].nombre,data[x].imagenPerfil, data[x].id,"artistaSelect($(this));"));
+                    }
+                }
+            });
+		}
+	});
+	$('form').submit(function(event){
+		event.preventDefault();
+	});
+	
+	$(document).click(function() {
+		$(".result-list").addClass("hide");
+	});
+	$('input[name=search]').click(function(e) {
+		$(".result-list").removeClass("hide");
+		e.stopPropagation(); // This is the preferred method.
+
+	});
+	
 	
 });
 function artistaSelect(artista){
 	console.log(artista);
-	console.log("Nombre:" + artista.attr("data-nombre"));
-	console.log("imagen:" + artista.attr("data-imagen"));
-	console.log("id:" + artista.attr("data-id"));
-	$("#seleccionado").html(artista.clone());
-	$(artista).closest("form").attr("data-artista", artista.attr("data-id") );
-	$(artista).closest("form").attr("data-imagen", artista.attr("data-imagen") );
-	$(artista).closest("form").attr("data-nombre", artista.attr("data-nombre") );
-	console.log($(artista).closest("form"));
+	console.log("/perfilArtistaNp/"+artista.attr("data-id"));
+	
 }
 
 function imgGen(url){
@@ -59,8 +94,8 @@ function imgGen(url){
 	var pos='"></div>';
 	return pre+url+pos;
 }
-function liGen(busc, nombre,url, id,onclick){
-	var tagO='<a data-nombre="'+nombre+'" data-imagen="'+url+'" data-id="'+id+'" class="collection-item valign-wrapper resultado" onclick="'+onclick+'" >';
+function liGen(busc, nombre,url, id,onclick){ 
+	var tagO='<a data-nombre="'+nombre+'" data-imagen="'+url+'" data-id="'+id+'"class="collection-item valign-wrapper resultado" onclick="'+onclick+'" >';
 	var tagC='</a>';
 	console.log(nombre.indexOf(busc));
 	var icon='';
