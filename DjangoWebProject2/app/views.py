@@ -623,7 +623,7 @@ class crearBanda(View):
         tipoUsuario = verificacion(request)
         if tipoUsuario != 1:
             return HttpResponseRedirect("/login/")
-         
+        print "jkasdknadsiojasdijoads"
         # create a form instance and populate it with data from the request:
         form = CrearBandaForm(request.POST)
         # check whether it's valid:

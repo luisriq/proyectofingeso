@@ -27,7 +27,7 @@ $( document ).ready(function(){
             });
 		}
 	});
-	$('form').submit(function(event){
+	$('form').not('#crearBanda').submit(function(event){
 		event.preventDefault();
 	});
 	
@@ -67,9 +67,6 @@ $( document ).ready(function(){
                 }
             });
 		}
-	});
-	$('form').submit(function(event){
-		event.preventDefault();
 	});
 	
 	$(document).click(function() {
