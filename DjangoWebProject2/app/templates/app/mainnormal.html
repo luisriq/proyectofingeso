@@ -12,6 +12,21 @@
                     <BR><BR>
                     <span>Todas las bandas creadas</span>
                     <div class="horizontal-scroll">
+                     {%  for artista in artistas %}
+                     <a href="/perfilArtistaNp/{{artista.id}}"><div style="width:250px;display:inline-block;">
+                        <div class="card">
+                            <div class="card-image">
+                             <img src="{{artista.imagenPerfil.url}}" />
+                            </div>
+                            <div class="card-content">
+                            <h5 class="truncate">{{artista.nombre}}</h5>
+                            </div>
+                        </div>
+                    </div></a>
+                    {% endfor %}
+                    </div>
+                    <span>Todas las bandas creadas</span>
+                    <div class="horizontal-scroll">
                      {%  for banda in bandas %}
                      <a href="/perfilBandaNp/{{banda.id}}"><div style="width:250px;display:inline-block;">
                         <div class="card">

@@ -13,29 +13,23 @@
 
 <body class="grey lighten-2">
     
-    <nav class="navbar" style="position:fixed;top:0;" >
-       	<div class="color-333 nav-wrapper">
-            <div class="col left w200px"> 
+    <div class="navbar container wide" style="position:fixed;top:0;">
+       	<div class="row color-333">
+            <div class="col left w200px">
+                
                 <a class="b-logo" href="/">
                     <img alt="Brand" class="logo-img" src="{% static 'app/images/logo.png' %}">
-                </a>
+                </a>&nbsp;
             </div>
            
-                     
             <div class="container right" style="width: calc(100% - 220px);height: 80px;"> 
+                <div class="row">
+
                 <div class="col dropdown-button right grey-text text-lighten-2 valign-wrapper" data-beloworigin="true" data-activates='dropdown1'  style="max-width:100%;cursor:pointer; ">
                     <div id="nombre-navbar" class="truncate" >{{ user.first_name|title }}</div>
                     <div class="circle avatar-img myavatar dropdown-button"  data-beloworigin="true" data-activates='dropdown1'><img src="{{user.profile.imagenPerfil.url}}" alt="" style="height:50px;"></div>
                 </div>
-               <div class="col s12 l9  campo-editable">
-                    <div class="input-field hide-on-small-only valign-wrapper" >
-                        <input type="search" name="universalsearch" id="search-field" class="field valign"  required maxlength="">
-                        <label for="search-field" style="padding-top: 8px;"><i class="mdi-action-search"></i></label>
-                    </div>
-
-                    <div class="collection result-list-u" style="max-height:500px;cursor:pointer;overflow-y:scroll;position: absolute;margin:0;margin-top:-15px;border:solid 1px #ccc">
-                    </div>
-                </div>
+               
                 <ul id='dropdown1'  class='grey darken-3 dropdown-content' style="min-width:200px;" data-beloworigin="true">
                     <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
                     <li><a href="{% url 'config' %}">Configuraciones</a></li>
@@ -50,10 +44,11 @@
                
 
                 </div>
-
             </div>
-
-        </nav>
+            
+            </div>
+        </div>
+    </div>
 
 {% block sidebar %}{% endblock %}
     <div class="body-content " >
@@ -65,11 +60,10 @@
         </footer>
     </div>
 
-    <script src="{% static 'app/scripts/jquery-1.10.2.min.js' %}"></script>
+    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'app/scripts/respond.js' %}"></script>
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
     <script src="{% static 'app/scripts/materialize.min.js' %}"></script>
-    <script src="{% static 'app/scripts/artistasearch.js' %}"></script>
     <script type="text/javascript">
         $('.dropdown-button').dropdown({
             inDuration: 300,
@@ -79,9 +73,7 @@
             belowOrigin: true // Displays dropdown below the button
         });
         $(".button-collapse").sideNav();
-        
     </script>
-
 {% block scripts %}{% endblock %}
 
 </body>

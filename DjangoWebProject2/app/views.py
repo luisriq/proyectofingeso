@@ -106,6 +106,7 @@ class Home(View):
                 urlAvatar = normal[0].imagenPerfil.url
                 tipo = "Normal :"
                 bandas = Banda.objects.all()
+                artistas = Artista.objects.all()
                 return render( 
                     request,
                     'app/mainnormal.html',
@@ -117,7 +118,8 @@ class Home(View):
                         
                         'year':datetime.now().year,
                         'urlAvatar':urlAvatar,
-                        'bandas':bandas
+                        'bandas':bandas,
+                        'artistas':artistas
                         #'datosBarra':datosBarra(request),
                         #'bandas':integranteEn
                     })
@@ -1394,7 +1396,7 @@ def poblacionBd(request):
         {'nombre': u'Pop'} ]
     for e in lista:
         g=Genero(nombre=e['nombre'])
-        g.save()
+        #g.save()
     instrumentos = [
         {'tipo': u'Acorde\xf3n', 'imagen': '/media/app/static/app/images/acordion'},
         {'tipo': u'Arm\xf3nica', 'imagen': '/media/app/static/app/images/armonica'},
@@ -1419,5 +1421,5 @@ def poblacionBd(request):
         {'tipo': u'Djembe', 'imagen': '/media/app/static/app/images/yembe'}]
     for instrumento in instrumentos:
         i = Instrumento(tipo=instrumento['tipo'], imagen=instrumento['imagen'])
-        i.save()
+        #i.save()
     return HttpResponse("asdasdasd")

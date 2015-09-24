@@ -12,8 +12,8 @@
             <div class="card-panel grey lighten-4">
                 <h4>Actividad reciente</h4>
                 <span class="grey-text text-darken-2">Acá encontraras solicitudes a bandas que como músico puedes acceder</span>
+                <h5>Enviadas</H5>
                 <ul class="collection">
-                    <h5>Enviadas</H5>
                     {% for solicitud in solicitantes %}
                     {%if solicitud.direccion%}
                     <li class="collection-item valign-wrapper" >
@@ -42,8 +42,10 @@
                     {%endif%}
                     {% endfor %}
                 </ul>
+                <div class="divider"></div>
+                <h5>Recibidas</H5>
                 <ul  class="collection">
-                    <h5>Recibidas</H5>
+                    
                     {% for solicitud in solicitantes %}
                     {%if not solicitud.direccion%}
                     <li class="collection-item valign-wrapper" >

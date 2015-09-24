@@ -29,6 +29,17 @@ DATABASES = {
     }
 }
 
+#DATABASES = {
+#    'default': {
+#    'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+#    'NAME': 'fingesoDB', # Or path to database file if using sqlite3.
+#    'USER': 'root', # Not used with sqlite3.
+#    'PASSWORD': 'root', # Not used with sqlite3.
+#    'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
+#    'PORT': '8889', # Set to empty string for default. Not used with sqlite3.
+#    }
+#}
+
 LOGIN_URL = '/landing'
 
 # Local time zone for this installation. Choices can be found here:
