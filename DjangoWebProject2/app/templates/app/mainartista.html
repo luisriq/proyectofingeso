@@ -30,8 +30,10 @@
                                 <br><span class="grey-text ">{{solicitud.ocupacion}}</span>
                             </div>
                             </a>
-                             <div class="inline" style="width:45px">           
-                            <a class="btn green solicitud tooltipped" data-tooltip="Aceptar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" style="padding:0 8px;margin-bottom:10px;"><i class="material-icons">&#xE5CA;</i></a>
+                            <div class="inline" style="width:45px"> 
+                            {%if not solicitud.direccion%} 
+                                <a class="btn green solicitud tooltipped" data-tooltip="Aceptar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" style="padding:0 8px;margin-bottom:10px;"><i class="material-icons">&#xE5CA;</i></a>
+                            {%endif%}
                             <a class="btn red solicitud tooltipped" data-tooltip="Rechazar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>       
                             </div>
                             <input id="accion" name ="accion" hidden="true" value="aceptar">

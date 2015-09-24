@@ -9,13 +9,14 @@ $( document ).ready(function(){
 		var hide = form.find(".hide");
 		no_hide.removeClass("no-hide").addClass("hide");
 		hide.removeClass("hide").addClass("no-hide");
-		form.find("input").val(form.find("span.dato").text());
+		form.find("input").not('input[name=dato2]').val(form.find("span.dato").text());
 		form.find("textarea").val(form.find("span.dato").text());
 	});
 	//Realizar cambio algi asi como un submit
 	$(".editar.submit").click(function(){
 		var formulario = $(this).closest("form");
 		var dato = $(this).parent().find('input[name=dato], textarea[name=dato], select[name=dato]');
+		var dato2 = $(this).parent().find('input[name=dato2], textarea[name=dato2], select[name=dato2]');
 		
 		var datoValue = dato.val();
 		if(dato.val()==null){
@@ -25,24 +26,38 @@ $( document ).ready(function(){
 			Materialize.toast('<span class="yellow-text"><i class="material-icons">&#xE002;</i></span>El campo no puede estar vacio', 4000);
 			return null
 		}
+		if(formulario.attr('data-target')=='rol'){
+			datoValue = dato.val().capitalizeFirstLetter();
+		}
 		if (largoPalabra(dato.val(), formulario.attr("largomaximo"))){
 			$.ajax({
 				url : "/guardarDatosBanda", // the endpoint
 				type : "POST", // http method
 				data : { bid:$('.container.sfull').attr('id-banda'),
 						dato : datoValue,
-						target : formulario.attr('data-target')
+						target : formulario.attr('data-target'),
+						dato2 : dato2.val(),
 						}, // data sent with the post request
 				// handle a successful response
 				success : function(response) {
 					console.log(response); // log the returned json to the console
 					if(response=="OK"){
 						Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Se han guardado cambios en '+formulario.attr('data-target'), 4000);
-						if(formulario.attr('data-target')=="nombre"){
-							$("#nombre-navbar").text(dato.val().capitalizeFirstLetter());
+						if(formulario.attr('data-target')=="rol"){
+							var aid=dato2.val()
+							if($('#int'+aid).attr('data-lider')=='True')
+								$('#int'+aid).find('.ocupacion').html('<i class="material-icons yellow-text text-darken-3" style="font-size: 15px">&#xE838;</i>'+datoValue);
+							else
+								$('#int'+aid).find('.ocupacion').html(datoValue);								
+							//$("#nombre-navbar").text(dato.val().capitalizeFirstLetter());
+							$('#modalOpciones').closeModal();
+							
 						}
 						else if(formulario.attr('data-target')=="retirarse"){
 							window.location="/perfilArtista";
+						}
+						else if(formulario.attr('data-target')=="ceder"){
+							location.reload();
 						}
 						else if(formulario.attr('data-target')=="cuentaTwitter"){
 							$('.twitter-container').html('');
@@ -447,6 +462,7 @@ function intOpciones(uid){
 	var ocupacion_h5 = modal.find('.campo-editable');
 	$(ocupacion_h5).find('.dato').text(ocu);
 	modal.find('.nombre_').text(nom);
+	modal.find('input[name=dato2]').val(uid);
 	modal.find('.avatar-perfil').css({'background-image':'url('+img+')'})
 	console.log(modal.find('.avatar-perfil'));
 	
