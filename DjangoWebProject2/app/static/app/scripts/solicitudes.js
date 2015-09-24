@@ -103,7 +103,7 @@ var Onclick= function (este){
 												'<div class="" style="margin-left:20px;"><span >'+nombre+'</span>'+
 												'<br><span class="grey-text ">'+ocupacion+'</span></div>'+
 											'</a>'+
-											' <a class="btn grey darken-1 tooltipped"  data-tooltip="Opciones" data-position="right" onclick="intOpciones('+')" style="padding:0 8px"><i class="material-icons">&#xE8B8;</i></a>'+
+											' <a class="btn grey darken-1 tooltipped"  data-tooltip="Opciones" data-position="right" onclick="intOpciones('+id+')" style="padding:0 8px"><i class="material-icons">&#xE8B8;</i></a>'+
 										'</li>';
 							console.log($('#integrante li:last'));
 							$('#integrante li:last').before(str);
