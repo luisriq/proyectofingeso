@@ -325,7 +325,8 @@ class perfilBanda(View):
         tipoUsuario = verificacion(request)
         if tipoUsuario == 0:
             return HttpResponseRedirect("/login/")
-        
+        elif tipoUsuario == 2:
+            return HttpResponseRedirect("/perfilBandaNp/%s" % bandaid)
         artista = Artista.objects.filter(user = request.user)[0]
         banda = Banda.objects.filter(id = bandaid)[0]
         pertenece = IntegrantesBanda.objects.filter(integrante = artista, banda = banda)
