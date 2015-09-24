@@ -13,7 +13,9 @@
                 <h4>Actividad reciente</h4>
                 <span class="grey-text text-darken-2">Acá encontraras solicitudes a bandas que como músico puedes acceder</span>
                 <ul class="collection">
+                    <h5>Enviadas</H5>
                     {% for solicitud in solicitantes %}
+                    {%if solicitud.direccion%}
                     <li class="collection-item valign-wrapper" >
                         <form method="POST" class="valign-wrapper" data-target="aceptarSolicitud" data-artista= "{{user.id}}" style="width:100%" data-banda="{{solicitud.banda.id}}" >
                             <div class="datos hidden">
@@ -31,15 +33,44 @@
                             </div>
                             </a>
                             <div class="inline" style="width:45px"> 
-                            {%if not solicitud.direccion%} 
-                                <a class="btn green solicitud tooltipped" data-tooltip="Aceptar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" style="padding:0 8px;margin-bottom:10px;"><i class="material-icons">&#xE5CA;</i></a>
-                            {%endif%}
                             <a class="btn red solicitud tooltipped" data-tooltip="Rechazar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>       
                             </div>
                             <input id="accion" name ="accion" hidden="true" value="aceptar">
                             <input name ="dato" hidden="true" value="{{ solicitud.id }}">
                         </form>
                     </li>
+                    {%endif%}
+                    {% endfor %}
+                </ul>
+                <ul  class="collection">
+                    <h5>Recibidas</H5>
+                    {% for solicitud in solicitantes %}
+                    {%if not solicitud.direccion%}
+                    <li class="collection-item valign-wrapper" >
+                        <form method="POST" class="valign-wrapper" data-target="aceptarSolicitud" data-artista= "{{user.id}}" style="width:100%" data-banda="{{solicitud.banda.id}}" >
+                            <div class="datos hidden">
+                                <input type="hidden" name="bid" value="{{solicitud.banda.id}}">
+                                <input type="hidden" name="img" value="{{solicitud.banda.imagenPerfil.url}}">
+                                <input type="hidden" name="nombre" value="{{solicitud.banda.nombre}}">
+                                <input type="hidden" name="ocupacion" value="{{solicitud.ocupacion}}">
+                            </div>
+                            
+                            <a class="valign-wrapper" href="/perfilBandaNp/{{solicitud.banda.id}}" style="width:calc(100% - 40px)">
+                            <div class="circle avatar-perfil small" style="background: url({{solicitud.banda.imagenPerfil.url}}); " ></div>
+                            <div class="" style="margin-left:20px;">
+                                <span >{{solicitud.banda.nombre}}</span>
+                                <br><span class="grey-text ">{{solicitud.ocupacion}}</span>
+                            </div>
+                            </a>
+                            <div class="inline" style="width:45px"> 
+                                <a class="btn green solicitud tooltipped" data-tooltip="Aceptar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'aceptar')" style="padding:0 8px;margin-bottom:10px;"><i class="material-icons">&#xE5CA;</i></a>
+                                <a class="btn red solicitud tooltipped" data-tooltip="Rechazar" data-position="right" onclick="document.getElementById('accion').setAttribute('value', 'rechazar')" style="padding:0 8px"><i class="material-icons">&#xE14C;</i></a>       
+                            </div>
+                            <input id="accion" name ="accion" hidden="true" value="aceptar">
+                            <input name ="dato" hidden="true" value="{{ solicitud.id }}">
+                        </form>
+                    </li>
+                    {%endif%}
                     {% endfor %}
                 </ul>
             </div>

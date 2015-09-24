@@ -117,6 +117,7 @@ var Onclick= function (este){
 					}
 					else if(formulario.attr('data-target')=="solicitarBanda"){
 						$('#modalArtista').closeModal();
+						
 						if ($('#solicitarBanda').length == 0){
 							console.log("LALILULELO");
 							$('#containerGeneral').append(
@@ -148,6 +149,9 @@ var Onclick= function (este){
 						);
 						$('.new-append form .inline .solicitud').click(function(){Onclick(this)});
 						$('.new-append').removeClass('new-append');
+						dato.val('');
+						olddato.val('');
+						formulario.find('input[name=search]').val('');
 					}
 				}else{
 					respuestaInstatisfactoria(response);
