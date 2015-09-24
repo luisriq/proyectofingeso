@@ -46,6 +46,7 @@ urlpatterns = patterns('',
     url(r'^crearCancion$', crearCancion, name='addC'),
     url(r'^upload$', upload_file, name='upload'),
     url(r'^search', search),#buscador
+    url(r'^universalsearch', universalsearch),#buscador
     url(r'^autoPoblado', poblacionBd),
     url(r'^login/$',
         'django.contrib.auth.views.login',
