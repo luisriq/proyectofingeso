@@ -119,7 +119,6 @@ var Onclick= function (este){
 						$('#modalArtista').closeModal();
 						
 						if ($('#solicitarBanda').length == 0){
-							console.log("LALILULELO");
 							$('#containerGeneral').append(
 							'<div class="row">'+
                                 '<div class="col s12 left-align">'+
