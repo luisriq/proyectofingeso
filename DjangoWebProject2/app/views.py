@@ -1396,7 +1396,7 @@ def poblacionBd(request):
         {'nombre': u'Pop'} ]
     for e in lista:
         g=Genero(nombre=e['nombre'])
-        g.save()
+        #g.save()
     instrumentos = [
         {'tipo': u'Acorde\xf3n', 'imagen': '/media/app/static/app/images/acordion'},
         {'tipo': u'Arm\xf3nica', 'imagen': '/media/app/static/app/images/armonica'},
