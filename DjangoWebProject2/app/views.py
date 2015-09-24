@@ -239,6 +239,10 @@ class perfilBandaNp(View):
         else:
             integrantes = [ib for ib in IntegrantesBanda.objects.filter(banda = banda)]  
             seguidores = len(banda.seguidores.all())
+            usuario = Normal.objects.filter(user = request.user)[0]
+            siguiendo = False
+            if len(Banda.objects.filter(id = banda.id,   seguidores = usuario)) == 1:
+                siguiendo = True
             title = 'perfil de la banda ' + banda.nombre
             assert isinstance(request, HttpRequest)
             return render(
@@ -248,6 +252,8 @@ class perfilBandaNp(View):
                 {
                     'banda':banda,
                     'discos':discos,
+                    'usuario':usuario,
+                    'siguiendo':siguiendo,
                     'material':material,
                     'tipoUsuario':tipoUsuario,
                     'datosBarra':datosBarra(request),
@@ -871,20 +877,27 @@ def guardarDatosBanda(request):
             target = request.POST.get('target')
             print "bid", bandId
             banda=Banda.objects.filter(id = bandId)[0]
-            integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = Artista.objects.filter(user=request.user)[0])
-            if target == "solicitarBanda": 
-                print "idbanda:",dato    
-                a = Artista.objects.filter(id = request.POST.get('artista'))[0]
-                
-                print "b", banda.nombre,"a",a.nombre
-                if(len(Solicitud.objects.filter(artista = a, banda = banda))==0):
-                    s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = False)
-                    s.save()
-                    return HttpResponse("OK,%d"%s.id)
-                else:
-                    return HttpResponse("ERROR")
-            elif(len(integrante)==1):
-                if target == "nombre":
+            art = Artista.objects.filter(user=request.user)
+            integrante=[]
+            if(len(art)==1):
+                integrante = IntegrantesBanda.objects.filter(banda=banda,integrante = art[0])
+            
+            if(len(integrante)==1):
+                if target == "solicitarBanda": 
+                    if integrante[0].esLider:
+                        print "idbanda:",dato    
+                        a = Artista.objects.filter(id = request.POST.get('artista'))[0]
+                        
+                        print "b", banda.nombre,"a",a.nombre
+                        if(len(Solicitud.objects.filter(artista = a, banda = banda))==0):
+                            s = Solicitud(ocupacion = dato ,artista = a, banda = banda, direccion = False)
+                            s.save()
+                            return HttpResponse("OK,%d"%s.id)
+                        else:
+                            return HttpResponse("ERROR")   
+                    else:
+                        return HttpResponse("e,No tienes permiso para invitar artistas")
+                elif target == "nombre":
                     if integrante[0].esLider:
                         if banda.nombre==dato:
                             return HttpResponse("w,El nombre ingresado era el mismo")
@@ -964,6 +977,28 @@ def guardarDatosBanda(request):
                         s.delete()
                     else:
                         return HttpResponse("e,No tienes permiso para aceptar solicitudes")
+            elif target == 'seguir':
+                usuario = Normal.objects.filter(id = dato)[0]
+                siguiendo = False
+                if len(Banda.objects.filter(id = banda.id, seguidores = usuario)) == 1:
+                    siguiendo = True            
+                if not siguiendo:
+                    banda.seguidores.add(usuario)
+                    banda.save()
+                    return HttpResponse("k,Est&aacute;s siguiendo a la Banda: %s"%banda.nombre )
+                return HttpResponse("w,Ya sigues a esta banda")
+                
+            elif target == 'dejardeseguir':
+                usuario = Normal.objects.filter(id = dato)[0]
+                siguiendo = False
+                if len(Banda.objects.filter(id = banda.id, seguidores = usuario)) == 1:
+                    siguiendo = True            
+                if siguiendo:
+                    banda.seguidores.remove(usuario)
+                    banda.save()
+                    return HttpResponse("k,Dejaste de seguir a la Banda: %s"%banda.nombre )
+                return HttpResponse("w,Nunca la seguiste")
+            
             elif target == "solicitar": 
                     print "idbanda:",dato    
                     a = Artista.objects.filter(user = request.user)[0]
