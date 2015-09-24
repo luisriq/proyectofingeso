@@ -1205,10 +1205,7 @@ def handle_uploaded_file(f):
     return path
 
 #-----------------------------
-def poblacionBd():
-    generos = Genero.objects.all().values('nombre')
-    for g in generos:
-        print g,','
+def poblacionBd(request):
     lista =[  
         {'nombre': u'Rock N` Roll'} ,
         {'nombre': u'M\xfasica Electr\xf3nica'} ,
@@ -1338,3 +1335,4 @@ def poblacionBd():
     for instrumento in instrumentos:
         i = Instrumento(tipo=instrumento['tipo'], imagen=instrumento['imagen'])
         i.save()
+    return HttpResponse("asdasdasd")
