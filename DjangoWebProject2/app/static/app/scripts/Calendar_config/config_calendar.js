@@ -6,7 +6,7 @@ var events = [
     { Title: "Five K for charity", Date: new Date("05/14/2013"), excerpt:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet, culpa, tempora sequi labore dicta"}, 
     { Title: "Dinner", Date: new Date("05/31/2013"), excerpt:"Cena de caridad ble"}, 
     { Title: "Meeting with manager", Date: new Date("05/10/2013"), excerpt:"Cena de caridad ble"},
-    { Title: "El Terrible concierto de rock", Date: new Date("8/28/2015"), excerpt:"El terrible concierto de rock más Épico de todos los tiempos ocurrira en el ..."}
+    { Title: "El Terrible concierto de rock", Date: new Date("9/24/2015"), excerpt:"El terrible concierto de rock más Épico de todos los tiempos ocurrira en el ..."}
 ];
 
 $("#datepicker").datepicker({
