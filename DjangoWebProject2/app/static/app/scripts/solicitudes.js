@@ -95,12 +95,15 @@ var Onclick= function (este){
 							nombre = $(formulario.find('span')[0]).text()
 							ocupacion = $(formulario.find('span')[1]).text()
 							// TODO: Cambiarlo  reusando y reemplazando con el primer integrante
+							var id = hrefItem.split('/')[hrefItem.split('/').length-1];
+							console.log(id);
 							var str = '<li class="collection-item valign-wrapper">'+
 											'<a class="valign-wrapper" href="'+hrefItem+'">'+
 												'<div class="circle avatar-perfil small" style="'+imagen+'" ></div>'+
 												'<div class="" style="margin-left:20px;"><span >'+nombre+'</span>'+
 												'<br><span class="grey-text ">'+ocupacion+'</span></div>'+
 											'</a>'+
+											' <a class="btn grey darken-1 tooltipped"  data-tooltip="Opciones" data-position="right" onclick="intOpciones('+')" style="padding:0 8px"><i class="material-icons">&#xE8B8;</i></a>'+
 										'</li>';
 							console.log($('#integrante li:last'));
 							$('#integrante li:last').before(str);
