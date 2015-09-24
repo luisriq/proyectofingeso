@@ -30,15 +30,11 @@
                <div class="col s12 l9  campo-editable">
                     <div class="input-field hide-on-small-only valign-wrapper" >
                         <input type="search" name="universalsearch" id="search-field" class="field valign"  required maxlength="">
-
-                        <label for="search-field" style="
-    padding-top: 8px;"><i class="mdi-action-search"></i></label>
-                        
-
+                        <label for="search-field" style="padding-top: 8px;"><i class="mdi-action-search"></i></label>
                     </div>
-                    <div class="collection result-list" style="height:500px;cursor:pointer;overflow: scroll;position: absolute; "></div>
+                    <div class="collection result-list" style="max-height:500px;cursor:pointer;overflow-y:scroll;position: absolute;margin:0;margin-top:-15px;border:solid 1px #ccc">
+                    </div>
                 </div>
-
                 <ul id='dropdown1'  class='grey darken-3 dropdown-content' style="min-width:200px;" data-beloworigin="true">
                     <li><a href="#!" class="button-collapse hide-on-med-and-up" data-activates="mobile-demo"><i class="material-icons">menu</i> Sidebar</a></li>
                     <li><a href="{% url 'config' %}">Configuraciones</a></li>

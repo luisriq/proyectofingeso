@@ -45,9 +45,9 @@ $( document ).ready(function(){
 		$(".result-list").removeClass("hide");
 		var this_=$(this);
 		var collectionContainer=$(".result-list");
-		collectionContainer.html('')
-		if($(this).val().length>=0){
-			collectionContainer.width(this_.width());
+		collectionContainer.html('');
+		if($(this).val().length>=2){
+			collectionContainer.width(this_.parent().width());
 			$.ajax({
                 dataType : 'json',
                 method : 'POST',
@@ -129,13 +129,13 @@ function liGen(busc, nombre,url, id,onclick){
 }
 
 function uniGen(imagen, url, nombre, tipo){
-	img = '<div class="circle avatar-img-30"><img src="'+imagen+'"></div>';
+	img = '<div class="circle avatar-img-30 inline"><img src="'+imagen+'"></div>';
 	icon = '';
 	if(tipo == "artista")
-		icon='<i class="material-icons">face</i>';
+		icon='<i class="material-icons inline" style="width:25px;font-size:20px;" >person</i>';
 	else
-		icon ='<i class="material-icons">&#xE41C;</i>';
-	a = '<a href="'+url+'" class="collection-item valign-wrapper resultado" >'+img+icon+nombre+'</a>';
+		icon ='<i class="material-icons inline" style="width:25px;font-size:20px;" >group</i>';
+	a = '<a href="'+url+'" class="collection-item resultado" >'+img+'<div class="inline ">'+icon+'<span class="grey-text text-darken-2" style="font-size:18px;">'+nombre+'</span></div></a>';
 	console.log("AAAA "+a);
 	return a;
 }
