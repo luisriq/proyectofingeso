@@ -42,9 +42,9 @@ $( document ).ready(function(){
 	
 	$('input[name=universalsearch]').keyup(function(){
 		
-		$(".result-list").removeClass("hide");
+		$(".result-list-u").removeClass("hide");
 		var this_=$(this);
-		var collectionContainer=$(".result-list");
+		var collectionContainer=$(".result-list-u");
 		collectionContainer.html('');
 		if($(this).val().length>=2){
 			collectionContainer.width(this_.parent().width());
@@ -73,10 +73,10 @@ $( document ).ready(function(){
 	});
 	
 	$(document).click(function() {
-		$(".result-list").addClass("hide");
+		$(".result-list-u").addClass("hide");
 	});
-	$('input[name=search]').click(function(e) {
-		$(".result-list").removeClass("hide");
+	$('input[name=universalsearch]').click(function(e) {
+		$(".result-list-u").removeClass("hide");
 		e.stopPropagation(); // This is the preferred method.
 
 	});
