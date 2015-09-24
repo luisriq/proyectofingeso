@@ -382,6 +382,7 @@ function expulsar(uId,confirmado){
 					Materialize.toast('<span class="green-text"><i class="material-icons">&#xE5CA;</i></span>Artista expulsado', 4000);
 					//remover el usuario de la cosa de los usarios
 					$('#int'+uId).remove();
+					$('#modalOpciones').closeModal();
 				}else
 					respuestaInstatisfactoria(data);
 			},
@@ -452,8 +453,9 @@ function intOpciones(uid){
 	
 	$('#modalOpciones').openModal();
 	if(lider){
-		$('.ceder.no-hide').hide();
+		$('.ceder').hide();
 	}else{
-		$('.ceder.no-hide').show();
+		$('.ceder').show();
+		$('.btn.expulsar').attr('onclick','expulsar('+uid+')')
 	}
 }
