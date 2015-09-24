@@ -462,9 +462,10 @@
         </a>
 
         <h5 class="campo-editable"> 
-            <form method="POST" data-target="nombre" largomaximo="20" class="inline" >
+            <form method="POST" data-target="rol" largomaximo="20" class="inline" >
                 <span class="no-hide dato">Ocupación</span> 
                 <input class="w60p hide"  type="text" name="dato" value="" />
+                <input class="w60p"  type="hidden" name="dato2" value="" />
                 <a class="btn no-hide editar toggle color-principal hover-shadow">
                     <i class="material-icons">&#xE254;</i>
                 </a> 
@@ -483,12 +484,15 @@
 			<div class="input-field hide" style="width:calc(100% - 30px);">
 			     <span class="grey-text text-darken-2">Para ceder el puesto de Lider necesitamos verificar tu contraseña</span>
 			     <div class="input-field">
-			         <input name="pass" id="pass" type="password" class="validate ">
+			         <input name="dato" id="pass" type="password" class="validate ">
+                     <input class="w60p" type="hidden" name="dato2" value="" />
 			         <label for="pass">Contraseña</label>
 			     </div>
 			</div>
-            
-			<a class="btn hide editar submit desactivar right yellow darken-3 hover-shadow">Confirmar</a> 
+            <a class="btn hide editar red right hover-shadow tooltipped toggle" data-tooltip="Cancelar cambios" style="margin-left:10px" >
+                <i class="material-icons">&#xE14C;</i>
+            </a>
+			<a class="btn hide editar submit right yellow darken-3 hover-shadow">Confirmar</a> 
             <hr class="hide" style="border:none;width:auto;height:0px;clear:both;">
             <a class="waves-effec expulsar waves-light btn red" onclick="">Expulsar</a>
 		 </form>          

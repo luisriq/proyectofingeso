@@ -897,6 +897,7 @@ def guardarDatosBanda(request):
                             return HttpResponse("ERROR")   
                     else:
                         return HttpResponse("e,No tienes permiso para invitar artistas")
+                
                 elif target == "nombre":
                     if integrante[0].esLider:
                         if banda.nombre==dato:
@@ -904,6 +905,32 @@ def guardarDatosBanda(request):
                         else:
                             banda.nombre = dato
                             banda.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar el nombre")
+                elif target == "rol":
+                    if integrante[0].esLider:
+                        a = Artista.objects.filter(id = request.POST.get('dato2'))
+                        integ = IntegrantesBanda.objects.filter(banda=banda,integrante = a[0])[0]
+                        print integ
+                        if integ.ocupacion == dato:
+                            return HttpResponse("w,El rol ingresado era el mismo")
+                        else:
+                            print integ.ocupacion,' => ',dato
+                            integ.ocupacion = dato
+                            integ.save()
+                    else:
+                        return HttpResponse("e,No tienes permiso para cambiar el rol")
+                elif target == "ceder":
+                    if integrante[0].esLider:
+                        a = Artista.objects.filter(id = request.POST.get('dato2'))
+                        integ = IntegrantesBanda.objects.filter(banda=banda,integrante = a[0])[0]
+                        if(authenticate(username=request.user.username, password=dato)!= None):
+                            integ.esLider = True
+                            integ.save()
+                            integrante[0].esLider = False
+                            integrante[0].save()
+                        else:
+                            return HttpResponse("e,Error de autenticaci&oacute;n")
                     else:
                         return HttpResponse("e,No tienes permiso para cambiar el nombre")
                 elif target == "retirarse":
