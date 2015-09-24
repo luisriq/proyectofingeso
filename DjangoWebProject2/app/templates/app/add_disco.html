@@ -85,7 +85,7 @@ function disco_send(){
 					console.log("disco id:"+$(this).attr('data-dId'));
 					$('#modalDisco').openModal();
 					var modal = $('#modalDisco .modal-content')
-					$.get("/infoDisco/"+$(this).attr('data-dId'),function(data){
+					$.get("/infoDiscoE/"+$(this).attr('data-dId'),function(data){
 							modal.html("")
 							modal.html(data)
 					}).fail(function() {

@@ -11,6 +11,7 @@
 
 
 {% block content %}
+{% load staticfiles %}
 <div class="container">
         <div class="row">
             <div class="col l8 s12 columna-complemento-calendario grey lighten-4 card-panel" style="margin-top:30px">
@@ -101,7 +102,7 @@
                             <div class="col s12 left-align"> 
                             <h5>Calendario de eventos</h5>
                         <!-- inicio calendario -->
-                            <link rel="stylesheet" href="Calendar_config/jquery-ui.css">
+                            <link rel="stylesheet" href="{% static 'app/scripts/Calendar_config/jquery-ui.css' %}">
                             <!--http://streaming.croop.cl/jquery-ui.css-->
                             <div id="datepicker" class=" z-depth-1">
 
@@ -191,5 +192,12 @@
 	<script src="{% static 'app/scripts/materialize.min.js' %}"></script>
 	<script src="{% static 'app/scripts/script.js' %}"></script>
     <script src="{% static 'app/scripts/editarnormal.js' %}"></script>
-    
+    <!-- inicio calendario JS-->
+    <!--script src="Calendar_config/jquery.min.js"></script-->
+    <!--http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js-->
+    <script src="{% static 'app/scripts/Calendar_config/jquery-ui.min.js' %}"></script>
+    <!--http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js-->
+    <script src="{% static 'app/scripts/Calendar_config/config_calendar.js' %}"></script>
+
+    <!-- fin calendario JS -->
 {% endblock %}
