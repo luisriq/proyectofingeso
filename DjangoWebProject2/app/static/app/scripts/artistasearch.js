@@ -5,7 +5,7 @@ $( document ).ready(function(){
 		var this_=$(this);
 		var collectionContainer=$(".result-list");
 		collectionContainer.html('')
-		if($(this).val().length>=0){
+		if($(this).val().length>=2){
 			collectionContainer.width(this_.width());
 			$.ajax({
                 dataType : 'json',
